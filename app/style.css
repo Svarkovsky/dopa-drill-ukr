@@ -988,3 +988,79 @@ html[lang="uk"] #go-extra small {
     font-size: 12px;
   }
 }
+
+/* ------------------------------------------------------------ Browser Tabs for Install Guide */
+.install-card {
+  max-width: 440px !important;
+  padding: 20px 16px 18px !important;
+}
+.browser-tabs {
+  display: flex;
+  gap: 6px;
+  background: rgba(27, 29, 77, 0.07);
+  padding: 4px;
+  border-radius: 16px;
+  margin: 6px 0 12px;
+}
+.browser-tab-btn {
+  flex: 1;
+  padding: 8px 4px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  font-family: var(--round);
+  font-weight: 900;
+  font-size: 13px;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all .15s;
+}
+.browser-tab-btn.is-active {
+  background: #fff;
+  border-color: var(--ink);
+  box-shadow: 0 3px 0 var(--ink);
+  color: var(--blue);
+}
+.browser-tab-content {
+  display: none;
+}
+.browser-tab-content.is-active {
+  display: block;
+  animation: fadeInTab .2s ease-out;
+}
+@keyframes fadeInTab {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+.install-guide-block {
+  background: #fff;
+  border: 2.5px solid var(--ink);
+  border-radius: 16px;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  box-shadow: 0 3px 0 var(--ink);
+}
+.install-guide-block h3 {
+  font-family: var(--chunky);
+  font-size: 14px;
+  margin: 0 0 6px;
+  color: var(--blue);
+}
+.install-guide-block ol {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.install-guide-block li {
+  margin-bottom: 4px;
+}
+.install-guide-note {
+  font-size: 12px;
+  color: #444;
+  margin-top: 6px;
+  padding-top: 4px;
+  border-top: 1px dashed rgba(27, 29, 77, 0.2);
+  line-height: 1.35;
+}

@@ -30,6 +30,15 @@ test('i18n default language and switching', () => {
   assert.equal(t('appTitle'), 'Dopa Drill');
   assert.equal(t('correctStampText'), 'Correct!');
 
+  // Test grade0 and grade0Sub in all languages
+  for (const lang of ['uk', 'ja', 'en']) {
+    setLanguage(lang);
+    assert.ok(t('grade0'), `grade0 in ${lang}`);
+    assert.notEqual(t('grade0'), 'grade0', `grade0 not raw in ${lang}`);
+    assert.ok(t('grade0Sub'), `grade0Sub in ${lang}`);
+    assert.notEqual(t('grade0Sub'), 'grade0Sub', `grade0Sub not raw in ${lang}`);
+  }
+
   // Switch back to uk
   setLanguage('uk');
   assert.equal(getLanguage(), 'uk');

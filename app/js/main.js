@@ -2713,6 +2713,27 @@ const installBtn = $('#pwa-install-btn');
 const installModal = $('#install-modal');
 const installModalClose = $('#install-modal-close');
 
+function selectInstallTab(tabName) {
+  const tabs = $$('.browser-tab-btn');
+  const contents = $$('.browser-tab-content');
+  tabs.forEach((b) => b.classList.toggle('is-active', b.dataset.tab === tabName));
+  contents.forEach((c) => c.classList.toggle('is-active', c.id === `tab-content-${tabName}`));
+}
+
+function detectUserBrowser() {
+  const ua = (navigator.userAgent || '').toLowerCase();
+  if (ua.includes('firefox') || ua.includes('fxios')) return 'firefox';
+  if (ua.includes('safari') && !ua.includes('chrome') && !ua.includes('crios') && !ua.includes('edg')) return 'safari';
+  return 'chrome';
+}
+
+$$('.browser-tab-btn').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    audio.play('blip', audio.now(), { m: 76, v: 0.08 });
+    selectInstallTab(btn.dataset.tab);
+  });
+});
+
 if (installBtn) {
   installBtn.addEventListener('click', async () => {
     audio.play('blip', audio.now(), { m: 84, v: 0.1 });
@@ -2725,6 +2746,7 @@ if (installBtn) {
       }
     } else {
       if (installModal) {
+        selectInstallTab(detectUserBrowser());
         if (hero) hero.visible = false;
         installModal.hidden = false;
         const card = installModal.querySelector('.modal-card');

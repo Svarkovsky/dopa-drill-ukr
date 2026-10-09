@@ -342,13 +342,65 @@
   </div>
 
   <div class="modal" id="install-modal" role="dialog" aria-modal="true" aria-labelledby="install-modal-title" hidden>
-    <div class="modal-card">
-      <h2 id="install-modal-title" class="chip" data-i18n="installTitle">📱 Встановити на телефон</h2>
-      <div class="set-row">
-        <p class="install-step" data-i18n-html="installStep1">Натисніть меню браузера (три крапки <b>⋮</b> у Chrome або <b>📤</b> «Поділитися» у Safari)</p>
-        <p class="install-step" data-i18n-html="installStep2">Виберіть пункт <b>«Додати на головний екран»</b> або «Встановити додаток»</p>
-        <p class="set-note install-benefit" data-i18n="installBenefit">Гра запускатиметься в 1 клік на весь екран як окремий додаток!</p>
+    <div class="modal-card install-card">
+      <h2 id="install-modal-title" class="chip" data-i18n="installTitle">📱 Як встановити гру на екран</h2>
+
+      <div class="browser-tabs" role="tablist">
+        <button type="button" class="browser-tab-btn" data-tab="firefox" id="tab-btn-firefox">🦊 Firefox</button>
+        <button type="button" class="browser-tab-btn is-active" data-tab="chrome" id="tab-btn-chrome">📱 Chrome</button>
+        <button type="button" class="browser-tab-btn" data-tab="safari" id="tab-btn-safari">🍎 Safari</button>
       </div>
+
+      <!-- Firefox tab content -->
+      <div class="browser-tab-content" id="tab-content-firefox">
+        <div class="install-guide-block">
+          <h3 data-i18n="installFirefoxPhoneTitle">📱 Firefox на телефоні (Android)</h3>
+          <ol>
+            <li data-i18n-html="installFirefoxPhoneStep1">Натисніть меню <b>⋮</b> (три крапки поруч з адресою)</li>
+            <li data-i18n-html="installFirefoxPhoneStep2">Виберіть пункт <b>«Встановити»</b> або <b>«Додати на головний екран»</b></li>
+          </ol>
+        </div>
+        <div class="install-guide-block">
+          <h3 data-i18n="installFirefoxPcTitle">💻 Firefox на компʼютері (ПК / Mac)</h3>
+          <ol>
+            <li data-i18n-html="installFirefoxPcStep1">Натисніть зірочку <b>⭐</b> (або <b>Ctrl+D</b>), щоб зберегти в закладки</li>
+            <li data-i18n-html="installFirefoxPcStep2">Або перетягніть замочок <b>🔒</b> з адреси прямо на робочий стіл!</li>
+          </ol>
+          <div class="install-guide-note" data-i18n="installFirefoxPcNote">💡 У браузері Google Chrome на ПК доступна офіційна кнопка 📥 «Встановити» в 1 клік.</div>
+        </div>
+      </div>
+
+      <!-- Chrome tab content -->
+      <div class="browser-tab-content is-active" id="tab-content-chrome">
+        <div class="install-guide-block">
+          <h3 data-i18n="installChromePhoneTitle">📱 Chrome на телефоні (Android)</h3>
+          <ol>
+            <li data-i18n-html="installChromePhoneStep1">Натисніть меню <b>⋮</b> (три крапки вгорі праворуч)</li>
+            <li data-i18n-html="installChromePhoneStep2">Виберіть <b>«Встановити додаток»</b> або <b>«Додати на головний екран»</b></li>
+          </ol>
+        </div>
+        <div class="install-guide-block">
+          <h3 data-i18n="installChromePcTitle">💻 Chrome на компʼютері (ПК / Mac)</h3>
+          <ol>
+            <li data-i18n-html="installChromePcStep1">В адресному рядку праворуч натисніть значок <b>📥 «Встановити»</b></li>
+            <li data-i18n-html="installChromePcStep2">Або меню <b>⋮</b> ➔ «Встановити Допа Дріл». Гра відкриватиметься в окремому вікні!</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Safari tab content -->
+      <div class="browser-tab-content" id="tab-content-safari">
+        <div class="install-guide-block">
+          <h3 data-i18n="installSafariTitle">🍎 Safari на iPhone та iPad</h3>
+          <ol>
+            <li data-i18n-html="installSafariStep1">Натисніть кнопку <b>«Поділитися»</b> (квадратик зі стрілкою <b>📤</b> у нижній панелі)</li>
+            <li data-i18n-html="installSafariStep2">Прокрутіть меню вниз і виберіть пункт <b>«На початковий екран»</b> (значок <b>➕</b>)</li>
+            <li data-i18n-html="installSafariStep3">У правому верхньому куті натисніть <b>«Додати»</b></li>
+          </ol>
+        </div>
+      </div>
+
+      <p class="set-note install-benefit" data-i18n="installBenefit">Гра запускатиметься на весь екран як окремий додаток навіть без інтернету!</p>
       <button type="button" class="big-btn" id="install-modal-close" data-i18n="installClose">Зрозуміло!</button>
     </div>
   </div>
