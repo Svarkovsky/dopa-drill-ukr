@@ -910,6 +910,21 @@ li.done .qbar { background: var(--mint); }
 
 /* ------------------------------------------------------------ title guide (id052) */
 .help-btn { top: calc(72px + env(safe-area-inset-top)); }
+.coffee-btn { top: calc(132px + env(safe-area-inset-top)); text-decoration: none; }
+.coffee-btn:hover { transform: translateY(-2px); }
+.coffee-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--ink); }
+.coffee-svg { display: block; width: 100%; height: 100%; overflow: visible; transition: transform .3s cubic-bezier(.34, 1.56, .64, 1); }
+.coffee-btn:hover .coffee-svg { transform: scale(1.08) rotate(-4deg); }
+.coffee-steam { transform-origin: center bottom; }
+@keyframes coffee-steam-drift {
+  0% { transform: translateY(0); opacity: 0.3; }
+  50% { transform: translateY(-2px); opacity: 0.95; }
+  100% { transform: translateY(-4px); opacity: 0.15; }
+}
+.steam-1 { animation: coffee-steam-drift 1.8s ease-in-out infinite; }
+.steam-2 { animation: coffee-steam-drift 1.8s ease-in-out infinite 0.6s; }
+.steam-3 { animation: coffee-steam-drift 1.8s ease-in-out infinite 1.2s; }
+body.reduced .coffee-steam { animation: none !important; }
 #guide { position: fixed; inset: 0; z-index: 10; touch-action: none; }
 #guide[hidden] { display: none; }
 .guide-shade, #guide-actor { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }

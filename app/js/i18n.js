@@ -9,7 +9,7 @@ export const SUPPORTED_LANGS = [
   { code: 'ja', name: '日本語' },
 ];
 
-// Active language state. Default is Ukrainian ('uk').
+// Active language state. Default is English ('en').
 let currentLang = (() => {
   try {
     if (typeof location !== 'undefined') {
@@ -19,9 +19,9 @@ let currentLang = (() => {
     }
     const saved = typeof localStorage !== 'undefined' ? localStorage.getItem(STORAGE_KEY) : null;
     if (saved && ['uk', 'en', 'ja'].includes(saved)) return saved;
-    return 'uk';
+    return 'en';
   } catch {
-    return 'uk';
+    return 'en';
   }
 })();
 
@@ -61,6 +61,7 @@ const STRINGS = {
 
     // Top HUD & Controls
     helpBtnAria: 'Як грати та довідка',
+    coffeeBtnAria: 'Підтримати автора кавою (Донат)',
     settingsBtnAria: 'Налаштування',
     keyboardHint: 'Можна відповідати цифровими клавішами та Backspace',
     cellInputAria: 'Поле вводу',
@@ -283,6 +284,7 @@ const STRINGS = {
 
     // Top HUD & Controls
     helpBtnAria: 'あそびかた',
+    coffeeBtnAria: '開発者をコーヒーで応援（寄付）',
     settingsBtnAria: 'せってい',
     keyboardHint: '数字キーとBackspaceでも操作できます',
     cellInputAria: '入力欄',
@@ -505,6 +507,7 @@ const STRINGS = {
 
     // Top HUD & Controls
     helpBtnAria: 'How to Play & Help',
+    coffeeBtnAria: 'Buy creator a coffee (Donate)',
     settingsBtnAria: 'Settings',
     keyboardHint: 'You can also use number keys and Backspace',
     cellInputAria: 'Input field',
