@@ -47,13 +47,29 @@ button:focus-visible { outline: 4px solid var(--yellow); outline-offset: 3px; }
 #rays-fallback {
   display: none; position: fixed; inset: -50vmax; z-index: 1; opacity: 0; pointer-events: none;
   background: repeating-conic-gradient(from 0deg at 50% 50%, #3b6bff 0 9deg, #ff7ab6 9deg 18deg);
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
-#bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-#fx-back { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-#fx { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 4; pointer-events: none; }
-#actors { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 5; pointer-events: none; overflow: visible; }
-#cutins { position: fixed; inset: 0; z-index: 6; pointer-events: none; overflow: hidden; }
-#flash { position: fixed; inset: 0; z-index: 7; pointer-events: none; background: #fff; opacity: 0; }
+@keyframes bg-hue-cycle {
+  from { filter: hue-rotate(0deg); }
+  to { filter: hue-rotate(360deg); }
+}
+.bg-hue-anim {
+  animation: bg-hue-cycle 8s linear infinite !important;
+  will-change: filter, transform;
+}
+#bg, #fx-back, #fx, #actors, #cutins, #flash {
+  position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+#bg { z-index: 1; will-change: transform; }
+#fx-back { z-index: 1; will-change: transform; }
+#fx { z-index: 4; will-change: transform; }
+#actors { z-index: 5; overflow: visible; will-change: transform; }
+#cutins { z-index: 6; overflow: hidden; will-change: transform; }
+#flash { z-index: 7; background: #fff; opacity: 0; will-change: opacity; }
 .dk-digit { font-family: var(--round); font-weight: 900; fill: var(--ink); stroke: #fff; stroke-width: 6px; paint-order: stroke; }
 
 #app {
@@ -101,7 +117,7 @@ button:focus-visible { outline: 4px solid var(--yellow); outline-offset: 3px; }
 .logo-bits b:nth-child(4) { animation-delay: -1.8s; }
 @keyframes logo-hop { 0%, 100% { transform: rotate(var(--r)) translateY(var(--dy, 0)) scale(1); } 12% { transform: rotate(var(--r)) translateY(calc(var(--dy, 0px) + 4px)) scale(1.08, .9); } 30% { transform: rotate(calc(var(--r) * -0.4)) translateY(calc(var(--dy, 0px) - 10px)) scale(.96, 1.06); } 55% { transform: rotate(var(--r)) translateY(var(--dy, 0)) scale(1); } }
 @keyframes logo-wave { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-@keyframes logo-float { 0%, 100% { margin-top: 0; } 50% { margin-top: -8px; } }
+@keyframes logo-float { 0%, 100% { transform: translate(-50%, -50%) rotate(var(--r)); } 50% { transform: translate(-50%, calc(-50% - 8px)) rotate(var(--r)); } }
 body.reduced .logo *, body.reduced .logo-burst { animation: none !important; }
 .settings-btn { display: grid; place-items: center; position: absolute; top: calc(12px + env(safe-area-inset-top)); right: 14px; width: 48px; height: 48px; padding: 4px; background: #fff; box-shadow: 0 4px 0 var(--ink); z-index: 3; }
 .settings-btn svg { display: block; width: 100%; height: 100%; transition: transform .4s; }
@@ -340,6 +356,8 @@ body.lv5 .spot { opacity: .7; }
   position: relative; margin: 0 14px 12px; padding: 10px 12px 10px;
   background: #fff; border: 3px solid var(--ink); border-radius: 24px; box-shadow: 0 7px 0 var(--ink);
   transform-origin: 50% 100%;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 .card-top { display: flex; justify-content: space-between; align-items: center; }
 .chip { display: inline-block; margin: 0; padding: 3px 12px; border-radius: 999px; background: var(--blue); color: #fff; font-size: 13px; letter-spacing: .08em; }

@@ -253,7 +253,12 @@ export class Backdrop {
       const f = this.fallback;
       f.style.opacity = String(Math.min(1, Math.max(s.reach * 0.8, (s.E - 0.12) * 2)));
       f.style.transform = `rotate(${(t / 1000) * (8 + 40 * s.E)}deg) scale(${1 + s.kick * 0.04})`;
-      f.style.filter = s.E > 0.6 ? `hue-rotate(${(t / 20) % 360}deg)` : 'none';
+      const highE = s.E > 0.6;
+      if (highE !== this._lastHighE) {
+        this._lastHighE = highE;
+        f.classList.toggle('bg-hue-anim', highE);
+        if (!highE) f.style.filter = 'none';
+      }
       return;
     }
     this.resize();

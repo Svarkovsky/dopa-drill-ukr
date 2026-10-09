@@ -237,6 +237,20 @@ export class Dopakichi {
   place(x, y) { this.x = x; this.y = y; this.home = { x, y }; this.ground = y; }
 
   update(dt, t, ctx = {}) {
+    if (!this.visible) {
+      if (this._wasVisible) {
+        this._wasVisible = false;
+        this.root.style.display = 'none';
+        this.armsFront.style.display = 'none';
+      }
+      return;
+    }
+    if (this._wasVisible === false) {
+      this._wasVisible = true;
+      this.root.style.display = '';
+      this.armsFront.style.display = '';
+    }
+
     this.sq.step(dt); this.lean.step(dt); this.tilt.step(dt); this.earL.step(dt); this.earR.step(dt);
     this.browLift.step(dt); this.browTilt.step(dt);
     this.look.x = lerp(this.look.x, this.lookTarget.x, Math.min(1, dt * 10));
@@ -255,11 +269,12 @@ export class Dopakichi {
     const shakeX = this.shake ? Math.sin(t / 22) * this.shake : 0;
     const bx = this.x + shakeX; const by = this.y - this.lift;
     const rot = this.rot + this.lean.value;
-    this.root.setAttribute('opacity', this.opacity);
-    // Arms live in a separate front layer, so hide them together with the body.
-    this.root.style.display = this.visible ? '' : 'none';
-    this.armsFront.style.display = this.visible ? '' : 'none';
-    this.armsFront.setAttribute('opacity', this.opacity);
+
+    if (this._lastOpacity !== this.opacity) {
+      this._lastOpacity = this.opacity;
+      this.root.setAttribute('opacity', this.opacity);
+      this.armsFront.setAttribute('opacity', this.opacity);
+    }
     this.bodyG.setAttribute('transform', `translate(${bx} ${by - pc}) rotate(${rot}) translate(0 ${pc}) scale(${S * sx} ${S * sy})`);
     const gy = this.ground ?? this.y;
     const hk = clamp(1 - (gy - by) / 400, 0.2, 1);
@@ -281,16 +296,24 @@ export class Dopakichi {
       b.setAttribute('transform', `translate(${s * G.brow.x + lx} ${G.brow.y + ly - this.browLift.value * 4}) rotate(${-s * this.browTilt.value})`);
     });
     this.mouthG.setAttribute('transform', `translate(${lx * 0.6} ${G.mouthY + ly * 0.5})`);
-    this.cheeks.forEach((c, i) => {
-      const k = 1 + this.cheekPuff * 0.7;
-      c.setAttribute('rx', G.cheek.rx * k); c.setAttribute('ry', G.cheek.ry * k);
-      c.setAttribute('cx', (i ? 1 : -1) * (G.cheek.x + this.cheekPuff * 3) + lx * 0.4);
-    });
-    this.feet.forEach((f, i) => {
-      const s = i ? 1 : -1;
-      const kick = this.lift > 4 ? Math.sin(t / 60 + i * 2) * 4 : 0;
-      f.setAttribute('transform', `translate(0 ${kick}) rotate(${this.lift > 4 ? s * 14 : 0} ${s * G.footPivot.x} ${G.footPivot.y})`);
-    });
+    if (this._lastPuff !== this.cheekPuff || Math.abs(lx - (this._lastLx || 0)) > 0.05) {
+      this._lastPuff = this.cheekPuff;
+      this._lastLx = lx;
+      this.cheeks.forEach((c, i) => {
+        const k = 1 + this.cheekPuff * 0.7;
+        c.setAttribute('rx', G.cheek.rx * k); c.setAttribute('ry', G.cheek.ry * k);
+        c.setAttribute('cx', (i ? 1 : -1) * (G.cheek.x + this.cheekPuff * 3) + lx * 0.4);
+      });
+    }
+    const inAir = this.lift > 4;
+    if (inAir || this._wasInAir) {
+      this._wasInAir = inAir;
+      this.feet.forEach((f, i) => {
+        const s = i ? 1 : -1;
+        const kick = inAir ? Math.sin(t / 60 + i * 2) * 4 : 0;
+        f.setAttribute('transform', `translate(0 ${kick}) rotate(${inAir ? s * 14 : 0} ${s * G.footPivot.x} ${G.footPivot.y})`);
+      });
+    }
 
     // arms
     const lpx = this.lw * S;
