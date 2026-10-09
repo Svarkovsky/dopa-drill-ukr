@@ -1,3 +1,4 @@
+console.log('🎮 Dopa Drill v1.0.3');
 // Game flow, input, scoring, and the "director" that turns every event into
 // escalating visuals and sound.
 import { startClock, onFrame, wait, tween, clamp, lerp, rand, pick, chance, centerOf, params,
