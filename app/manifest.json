@@ -1,0 +1,19 @@
+{
+  "name": "Допа Дріл — Весела математика",
+  "short_name": "Допа Дріл",
+  "description": "Швидкий та захопливий тренажер математики для дітей",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fffdf0",
+  "theme_color": "#fffdf0",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

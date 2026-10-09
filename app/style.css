@@ -92,7 +92,7 @@ button:focus-visible { outline: 4px solid var(--yellow); outline-offset: 3px; }
 #screen-title {
   flex-direction: column; align-items: center; justify-content: flex-start;
   gap: 12px;
-  padding: calc(14px + env(safe-area-inset-top)) 14px calc(24px + env(safe-area-inset-bottom));
+  padding: calc(34px + env(safe-area-inset-top)) 14px calc(24px + env(safe-area-inset-bottom));
   overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
 }
 #screen-title > * { flex: none; }
@@ -100,7 +100,7 @@ button:focus-visible { outline: 4px solid var(--yellow); outline-offset: 3px; }
    "ドリル" rides on a folded ribbon, operator scraps float around. */
 .logo {
   position: relative;
-  margin: calc(var(--fs) * 0.35) 0 calc(var(--fs) * 0.12);
+  margin: calc(var(--fs) * 0.65) 0 calc(var(--fs) * 0.14);
   display: grid; justify-items: center; font-family: var(--chunky); font-weight: 400; line-height: 1;
   --fs: clamp(50px, 16vw, 76px);
 }
@@ -359,7 +359,7 @@ body.lv6 .dopa { background: linear-gradient(90deg, #ffd23f, #ff9ccc, #9fd0ff, #
 
 .stage { position: relative; flex: 1 1 auto; min-height: 118px; margin: 0 14px; }
 .ground { position: absolute; left: 6%; right: 6%; bottom: 6px; width: 88%; height: 14px; }
-.bunting { position: absolute; left: -2%; right: -2%; top: 0; width: 104%; height: 34px; opacity: 0; transform: translateY(-20px); transition: opacity .5s, transform .5s cubic-bezier(.3, 1.6, .5, 1); }
+.bunting { position: absolute; left: -2%; right: -2%; top: 0; width: 104%; height: 48px; opacity: 0; transform: translateY(-20px); transition: opacity .5s, transform .5s cubic-bezier(.3, 1.6, .5, 1); overflow: visible; }
 body.lv3 .bunting { opacity: 1; transform: none; }
 .spot { position: absolute; top: -30px; width: 140px; height: 190px; opacity: 0; transition: opacity .6s; mix-blend-mode: screen; filter: blur(2px);
   background: linear-gradient(to bottom, rgba(255, 246, 200, .95), rgba(255, 246, 200, 0)); clip-path: polygon(44% 0, 56% 0, 100% 100%, 0 100%); }
@@ -912,3 +912,76 @@ body.guide-open .logo *, body.guide-open .logo-burst { animation: none !importan
 .guide-help-fallback::after { content: ''; position: absolute; inset: -5px; border: 2px solid var(--yellow); border-radius: 14px; animation: guide-help-pulse 1.4s ease-in-out infinite; }
 @keyframes guide-help-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
 body.reduced #guide-help-ring, body.reduced .guide-help-fallback::after { animation: none; }
+
+/* ------------------------------------------------------------ PWA Install banner & modal */
+.install-banner {
+  position: absolute;
+  left: 14px;
+  top: calc(12px + env(safe-area-inset-top));
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 6px 10px;
+  background: #fff;
+  border: 3px solid var(--ink);
+  border-radius: 16px;
+  box-shadow: 0 4px 0 var(--ink);
+  cursor: pointer;
+  transition: transform .12s, box-shadow .12s;
+}
+.install-banner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 var(--ink);
+  background: #fffcee;
+}
+.install-banner:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--ink);
+}
+.install-banner .install-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+.install-banner .install-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-family: var(--round);
+  font-weight: 900;
+  font-size: 11px;
+  letter-spacing: .08em;
+  color: var(--blue);
+}
+@media (display-mode: standalone) {
+  .install-banner { display: none !important; }
+}
+.install-step { margin: 6px 0; font-size: 15px; line-height: 1.45; }
+.install-benefit { margin-top: 8px; font-weight: 900; color: var(--pink); font-size: 13px; }
+
+/* Ukrainian localization text fitting for extra round button */
+#go-extra {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+html[lang="uk"] #go-extra {
+  font-size: 20px;
+  letter-spacing: .02em;
+  padding: 0 12px;
+}
+html[lang="uk"] #go-extra small {
+  font-size: 14px;
+  margin-left: 2px;
+}
+@media (max-width: 380px) {
+  html[lang="uk"] #go-extra {
+    font-size: 17px;
+    padding: 0 8px;
+  }
+  html[lang="uk"] #go-extra small {
+    font-size: 12px;
+  }
+}

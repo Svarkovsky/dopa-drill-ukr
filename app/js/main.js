@@ -2702,6 +2702,59 @@ $('#close-day').addEventListener('click', () => { $('#day-log').hidden = true; }
 $('#day-log').addEventListener('click', (e) => { if (e.target.id === 'day-log') $('#day-log').hidden = true; });
 $('#screen-title').addEventListener('scroll', () => requestAnimationFrame(layoutActors), { passive: true });
 $$('#screen-result, #screen-final, #tree-scroll, #tr-scroll').forEach((el) => el.addEventListener('scroll', () => requestAnimationFrame(layoutActors), { passive: true }));
+// PWA installation logic
+let deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+});
+
+const installBtn = $('#pwa-install-btn');
+const installModal = $('#install-modal');
+const installModalClose = $('#install-modal-close');
+
+if (installBtn) {
+  installBtn.addEventListener('click', async () => {
+    audio.play('blip', audio.now(), { m: 84, v: 0.1 });
+    if (deferredInstallPrompt) {
+      deferredInstallPrompt.prompt();
+      const choice = await deferredInstallPrompt.userChoice;
+      if (choice && choice.outcome === 'accepted') {
+        deferredInstallPrompt = null;
+        installBtn.style.display = 'none';
+      }
+    } else {
+      if (installModal) {
+        installModal.hidden = false;
+        const card = installModal.querySelector('.modal-card');
+        if (!S.reduced && card) tween(300, (k) => { card.style.transform = `translateY(${(1 - k) * 40}px) scale(${0.9 + 0.1 * k})`; }, easeOutBack).then(() => { card.style.transform = ''; });
+        $('#install-modal-close')?.focus({ preventScroll: true });
+      }
+    }
+  });
+}
+
+if (installModalClose) {
+  installModalClose.addEventListener('click', () => {
+    audio.play('blip', audio.now(), { m: 72, v: 0.08 });
+    if (installModal) installModal.hidden = true;
+  });
+}
+
+if (installModal) {
+  installModal.addEventListener('click', (e) => {
+    if (e.target.id === 'install-modal') {
+      audio.play('blip', audio.now(), { m: 72, v: 0.08 });
+      installModal.hidden = true;
+    }
+  });
+}
+
+window.addEventListener('appinstalled', () => {
+  deferredInstallPrompt = null;
+  if (installBtn) installBtn.style.display = 'none';
+});
+
 $('#open-settings').addEventListener('click', openSettings);
 $('#open-guide').addEventListener('click', () => openGuide(true));
 $('#close-settings').addEventListener('click', closeSettings);

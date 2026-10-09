@@ -7,6 +7,13 @@
   <meta name="description" content="Захопливий арифметичний тренажер усного рахунку з динамічною музикою та спецефектами.">
   <title data-i18n="appTitle">Допа Дріл (Dopa Drill)</title>
   <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#fffdf0">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Допа Дріл">
+  <link rel="apple-touch-icon" href="icon.svg">
   <link rel="stylesheet" href="style.css">
   <script type="module" src="js/main.js"></script>
 </head>
@@ -19,6 +26,10 @@
   <main id="app">
     <!-- Title -->
     <section id="screen-title" class="screen is-active" aria-labelledby="logo">
+      <button type="button" class="install-banner" id="pwa-install-btn" aria-label="Встановити додаток" data-i18n-aria="installTitle">
+        <span class="install-icon" aria-hidden="true">📱</span>
+        <span class="install-text" data-i18n="installBanner">Встанови гру</span>
+      </button>
       <button type="button" class="icon-btn settings-btn" id="open-settings" aria-label="Settings" data-i18n-aria="settingsBtnAria" aria-haspopup="dialog">
         <svg viewBox="-16 -16 32 32" aria-hidden="true"><circle r="10.6" fill="none" stroke="#1b1d4d" stroke-width="9" stroke-dasharray="4.2 4.12"/><circle r="10.6" fill="#ffd23f" stroke="#1b1d4d" stroke-width="2.4"/><circle r="4.4" fill="#fff" stroke="#1b1d4d" stroke-width="2.4"/></svg>
       </button>
@@ -115,7 +126,7 @@
         <div class="dopa" id="dopa-box"><small data-i18n="dopaLabel">Допа</small><b id="dopa">0</b></div>
       </div>
       <div class="stage" id="stage" aria-hidden="true">
-        <svg class="bunting" viewBox="0 0 400 40" preserveAspectRatio="none"><path d="M0 4 Q200 34 400 4" fill="none" stroke="#1b1d4d" stroke-width="2.5"/><g id="flags"></g></svg>
+        <svg class="bunting" viewBox="0 0 400 52" preserveAspectRatio="none"><path d="M0 4 Q200 34 400 4" fill="none" stroke="#1b1d4d" stroke-width="2.5"/><g id="flags"></g></svg>
         <div class="spot spot-l"></div><div class="spot spot-r"></div>
         <svg class="ground" viewBox="0 0 400 20" preserveAspectRatio="none"><path d="M4 12 Q60 6 120 11 T240 10 T396 12" fill="none" stroke="#1b1d4d" stroke-width="3" stroke-linecap="round"/></svg>
       </div>
@@ -327,6 +338,18 @@
         <button type="button" class="sub-btn" id="confirm-no" data-i18n="confirmCancel">Скасувати</button>
         <button type="button" class="sub-btn danger" id="confirm-yes" data-i18n="confirmDanger">Скинути</button>
       </div>
+    </div>
+  </div>
+
+  <div class="modal" id="install-modal" role="dialog" aria-modal="true" aria-labelledby="install-modal-title" hidden>
+    <div class="modal-card">
+      <h2 id="install-modal-title" class="chip" data-i18n="installTitle">📱 Встановити на телефон</h2>
+      <div class="set-row">
+        <p class="install-step" data-i18n-html="installStep1">Натисніть меню браузера (три крапки <b>⋮</b> у Chrome або <b>📤</b> «Поділитися» у Safari)</p>
+        <p class="install-step" data-i18n-html="installStep2">Виберіть пункт <b>«Додати на головний екран»</b> або «Встановити додаток»</p>
+        <p class="set-note install-benefit" data-i18n="installBenefit">Гра запускатиметься в 1 клік на весь екран як окремий додаток!</p>
+      </div>
+      <button type="button" class="big-btn" id="install-modal-close" data-i18n="installClose">Зрозуміло!</button>
     </div>
   </div>
 

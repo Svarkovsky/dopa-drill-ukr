@@ -187,6 +187,16 @@ test('settings credits translations in all supported languages', () => {
   assert.ok(t('setDonateNote').includes('@grmchn4ai'));
   assert.equal(t('setDonateBtn'), 'Support & Donate');
 
+  for (const lang of ['uk', 'ja', 'en']) {
+    setLanguage(lang);
+    assert.ok(t('installBanner'), `installBanner in ${lang}`);
+    assert.ok(t('installTitle'), `installTitle in ${lang}`);
+    assert.ok(t('installStep1'), `installStep1 in ${lang}`);
+    assert.ok(t('installStep2'), `installStep2 in ${lang}`);
+    assert.ok(t('installBenefit'), `installBenefit in ${lang}`);
+    assert.ok(t('installClose'), `installClose in ${lang}`);
+  }
+
   // Reset to default
   setLanguage('uk');
 });
