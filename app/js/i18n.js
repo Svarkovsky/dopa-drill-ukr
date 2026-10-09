@@ -1488,3 +1488,5 @@ export function questTextI18n(q, fallback) {
   if (id === 'speed') return isUk ? 'Розвʼязати завдання швидше ніж за 2.5 с' : 'Solve a problem under 2.5s';
   return fallback;
 }
+
+export const stepHint = problemHelpText;

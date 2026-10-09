@@ -6,3 +6,11 @@ node_modules/
 .playwright-mcp/
 *.png
 !dopa-drill-*.png
+
+# Android build tools & outputs
+android/tools/
+android/.gradle/
+android/app/build/
+android/build/
+*.apk
+dist/

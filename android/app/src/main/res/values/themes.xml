@@ -1,0 +1,7 @@
+<resources>
+    <style name="Theme.DopaDrill" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">#fffbf0</item>
+        <item name="android:statusBarColor">#fffbf0</item>
+        <item name="android:navigationBarColor">#fffbf0</item>
+    </style>
+</resources>
