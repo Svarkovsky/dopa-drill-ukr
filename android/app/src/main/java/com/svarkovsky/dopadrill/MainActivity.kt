@@ -2,6 +2,9 @@ package com.svarkovsky.dopadrill
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
+import android.webkit.ConsoleMessage
+import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebSettings
@@ -42,8 +45,18 @@ class MainActivity : AppCompatActivity() {
             mediaPlaybackRequiresUserGesture = false
             allowFileAccess = false
             cacheMode = WebSettings.LOAD_DEFAULT
-            useWideViewPort = true
-            loadWithOverviewMode = true
+            
+            // Critical for proper mobile viewport scaling on Android 5.0 - 7.1.2
+            useWideViewPort = false
+            loadWithOverviewMode = false
+            textZoom = 100
+        }
+
+        webView.webChromeClient = object : WebChromeClient() {
+            override fun onConsoleMessage(cm: ConsoleMessage): Boolean {
+                Log.d("DopaDrillJS", "${cm.message()} (line ${cm.lineNumber()} of ${cm.sourceId()})")
+                return true
+            }
         }
 
         webView.webViewClient = object : WebViewClient() {
