@@ -1,9 +1,14 @@
+
+<div align="center">
+
 # Dopa Drill Enhanced
 
 [![Live Web App](https://img.shields.io/badge/Live%20Web%20App-Online-brightgreen?style=for-the-badge&logo=cloudflare)](https://dopa-drill.ivansvarkovsky.workers.dev)
 [![Version](https://img.shields.io/badge/Version-v1.0.10-blue?style=for-the-badge)](https://dopa-drill.ivansvarkovsky.workers.dev)
 [![Original Project](https://img.shields.io/badge/Original-grmchn%2Fdopa--drill-orange?style=for-the-badge&logo=github)](https://github.com/grmchn/dopa-drill)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
+
+</div>
 
 <p align="center">
   <img src="img.webp" alt="Dopa Drill" width="750">
