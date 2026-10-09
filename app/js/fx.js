@@ -1,6 +1,6 @@
 // Canvas 2D particle layer: paper confetti, stars, sparks, coins, fireworks,
 // streamers, mini Dopakichi sprites and floating score text.
-import { rand, pick, clamp } from './core.js';
+import { rand, pick, clamp, getAdaptiveDPR } from './core.js';
 import { dopakichiSprite } from './dopakichi.js';
 
 export const COLORS = ['#ff7ab6', '#3b6bff', '#ffd23f', '#3fdcb0', '#a77bff', '#ff5a4f', '#ffffff'];
@@ -21,7 +21,7 @@ export class FX {
     this.sprites = ['pink', 'blue', 'yellow', 'mint', 'violet'].map((p) => dopakichiSprite(p, 96));
   }
   resize() {
-    const dpr = Math.min(1.25, window.devicePixelRatio || 1);
+    const dpr = getAdaptiveDPR();
     const w = Math.round(innerWidth * dpr); const h = Math.round(innerHeight * dpr);
     if (this.canvas.width !== w || this.canvas.height !== h) { this.canvas.width = w; this.canvas.height = h; }
     this.dpr = dpr;

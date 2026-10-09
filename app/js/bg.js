@@ -1,3 +1,4 @@
+import { getAdaptiveDPR } from './core.js';
 // Full-screen WebGL backdrop: sunburst rays that grow into a rainbow tunnel of
 // Dopakichi silhouettes. Falls back to a CSS conic gradient without WebGL.
 
@@ -236,7 +237,7 @@ export class Backdrop {
     this.canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); this.gl = null; this.canvas.style.display = 'none'; this.fallback.style.display = 'block'; });
   }
   resize() {
-    const dpr = Math.min(1.25, window.devicePixelRatio || 1);
+    const dpr = getAdaptiveDPR();
     const w = Math.round(innerWidth * dpr); const h = Math.round(innerHeight * dpr);
     if (this.canvas.width !== w || this.canvas.height !== h) { this.canvas.width = w; this.canvas.height = h; }
     this.dpr = dpr;

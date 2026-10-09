@@ -100,4 +100,17 @@ export function centerOf(el) {
   return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width, h: r.height };
 }
 
-export const params = new URLSearchParams(location.search);
+export const params = new URLSearchParams(typeof location !== 'undefined' ? location.search : '');
+
+// Adaptive resolution calculation (Pixel Budgeting)
+export function getAdaptiveDPR(maxPixels = 1920 * 1080) {
+  const rawDpr = typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1;
+  const w = typeof window !== 'undefined' ? (window.innerWidth || 1920) : 1920;
+  const h = typeof window !== 'undefined' ? (window.innerHeight || 1080) : 1080;
+  let dpr = Math.min(rawDpr, 1.35);
+  const currentPixels = (w * dpr) * (h * dpr);
+  if (currentPixels > maxPixels && w * h > 0) {
+    dpr = Math.sqrt(maxPixels / (w * h));
+  }
+  return Math.max(0.75, dpr);
+}
