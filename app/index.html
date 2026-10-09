@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="zh">
+<html lang="uk">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
   <meta name="theme-color" content="#3b6bff">
-  <meta name="description" content="每解开一道算术题，画面演出与音乐就会不断升级的速算闯关游戏。">
-  <title data-i18n="appTitle">多帕速算 (Dopa Drill)</title>
+  <meta name="description" content="Захопливий арифметичний тренажер усного рахунку з динамічною музикою та спецефектами.">
+  <title data-i18n="appTitle">Допа Дріл (Dopa Drill)</title>
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
   <script type="module" src="js/main.js"></script>
@@ -19,34 +19,34 @@
   <main id="app">
     <!-- Title -->
     <section id="screen-title" class="screen is-active" aria-labelledby="logo">
-      <button type="button" class="icon-btn settings-btn" id="open-settings" aria-label="设置" data-i18n-aria="settingsBtnAria" aria-haspopup="dialog">
+      <button type="button" class="icon-btn settings-btn" id="open-settings" aria-label="Settings" data-i18n-aria="settingsBtnAria" aria-haspopup="dialog">
         <svg viewBox="-16 -16 32 32" aria-hidden="true"><circle r="10.6" fill="none" stroke="#1b1d4d" stroke-width="9" stroke-dasharray="4.2 4.12"/><circle r="10.6" fill="#ffd23f" stroke="#1b1d4d" stroke-width="2.4"/><circle r="4.4" fill="#fff" stroke="#1b1d4d" stroke-width="2.4"/></svg>
       </button>
-      <button type="button" class="icon-btn settings-btn help-btn" id="open-guide" aria-label="玩法说明" data-i18n-aria="helpBtnAria" aria-haspopup="dialog">
+      <button type="button" class="icon-btn settings-btn help-btn" id="open-guide" aria-label="How to play" data-i18n-aria="helpBtnAria" aria-haspopup="dialog">
         <svg viewBox="-16 -16 32 32" aria-hidden="true"><path d="M-6 -4 C-6 -7 -3 -9 0 -9 C3 -9 6 -7 6 -4 C6 -1 0 0 0 3 M0 9v.01" fill="none" stroke="#1b1d4d" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
-      <h1 id="logo" class="logo" aria-label="多帕速算">
+      <h1 id="logo" class="logo" aria-label="Dopa Drill">
         <svg class="logo-burst" viewBox="-100 -100 200 200" aria-hidden="true"><path id="logo-burst-path" fill="#ffd23f" stroke="#1b1d4d" stroke-width="5" stroke-linejoin="round"/><path id="logo-burst-inner" fill="#ff7ab6" stroke="#1b1d4d" stroke-width="4" stroke-linejoin="round"/></svg>
-        <span class="logo-top" aria-hidden="true"><i data-c="多">多</i><i data-c="帕">帕</i></span>
-        <span class="logo-ribbon" aria-hidden="true"><svg class="ribbon-bg" viewBox="0 0 300 70" preserveAspectRatio="none"><path d="M4 22 L34 16 L28 36 L40 58 L6 62 L18 42Z" fill="#2a4fd6" stroke="#1b1d4d" stroke-width="4" stroke-linejoin="round"/><path d="M296 22 L266 16 L272 36 L260 58 L294 62 L282 42Z" fill="#2a4fd6" stroke="#1b1d4d" stroke-width="4" stroke-linejoin="round"/><path d="M30 10 Q150 -4 270 10 L270 56 Q150 42 30 56Z" fill="#3b6bff" stroke="#1b1d4d" stroke-width="4.5" stroke-linejoin="round"/><path d="M42 18 Q150 6 258 18" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="7 6" stroke-linecap="round" opacity=".7"/></svg><i>速</i><i>算</i></span>
+        <span class="logo-top" aria-hidden="true"><i data-c="До">До</i><i data-c="па">па</i></span>
+        <span class="logo-ribbon" aria-hidden="true"><svg class="ribbon-bg" viewBox="0 0 300 70" preserveAspectRatio="none"><path d="M4 22 L34 16 L28 36 L40 58 L6 62 L18 42Z" fill="#2a4fd6" stroke="#1b1d4d" stroke-width="4" stroke-linejoin="round"/><path d="M296 22 L266 16 L272 36 L260 58 L294 62 L282 42Z" fill="#2a4fd6" stroke="#1b1d4d" stroke-width="4" stroke-linejoin="round"/><path d="M30 10 Q150 -4 270 10 L270 56 Q150 42 30 56Z" fill="#3b6bff" stroke="#1b1d4d" stroke-width="4.5" stroke-linejoin="round"/><path d="M42 18 Q150 6 258 18" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="7 6" stroke-linecap="round" opacity=".7"/></svg><i>Дріл</i></span>
         <span class="logo-bits" aria-hidden="true"><b style="--x:-46%;--y:4%;--r:-18deg;--c:#3fdcb0">＋</b><b style="--x:44%;--y:-2%;--r:14deg;--c:#a77bff">×</b><b style="--x:-34%;--y:104%;--r:10deg;--c:#ff4f6d">÷</b><b style="--x:36%;--y:102%;--r:-12deg;--c:#ffd23f">−</b></span>
       </h1>
       <div class="title-stage" id="title-stage" aria-hidden="true"></div>
       <div class="modes" id="modes">
-        <button type="button" id="start" class="big-btn level-btn"><span data-i18n="myLevel">个性化闯关</span><small id="level-sub" data-i18n="myLevelSub">首次游玩将进行实力诊断测试</small></button>
-        <button type="button" id="start-review" class="sub-btn review-btn review-main" hidden><span data-i18n="review">巩固错题</span> <b id="review-count">0</b></button>
+        <button type="button" id="start" class="big-btn level-btn"><span data-i18n="myLevel">Мій рівень</span><small id="level-sub" data-i18n="myLevelSub">Починається з перевірки знань</small></button>
+        <button type="button" id="start-review" class="sub-btn review-btn review-main" hidden><span data-i18n="review">Робота над помилками</span> <b id="review-count">0</b></button>
         <div class="grades" role="group" aria-label="按年级练习" data-i18n-aria="gradeGroupAria">
-          <button type="button" data-grade="1">1<small data-i18n="grade1">年级</small></button><button type="button" data-grade="2">2<small data-i18n="grade2">年级</small></button><button type="button" data-grade="3">3<small data-i18n="grade3">年级</small></button>
-          <button type="button" data-grade="4">4<small data-i18n="grade4">年级</small></button><button type="button" data-grade="5">5<small data-i18n="grade5">年级</small></button><button type="button" data-grade="6">6<small data-i18n="grade6">年级</small></button>
+          <button type="button" data-grade="1">1<small data-i18n="grade1">кл</small></button><button type="button" data-grade="2">2<small data-i18n="grade2">кл</small></button><button type="button" data-grade="3">3<small data-i18n="grade3">кл</small></button>
+          <button type="button" data-grade="4">4<small data-i18n="grade4">кл</small></button><button type="button" data-grade="5">5<small data-i18n="grade5">кл</small></button><button type="button" data-grade="6">6<small data-i18n="grade6">кл</small></button>
         </div>
         <div class="mode-row">
-          <button type="button" id="open-tree" class="sub-btn"><span data-i18n="skillTree">技能树</span> <b id="tree-badge"></b></button>
-          <button type="button" id="open-trophy" class="sub-btn"><span data-i18n="trophy">成就奖杯</span> <b id="trophy-badge"></b></button>
-          <button type="button" id="open-collect" class="sub-btn"><span data-i18n="collection">收藏展示</span> <b id="collect-badge"></b></button>
+          <button type="button" id="open-tree" class="sub-btn"><span data-i18n="skillTree">Дерево навичок</span> <b id="tree-badge"></b></button>
+          <button type="button" id="open-trophy" class="sub-btn"><span data-i18n="trophy">Трофеї</span> <b id="trophy-badge"></b></button>
+          <button type="button" id="open-collect" class="sub-btn"><span data-i18n="collection">Колекція</span> <b id="collect-badge"></b></button>
         </div>
       </div>
       <section class="quest-card" id="quests" aria-labelledby="quest-title">
-        <div class="quest-head"><h2 id="quest-title" data-i18n="todayQuests">今日任务</h2><span class="quest-reward" id="quest-reward"></span></div>
+        <div class="quest-head"><h2 id="quest-title" data-i18n="todayQuests">Щоденні завдання</h2><span class="quest-reward" id="quest-reward"></span></div>
         <ol class="quest-list" id="quest-list"></ol>
       </section>
       <section class="cal-card" id="calendar" aria-labelledby="cal-title">
@@ -191,10 +191,10 @@
       
       <div class="set-row">
         <span class="set-label" data-i18n="setLanguage">语言 / Language</span>
-        <div class="lang-pick-group" role="radiogroup" aria-label="语言选择" id="lang-pick">
-          <button type="button" role="radio" data-lang="zh" aria-checked="true">中文</button>
-          <button type="button" role="radio" data-lang="ja" aria-checked="false">日本語</button>
+        <div class="lang-pick-group" role="radiogroup" aria-label="Мова" id="lang-pick">
+          <button type="button" role="radio" data-lang="uk" aria-checked="true">Українська</button>
           <button type="button" role="radio" data-lang="en" aria-checked="false">English</button>
+          <button type="button" role="radio" data-lang="ja" aria-checked="false">日本語</button>
         </div>
       </div>
 

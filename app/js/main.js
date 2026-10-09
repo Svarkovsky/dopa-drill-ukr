@@ -180,11 +180,11 @@ function renderQuestMini(el) {
   const q = quests();
   const got = S.questReward;
   S.questReward = null;
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
   const hammerMsg = got ? (got.hammer
-    ? (isZh ? `<i class="qham">${HAMMER_SVG}</i>获得 补签铁锤 ×1！` : (isEn ? `<i class="qham">${HAMMER_SVG}</i>Got +1 No-Count Hammer!` : `<i class="qham">${HAMMER_SVG}</i>ノーカンハンマーを 1本 もらったよ！`))
-    : (isZh ? '铁锤数量已达上限！为你庆祝！' : (isEn ? 'Hammers are full! Well done!' : 'ハンマーは もう いっぱい！ おいわいだけ するよ'))) : '';
+    ? (isUk ? `<i class="qham">${HAMMER_SVG}</i>Отримано ремонтний молоток ×1!` : (isEn ? `<i class="qham">${HAMMER_SVG}</i>Got +1 No-Count Hammer!` : `<i class="qham">${HAMMER_SVG}</i>ノーカンハンマーを 1本 もらったよ！`))
+    : (isUk ? 'Кількість молотків на максимумі! Вітаємо!' : (isEn ? 'Hammers are full! Well done!' : 'ハンマーは もう いっぱい！ おいわいだけ するよ'))) : '';
   el.innerHTML = `<p class="qm-head">${i18n.t('todayQuests')} <span>${questRewardText(q)}</span></p><ol class="quest-list">${questRows(q.list)}</ol>${got ? `<p class="qm-got">${hammerMsg}</p>` : ''}`;
   if (got && !S.reduced) setTimeout(() => { const c = centerOf(el); fx.burst(c.x, c.y, { count: 50, kinds: ['star', 'confetti', 'coin'], speed: 600, up: 180 }); audio.unit(0.7); popEl(el, 0.12, 400); }, 900);
 }
@@ -193,10 +193,10 @@ function questPop(q) {
   audio.play('coin', audio.now(), { v: 0.12, m: 88 });
   const el = document.createElement('div');
   el.className = `quest-pop${q ? '' : ' all'}`;
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
-  const doneTitle = isZh ? '任务达成！' : (isEn ? 'Quest Cleared!' : 'クエスト クリア！');
-  const allTitle = isZh ? '任务全部完成！' : (isEn ? 'All Quests Complete!' : 'クエスト コンプリート！');
+  const doneTitle = isUk ? 'Квест виконано!' : (isEn ? 'Quest Cleared!' : 'クエスト クリア！');
+  const allTitle = isUk ? 'Всі квести завершено!' : (isEn ? 'All Quests Complete!' : 'クエスト コンプリート！');
   el.innerHTML = q ? `<b>${doneTitle}</b><span>${i18n.questTextI18n(q, qs.questText(q))}</span>` : `<b>${allTitle}</b>`;
   $('#cutins').appendChild(el);
   const y = Math.max(8, $('#app').getBoundingClientRect().top + 6);
@@ -214,8 +214,8 @@ const getModeLabel = () => ({
   level: i18n.t('myLevel'),
   grade: (g) => `${g}${i18n.t('grade1').replace('一', '') || '年级'}`,
   review: i18n.t('review'),
-  practice: i18n.getLanguage() === 'zh' ? '专项练习' : (i18n.getLanguage() === 'en' ? 'Practice' : 'れんしゅう'),
-  drill: i18n.getLanguage() === 'zh' ? '速算' : (i18n.getLanguage() === 'en' ? 'Drill' : 'ドリル'),
+  practice: i18n.getLanguage() === 'uk' ? 'Тренування' : (i18n.getLanguage() === 'en' ? 'Practice' : 'れんしゅう'),
+  drill: i18n.getLanguage() === 'uk' ? 'Дріл' : (i18n.getLanguage() === 'en' ? 'Drill' : 'ドリル'),
 });
 
 // kind: 'level' | 'grade' | 'review' | 'practice' | 'drill'
@@ -1165,9 +1165,9 @@ function showResult() {
   const modeText = modeName(S.plan);
   $('#result-title').textContent = review ? i18n.t('reviewResultTitle') : i18n.t('modeResultTitle', { mode: modeText });
   const un = $('#r-unlock');
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
-  const unlockMsg = ok ? (isZh ? '解锁加时挑战关卡' : (isEn ? 'Extra Stage Unlocked!' : 'エクストラ解放')) : (isZh ? '初次正解率达80%即可解锁加时' : (isEn ? 'Get 80%+ first-try to unlock Extra' : '初回正解率80%以上でエクストラ'));
+  const unlockMsg = ok ? (isUk ? 'Відкрито додатковий раунд!' : (isEn ? 'Extra Stage Unlocked!' : 'エクストラ解放')) : (isUk ? 'Влучність від 80% відкриває додатковий раунд' : (isEn ? 'Get 80%+ first-try to unlock Extra' : '初回正解率80%以上でエクストラ'));
   un.textContent = review ? '' : unlockMsg;
   un.classList.toggle('yes', ok);
   $('#go-extra').hidden = !ok;
@@ -1201,7 +1201,7 @@ function startExtra() {
   S.combo = 0;
   showCombo();
   $('.clock').classList.add('extra');
-  $('#clock-label').textContent = i18n.getLanguage() === 'zh' ? '剩余' : (i18n.getLanguage() === 'en' ? 'Left' : 'のこり');
+  $('#clock-label').textContent = i18n.getLanguage() === 'uk' ? 'Залишилось' : (i18n.getLanguage() === 'en' ? 'Left' : 'のこり');
   $('#ok-total').textContent = '';
   updateTally();
   audio.play('musicGain', audio.now(), { v: 0.8, ramp: 0.2 });
@@ -1219,7 +1219,7 @@ async function endExtra() {
   S.ready = false;
   if (S.reach) endReach();
   audio.gong();
-  bigStamp(i18n.getLanguage() === 'zh' ? '时间到' : (i18n.getLanguage() === 'en' ? 'Time Up!' : '終了'));
+  bigStamp(i18n.getLanguage() === 'uk' ? 'Час вийшов!' : (i18n.getLanguage() === 'en' ? 'Time Up!' : '終了'));
   S.flash = 0.6;
   await wait(1700);
   if (run === S.run) showFinal();
@@ -1325,11 +1325,11 @@ async function capsuleIntro(info) {
   const r = card.getBoundingClientRect();
   const el = document.createElement('div');
   el.className = 'capsule-intro';
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
-  const capTitle = isZh ? '时光胶囊' : (isEn ? 'Time Capsule' : 'タイムカプセル');
-  const capProb = isZh ? `${fmtDay(info.d)}的题目` : (isEn ? `Problem from ${fmtDay(info.d)}` : `${fmtDay(info.d)}の もんだい`);
-  const capSub = isZh ? '这是你第一次解出该题时的纪念题目' : (isEn ? 'A problem from when you first solved it' : 'はじめて といた ころの もんだいだよ');
+  const capTitle = isUk ? 'Капсула часу' : (isEn ? 'Time Capsule' : 'タイムカプセル');
+  const capProb = isUk ? `Завдання за ${fmtDay(info.d)}` : (isEn ? `Problem from ${fmtDay(info.d)}` : `${fmtDay(info.d)}の もんだい`);
+  const capSub = isUk ? 'Це завдання з часу, коли ти вперше його розвʼязав' : (isEn ? 'A problem from when you first solved it' : 'はじめて といた ころの もんだいだよ');
   el.innerHTML = `<div class="ci-env">${ENVELOPE_SVG}<div class="ci-letter"><small>${capTitle}</small><b>${capProb}</b><span>${capSub}</span></div></div>`;
   el.style.left = `${r.left + r.width / 2}px`; el.style.top = `${r.top + r.height / 2}px`;
   $('#cutins').appendChild(el);
@@ -1354,20 +1354,20 @@ function capsuleDone(info) {
   const cmp = growth.capsuleCompare(info, S.qMs, S.qMisses || 0);
   const st = stats(); st.capsules = (st.capsules || 0) + 1; if (cmp.what === 'time') st.capsuleFaster = (st.capsuleFaster || 0) + 1;
   const day = fmtDay(info.d);
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
   const sec = (ms) => `${Math.max(0.1, ms / 1000).toFixed(1)}${i18n.t('secondsUnit')}`;
-  const thatDayTxt = isZh ? '初次' : (isEn ? 'Then' : 'あの日');
-  const todayTxt = isZh ? '今天' : (isEn ? 'Today' : 'きょう');
-  const againSolvedTxt = isZh ? `又解出了一次${day}的题目！` : (isEn ? `Solved problem from ${day} again!` : `${day}の もんだいを もう一度 といたよ`);
-  const missCountTxt = (cnt) => isZh ? `失误 ${cnt} 次` : (isEn ? `Slips ${cnt}` : `おしい ${cnt}回`);
+  const thatDayTxt = isUk ? 'Уперше' : (isEn ? 'Then' : 'あの日');
+  const todayTxt = isUk ? 'Сьогодні' : (isEn ? 'Today' : 'きょう');
+  const againSolvedTxt = isUk ? `Знову розвʼязано завдання за ${day}!` : (isEn ? `Solved problem from ${day} again!` : `${day}の もんだいを もう一度 といたよ`);
+  const missCountTxt = (cnt) => isUk ? `Спроб: ${cnt}` : (isEn ? `Slips ${cnt}` : `おしい ${cnt}回`);
   const line = cmp.what === 'time' ? `${day} ${sec(cmp.from)} → ${todayTxt} ${sec(cmp.to)}` : cmp.what === 'miss' ? `${day} ${missCountTxt(cmp.from)} → ${todayTxt} ${missCountTxt(cmp.to)}` : againSolvedTxt;
   S.capsuleNews = line;
   const r = stage.getBoundingClientRect();
   const el = document.createElement('div');
   el.className = 'capsule-result';
-  const capTitle = isZh ? '时光胶囊' : (isEn ? 'Time Capsule' : 'タイムカプセル');
-  el.innerHTML = cmp.what === 'none' ? `<small>${capTitle}</small><b>${isZh ? `${day}的题目` : `${day}の もんだい`}</b><span>${isZh ? '又做对啦！' : (isEn ? 'Cleared again!' : 'また とけたね！')}</span>`
+  const capTitle = isUk ? 'Капсула часу' : (isEn ? 'Time Capsule' : 'タイムカプセル');
+  el.innerHTML = cmp.what === 'none' ? `<small>${capTitle}</small><b>${isUk ? `${day}` : `${day}の もんだい`}</b><span>${isUk ? 'Знову правильно!' : (isEn ? 'Cleared again!' : 'また とけたね！')}</span>`
     : `<small>${capTitle}</small><span class="cr-row"><span class="cr-old"><i>${thatDayTxt}</i>${cmp.what === 'time' ? sec(cmp.from) : missCountTxt(cmp.from)}</span><span class="cr-arrow">→</span><span class="cr-new"><i>${todayTxt}</i>${cmp.what === 'time' ? sec(cmp.to) : missCountTxt(cmp.to)}</span></span>`;
   el.style.left = `${r.left + r.width / 2}px`; el.style.top = `${r.top + 6}px`;
   $('#cutins').appendChild(el);
@@ -1390,9 +1390,9 @@ function polishFx() {
   const r = card.getBoundingClientRect();
   const x = r.left + r.width / 2; const y = r.top + 30;
   if (S.reduced) return;
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
-  fx.text(x, y, isZh ? '闪闪发亮！' : (isEn ? 'Polished!' : 'ピカッ！ ピカピカ'), { color: '#ffd23f', size: 26, vy: -80, life: 1.1 });
+  fx.text(x, y, isUk ? 'Сяє чистотою!' : (isEn ? 'Polished!' : 'ピカッ！ ピカピカ'), { color: '#ffd23f', size: 26, vy: -80, life: 1.1 });
   fx.burst(x, y, { count: 36, kinds: ['spark', 'star'], speed: 520, up: 140 });
   fx.ring(x, y, { color: '#fff', radius: 90, width: 8 });
   S.flash = Math.max(S.flash, 0.3);
@@ -1406,11 +1406,11 @@ function renderGrowth(el) {
   const lines = growth.growthLines(S.sessionTimes || {}, progress().skills, today);
   if (!lines.length) return;
   const gst = stats(); gst.grew = (gst.grew || 0) + 1; store.save();
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
-  const when = (x) => (x.kind === 'first' ? (isZh ? `初次（${fmtDay(x.d)}）` : (isEn ? `First (${fmtDay(x.d)})` : `はじめて（${fmtDay(x.d)}）`)) : growth.daysBetween(x.d, today) === 1 ? i18n.t('yesterday') : fmtDay(x.d));
+  const when = (x) => (x.kind === 'first' ? (isUk ? `Уперше (${fmtDay(x.d)})` : (isEn ? `First (${fmtDay(x.d)})` : `はじめて（${fmtDay(x.d)}）`)) : growth.daysBetween(x.d, today) === 1 ? i18n.t('yesterday') : fmtDay(x.d));
   const val = (what, v) => (what === 'time' ? `${Math.max(0.1, v / 1000).toFixed(1)}${i18n.t('secondsUnit')}` : `${Math.round(v * 100)}%`);
-  const whatText = (what) => what === 'time' ? (isZh ? '单题用时' : (isEn ? '1 problem' : '1もん')) : (isZh ? '初次答对' : (isEn ? 'First try' : '初回正解'));
+  const whatText = (what) => what === 'time' ? (isUk ? '1 завдання' : (isEn ? '1 problem' : '1もん')) : (isUk ? '1-ша спроба' : (isEn ? 'First try' : '初回正解'));
   el.innerHTML = `<p class="gb-head">${i18n.t('growthHeader')}</p>${lines.map((x) => `<div class="gb-line"><b>${skillDisplayName(x.skill)}</b><span class="gb-row"><span class="gb-what">${whatText(x.what)}</span><span class="gb-old"><small>${when(x)}</small>${val(x.what, x.from)}</span><span class="gb-arrow">→</span><span class="gb-new"><small>${i18n.t('today')}</small><em data-what="${x.what}" data-from="${x.from}" data-to="${x.to}">${val(x.what, S.reduced ? x.to : x.from)}</em></span></span></div>`).join('')}`;
   if (S.reduced) return;
   const run = S.run;
@@ -1434,27 +1434,27 @@ function starRow(n, max = STAR_MAX) {
   return `<svg class="star-row" viewBox="0 0 ${max * 20} 20" aria-hidden="true">${Array.from({ length: max }, (_, i) => `<path transform="translate(${10 + i * 20} 10.5)" d="${STAR_PATH}" class="${i < n ? 'on' : ''}"/>`).join('')}</svg>`;
 }
 function renderSkillNews(el) {
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
-  const capTitle = isZh ? '时光胶囊' : (isEn ? 'Time Capsule' : 'タイムカプセル');
+  const capTitle = isUk ? 'Капсула часу' : (isEn ? 'Time Capsule' : 'タイムカプセル');
   const items = [
     ...(S.capsuleNews ? [`<p class="capsule-news"><b>${capTitle}</b>${S.capsuleNews}</p>`] : []),
-    ...(S.polished || []).map((id) => `<p class="polish-news">${isZh ? '已擦亮！ ' : (isEn ? 'Polished! ' : 'ピカピカ！ ')}${skillDisplayName(id)}</p>`),
-    ...Object.entries(S.newStars || {}).map(([id, n]) => `<p class="star-up">${starRow(n)}<span>${isZh ? `升至 ☆${n}！ ` : (isEn ? `Reached ☆${n}! ` : `☆${n}に なった！ `)}${skillDisplayName(id)}</span></p>`),
-    ...S.newMastered.map((id) => `<p class="mastered">${isZh ? '完全掌握！ ' : (isEn ? 'Mastered! ' : 'マスター！ ')}${skillDisplayName(id)}</p>`),
-    ...S.newUnlocks.map((id) => `<p>${isZh ? '解锁新技能！ ' : (isEn ? 'Unlocked! ' : 'かいほう！ ')}${skillDisplayName(id)}</p>`),
+    ...(S.polished || []).map((id) => `<p class="polish-news">${isUk ? 'Освіжено! ' : (isEn ? 'Polished! ' : 'ピカピカ！ ')}${skillDisplayName(id)}</p>`),
+    ...Object.entries(S.newStars || {}).map(([id, n]) => `<p class="star-up">${starRow(n)}<span>${isUk ? `Досягнуто ☆${n}! ` : (isEn ? `Reached ☆${n}! ` : `☆${n}に なった！ `)}${skillDisplayName(id)}</span></p>`),
+    ...S.newMastered.map((id) => `<p class="mastered">${isUk ? 'Опановано! ' : (isEn ? 'Mastered! ' : 'マスター！ ')}${skillDisplayName(id)}</p>`),
+    ...S.newUnlocks.map((id) => `<p>${isUk ? 'Відкрито нову навичку! ' : (isEn ? 'Unlocked! ' : 'かいほう！ ')}${skillDisplayName(id)}</p>`),
   ];
   if (S.plan.placement) {
     const masteredCount = SKILLS.filter((x) => stateOf(progress(), x.id) === 'mastered').length;
-    items.unshift(`<p>${isZh ? `实力诊断测试结束　已掌握 ${masteredCount} 个技能` : (isEn ? `Placement test finished: ${masteredCount} mastered` : `じつりょくチェック おわり　${masteredCount}こ クリア`)}</p>`);
+    items.unshift(`<p>${isUk ? `Тест завершено: опановано ${masteredCount} навичок` : (isEn ? `Placement test finished: ${masteredCount} mastered` : `じつりょくチェック おわり　${masteredCount}こ クリア`)}</p>`);
   }
   el.innerHTML = items.slice(0, 5).join('');
 }
 function setReviewButton(btn, n) {
   btn.hidden = !n;
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
-  btn.textContent = isZh ? `重做错题（${n} 道）` : (isEn ? `Retry ${n} Mistakes` : `まちがえた ${n}問を やりなおす`);
+  btn.textContent = isUk ? `Повторити помилки (${n})` : (isEn ? `Retry ${n} Mistakes` : `まちがえた ${n}問を やりなおす`);
 }
 function startReview() {
   const prog = progress();
@@ -1466,12 +1466,12 @@ function refreshTitle() {
   const n = prog.review.length;
   $('#start-review').hidden = !n;
   $('#review-count').textContent = n;
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
   const frontierSkill = frontier(prog)[0] || ORDER[ORDER.length - 1];
   const nextName = skillDisplayName(frontierSkill);
   $('#level-sub').textContent = prog.placed
-    ? (isZh ? `接下来目标「${nextName}」` : (isEn ? `Next: "${nextName}"` : `つぎは「${nextName}」`))
+    ? (isUk ? `Наступна мета: «${nextName}»` : (isEn ? `Next: "${nextName}"` : `つぎは「${nextName}」`))
     : i18n.t('myLevelSub');
   const done = SKILLS.filter((x) => stateOf(prog, x.id) === 'mastered').length;
   $('#tree-badge').textContent = `${done}/${SKILLS.length}`;
@@ -1621,9 +1621,9 @@ function setMuted(m, { persist = true } = {}) {
   audio.setMuted(m);
   const b = $('[data-toggle="sound"]');
   b.setAttribute('aria-pressed', String(!m));
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
-  b.querySelector('b').textContent = m ? (isZh ? '关闭' : (isEn ? 'Off' : 'オフ')) : (isZh ? '开启' : (isEn ? 'On' : 'オン'));
+  b.querySelector('b').textContent = m ? (isUk ? 'Вимк' : (isEn ? 'Off' : 'オフ')) : (isUk ? 'Увімк' : (isEn ? 'On' : 'オン'));
   $('#mute').setAttribute('aria-pressed', String(m));
   $('#mute').setAttribute('aria-label', m ? i18n.t('muteOff') : i18n.t('muteOn'));
   if (persist) store.updateSettings({ sound: !m });
@@ -1712,7 +1712,7 @@ function renderTree(justIds = [], starIds = []) {
     links += `<path class="${on ? 'on' : ''}${grow ? ' grow' : ''}" data-to="${l.to}" d="${l.d}"/>`;
   }
   $('#tree-links').innerHTML = links;
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
   for (const sk of SKILLS) {
     const st = stateOf(prog, sk.id);
@@ -1723,11 +1723,11 @@ function renderTree(justIds = [], starIds = []) {
     b.className = `node ${st}${justIds.includes(sk.id) ? ' just' : ''}${starIds.includes(sk.id) ? ' star-up' : ''}${rusty ? ' rusty' : ''}`;
     b.dataset.id = sk.id;
     b.style.cssText = `left:${pos[sk.id].x}px;top:${pos[sk.id].y}px;width:${nodeW}px;height:${NODE_H}px;--p:${masteryRatio(prog, sk.id)}`;
-    const gradeStr = isZh ? `${sk.grade}年` : (isEn ? `G${sk.grade}` : `${sk.grade}年`);
+    const gradeStr = isUk ? `${sk.grade} кл` : (isEn ? `G${sk.grade}` : `${sk.grade} кл`);
     const nameStr = skillDisplayName(sk.id);
-    const rustBadge = isZh ? '生疏' : (isEn ? 'Rusty' : 'さび');
+    const rustBadge = isUk ? 'Освіжити' : (isEn ? 'Rusty' : 'さび');
     b.innerHTML = `<i class="hold"></i><span class="g">${gradeStr}</span><span>${nameStr}</span>${st === 'learning' ? '<i class="ring"></i>' : ''}${st === 'mastered' ? `<i class="stars s${stars}">${starRow(stars)}</i>` : ''}${rusty ? `<i class="rust" aria-hidden="true">${rustBadge}</i>` : ''}`;
-    const stLabels = isZh ? { locked: '未解锁', new: '新技能', learning: '练习中', mastered: `已掌握 拥有星级${stars}颗${rusty ? '（略显生疏）' : ''}` }
+    const stLabels = isUk ? { locked: 'Заблоковано', new: 'Нова навичка', learning: 'Тренування', mastered: `Опановано Рівень: ☆${stars}${rusty ? ' (призабуто)' : ''}` }
       : isEn ? { locked: 'Locked', new: 'New', learning: 'Learning', mastered: `Mastered ${stars} stars${rusty ? ' (Rusty)' : ''}` }
       : { locked: 'まだ', new: 'あたらしい', learning: 'れんしゅうちゅう', mastered: `マスター ほし${stars}こ${rusty ? ' さびついている' : ''}` };
     b.setAttribute('aria-label', `${nameStr} ${stLabels[st] || ''}`);
@@ -1777,19 +1777,19 @@ function openSkillInfo(id) {
   const times = (r.times || []).filter((e) => e.f);
   const best = times.length ? Math.min(...times.map((e) => e.t)) : null;
   S.skillInfo = id;
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
   const laneStr = i18n.laneName(sk.lane) || LANES[sk.lane];
-  const gradeStr = isZh ? `${sk.grade}年级` : (isEn ? `Grade ${sk.grade}` : `${sk.grade}年`);
+  const gradeStr = isUk ? `${sk.grade} клас` : (isEn ? `Grade ${sk.grade}` : `${sk.grade} кл`);
   $('#si-grade').textContent = `${gradeStr}　${laneStr}`;
   $('#si-title').textContent = skillDisplayName(id);
   $('#si-stars').innerHTML = `${starRow(n)}<span>☆${n} / ${STAR_MAX}</span>`;
-  const nextTitle = isZh ? `升至 ☆${next?.n}` : (isEn ? `Next ☆${next?.n}` : `つぎの ☆${next?.n}`);
+  const nextTitle = isUk ? `До ☆${next?.n}` : (isEn ? `Next ☆${next?.n}` : `つぎの ☆${next?.n}`);
   const maxStarsMsg = i18n.t('siMaxStars');
   $('#si-next').innerHTML = next ? `<p class="si-label">${nextTitle}</p><p class="si-text">${next.text}</p><p class="si-now">${next.now}</p>` : `<p class="si-text done">${maxStarsMsg}</p>`;
-  const rustyMsg = rustyOf(prog).includes(id) ? (isZh ? '技能有点生疏了，初次答对 1 题即可重新擦亮！ ' : (isEn ? 'A bit rusty! Clear 1 problem on first try to polish! ' : 'すこし さびているよ。1もん 初回正解で ピカピカ！　')) : '';
-  const solvedMsg = isZh ? `已练习 ${r.n || 0} 题` : (isEn ? `Solved: ${r.n || 0}` : `といた もんだい ${r.n || 0}もん`);
-  const fastestMsg = best != null ? (isZh ? `　最快单题 ${(best / 1000).toFixed(1)} 秒` : (isEn ? `　Fastest: ${(best / 1000).toFixed(1)}s` : `　いちばん はやい 1もん ${(best / 1000).toFixed(1)}びょう`)) : '';
+  const rustyMsg = rustyOf(prog).includes(id) ? (isUk ? 'Навичка трохи забулась, розвʼяжи 1 завдання з 1-ї спроби, щоб освіжити! ' : (isEn ? 'A bit rusty! Clear 1 problem on first try to polish! ' : 'すこし さびているよ。1もん 初回正解で ピカピカ！　')) : '';
+  const solvedMsg = isUk ? `Розвʼязано: ${r.n || 0}` : (isEn ? `Solved: ${r.n || 0}` : `といた もんだい ${r.n || 0}もん`);
+  const fastestMsg = best != null ? (isUk ? `　Найшвидше: ${(best / 1000).toFixed(1)} с` : (isEn ? `　Fastest: ${(best / 1000).toFixed(1)}s` : `　いちばん はやい 1もん ${(best / 1000).toFixed(1)}びょう`)) : '';
   $('#si-note').textContent = `${rustyMsg}${solvedMsg}${fastestMsg}`;
   $('#skill-info').hidden = false;
   const cardEl = $('#skill-info .modal-card');
@@ -1885,10 +1885,10 @@ function confirmYes() {
 function askRelock(id) {
   const ids = relockTargets(progress(), id);
   audio.unlock();
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
   if (!ids.length) {
-    toast(isZh ? '暂无做题记录，无需清除' : (isEn ? 'No records to reset' : 'まだ きろくが ないので けせないよ'));
+    toast(isUk ? 'Немає записів для скидання' : (isEn ? 'No records to reset' : 'まだ きろくが ないので けせないよ'));
     audio.play('boing', audio.now(), { v: 0.12 });
     return;
   }
@@ -1896,16 +1896,16 @@ function askRelock(id) {
   const deps = ids.length - (ids[0] === id ? 1 : 0);
   const MAX = 6;
   const targetName = skillDisplayName(id);
-  const msgZh = `确定清除「${targetName}」的记录吗？${deps ? `<br>与其关联的 <b>${deps} 个</b> 依赖技能也将被重置为锁定状态。` : ''}`;
+  const msgZh = `Скинути записи для «${targetName}»?${deps ? `<br><b>${deps}</b> повʼязаних навичок буде заблоковано.` : ''}`;
   const msgEn = `Reset records for "${targetName}"?${deps ? `<br><b>${deps}</b> dependent skill(s) will also be relocked.` : ''}`;
   const msgJa = `「${SKILL[id].name}」の きろくを けします。${deps ? `<br>これに つながる <b>${deps}こ</b> の スキルも きえて、ロックに もどります。` : ''}`;
-  const moreTxt = (cnt) => isZh ? `另外 ${cnt} 个` : (isEn ? `${cnt} more` : `ほか ${cnt}こ`);
+  const moreTxt = (cnt) => isUk ? `Ще ${cnt}` : (isEn ? `${cnt} more` : `ほか ${cnt}こ`);
   openConfirm({
-    title: isZh ? '重置技能' : (isEn ? 'Reset Skill' : 'スキルを けす'),
-    msg: isZh ? msgZh : (isEn ? msgEn : msgJa),
+    title: isUk ? 'Скинути навичку' : (isEn ? 'Reset Skill' : 'スキルを けす'),
+    msg: isUk ? msgZh : (isEn ? msgEn : msgJa),
     list: ids.slice(0, MAX).map((x) => `<li>${skillDisplayName(x)}</li>`).join('') + (ids.length > MAX ? `<li class="more">${moreTxt(ids.length - MAX)}</li>` : ''),
-    yes: isZh ? '确认重置' : (isEn ? 'Reset' : 'けす'),
-    no: isZh ? '取消' : (isEn ? 'Cancel' : 'やめる'),
+    yes: isUk ? 'Скинути' : (isEn ? 'Reset' : 'けす'),
+    no: isUk ? '取消' : (isEn ? 'Cancel' : 'やめる'),
     onYes: () => doRelock(id),
     focusBack: $(`.node[data-id="${id}"]`),
   });
@@ -1917,9 +1917,9 @@ function doRelock(id) {
   renderTree();
   audio.erase();
   audio.play('boing', audio.now() + 0.08, { v: 0.12 });
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
-  toast(isZh ? `已重置 ${gone.length} 个技能` : (isEn ? `Reset ${gone.length} skill(s)` : `${gone.length}こ の スキルを けしたよ`));
+  toast(isUk ? `Скинуто ${gone.length} навичок` : (isEn ? `Reset ${gone.length} skill(s)` : `${gone.length}こ の スキルを けしたよ`));
   gone.forEach((x, i) => {
     const el = $(`.node[data-id="${x}"]`);
     if (!el || S.reduced) return;
@@ -1932,16 +1932,16 @@ function doRelock(id) {
 
 // Escape anywhere but the title asks whether to go back to it.
 function askToTitle() {
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
   const playing = S.screen === 'play';
   openConfirm({
-    title: isZh ? '返回标题画面？' : (isEn ? 'Return to Title?' : 'タイトルに もどる？'),
+    title: isUk ? 'Повернутися на головну?' : (isEn ? 'Return to Title?' : 'タイトルに もどる？'),
     msg: playing
-      ? (isZh ? '当前正在游玩的一局将在这里结束。' : (isEn ? 'Your current play will end here.' : 'いまの プレイは ここで おわります。'))
-      : (isZh ? '将返回游戏主标题画面。' : (isEn ? 'Return to the title screen.' : 'タイトル画面に もどります。')),
-    yes: isZh ? '返回' : (isEn ? 'Return' : 'もどる'),
-    no: isZh ? '继续' : (isEn ? 'Stay' : 'つづける'),
+      ? (isUk ? 'Поточний раунд гри завершиться.' : (isEn ? 'Your current play will end here.' : 'いまの プレイは ここで おわります。'))
+      : (isUk ? 'Повернення на початковий екран.' : (isEn ? 'Return to the title screen.' : 'タイトル画面に もどります。')),
+    yes: isUk ? 'Вийти' : (isEn ? 'Return' : 'もどる'),
+    no: isUk ? 'Залишитися' : (isEn ? 'Stay' : 'つづける'),
     danger: playing,
     onYes: () => { audio.play('blip', audio.now(), { m: 72, v: 0.08 }); toTitle(); },
     focusBack: document.activeElement && document.activeElement !== document.body ? document.activeElement : null,
@@ -1960,22 +1960,22 @@ function toast(msg) {
 const cal = { y: new Date().getFullYear(), m: new Date().getMonth(), seen: new Set() };
 const MODE_NAMES = {
   drill: (h) => {
-    const isZh = i18n.getLanguage() === 'zh';
+    const isUk = i18n.getLanguage() === 'uk';
     const isEn = i18n.getLanguage() === 'en';
-    return isZh ? `${h.count || ''}题速算` : (isEn ? `${h.count || ''} Problems Drill` : `${h.count || ''}問ドリル`);
+    return isUk ? `${h.count || ''} завдань дріл` : (isEn ? `${h.count || ''} Problems Drill` : `${h.count || ''}問ドリル`);
   },
   level: () => i18n.t('myLevel'),
   grade: (h) => {
-    const isZh = i18n.getLanguage() === 'zh';
+    const isUk = i18n.getLanguage() === 'uk';
     const isEn = i18n.getLanguage() === 'en';
-    return isZh ? `${h.grade}年级` : (isEn ? `Grade ${h.grade}` : `${h.grade}ねんせい`);
+    return isUk ? `${h.grade} клас` : (isEn ? `Grade ${h.grade}` : `${h.grade}ねんせい`);
   },
   review: () => i18n.t('review'),
   practice: (h) => {
-    const isZh = i18n.getLanguage() === 'zh';
+    const isUk = i18n.getLanguage() === 'uk';
     const isEn = i18n.getLanguage() === 'en';
     const name = skillDisplayName(h.skill);
-    return isZh ? `专项练习（${name}）` : (isEn ? `Practice (${name})` : `れんしゅう（${SKILL[h.skill]?.name || ''}）`);
+    return isUk ? `Тренування (${name})` : (isEn ? `Practice (${name})` : `れんしゅう（${SKILL[h.skill]?.name || ''}）`);
   },
 };
 const stampSvg = (score) => {
@@ -1993,7 +1993,7 @@ function renderCalendar(animateNew = false) {
   const questDays = (store.load().quests || {}).doneDays || {};
   const first = new Date(y, m, 1).getDay();
   const days = new Date(y, m + 1, 0).getDate();
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
   let html = '';
   for (let i = 0; i < first; i++) html += '<span class="cal-day blank"></span>';
@@ -2003,22 +2003,22 @@ function renderCalendar(animateNew = false) {
     const cls = ['cal-day'];
     if (key === todayKey) cls.push('today');
     if (info) { cls.push('played'); if (animateNew && !cal.seen.has(`${key}:${info.best}`)) cls.push('pop'); }
-    const questDoneStr = questDays[key] ? (isZh ? ' 每日任务达成' : (isEn ? ' Quests Complete' : ' クエスト コンプリート')) : '';
+    const questDoneStr = questDays[key] ? (isUk ? ' Завдання виконано' : (isEn ? ' Quests Complete' : ' クエスト コンプリート')) : '';
     const label = info
-      ? (isZh
-        ? `${m + 1}月${d}日 练习${info.plays}次 最高${info.best}分${questDoneStr}`
+      ? (isUk
+        ? `${m + 1}/${d}: ${info.plays} разів, кращий ${info.best} б.${questDoneStr}`
         : (isEn
         ? `${m + 1}/${d}: ${info.plays} plays, best ${info.best} pts${questDoneStr}`
         : `${m + 1}月${d}日 ${info.plays}回 さいこう${info.best}点${questDoneStr}`))
-      : (isZh ? `${m + 1}月${d}日` : (isEn ? `${m + 1}/${d}` : `${m + 1}月${d}日`));
+      : (isUk ? `${m + 1}/${d}` : (isEn ? `${m + 1}/${d}` : `${m + 1}/${d}`));
     const sticker = store.stickerOn(key);
     const stk = sticker ? `<span class="stk">${stickerSvg(sticker)}</span>` : '';
     const nc = !info && nocount[key];
     if (questDays[key]) cls.push('quest');
     const qd = questDays[key] ? '<span class="qd" aria-hidden="true">★</span>' : '';
     if (nc) cls.push('nocount');
-    const ncStamp = nc ? `<span class="nc">${isZh ? '补签' : (isEn ? 'Saved' : 'ノーカン')}</span>` : '';
-    const ncLabel = nc ? (isZh ? ' 补签豁免' : (isEn ? ' Saved' : ' ノーカン')) : '';
+    const ncStamp = nc ? `<span class="nc">${isUk ? 'Збережено' : (isEn ? 'Saved' : 'ノーカン')}</span>` : '';
+    const ncLabel = nc ? (isUk ? ' Збережено' : (isEn ? ' Saved' : ' ノーカン')) : '';
     html += info
       ? `<button type="button" class="${cls.join(' ')}" data-day="${key}" data-key="${key}" aria-label="${label}"><span class="n">${d}</span>${stampSvg(info.best)}<span class="sc${info.best >= 10000 ? ' big' : ''}">${info.best.toLocaleString('ja-JP')}</span>${stk}${qd}</button>`
       : `<span class="${cls.join(' ')}" data-key="${key}" aria-label="${label}${ncLabel}"><span class="n">${d}</span>${ncStamp}${stk}</span>`;
@@ -2031,26 +2031,26 @@ function renderCalendar(animateNew = false) {
   const bonus = store.bonusState();
   const badges = [];
   if (n >= 1) {
-    const streakStr = isZh
-      ? `连续<b>${n}</b>天${playedToday ? '' : '（今天打卡后为 ' + (n + 1) + ' 天）'}`
+    const streakStr = isUk
+      ? `Серія: <b>${n}</b> дн.${playedToday ? '' : ' (' + (n + 1) + ' сьогодні)'}`
       : (isEn
       ? `Streak: <b>${n}</b> d${playedToday ? '' : ' (' + (n + 1) + ' today)'}`
       : `れんぞく<b>${n}</b>日${playedToday ? '' : '（きょうで' + (n + 1) + '日）'}`);
     badges.push(`<span class="cal-badge${n >= 3 ? ' hot' : ''}">${streakStr}</span>`);
   } else {
-    badges.push(`<span class="cal-badge">${isZh ? '连续打卡从今天开始' : (isEn ? 'Start your streak today!' : 'きょうから れんぞく記録スタート')}</span>`);
+    badges.push(`<span class="cal-badge">${isUk ? 'Почни свою серію сьогодні!' : (isEn ? 'Start your streak today!' : 'きょうから れんぞく記録スタート')}</span>`);
   }
   if (best >= 2) {
-    const bestStr = isZh ? `最高<b>${best}</b>天` : (isEn ? `Best: <b>${best}</b> d` : `さいこう<b>${best}</b>日`);
+    const bestStr = isUk ? `Рекорд: <b>${best}</b> дн.` : (isEn ? `Best: <b>${best}</b> d` : `さいこう<b>${best}</b>日`);
     badges.push(`<span class="cal-badge best">${bestStr}</span>`);
   }
   if (bonus.total) {
-    const stickerStr = isZh ? `印章<b>${bonus.total}</b>枚` : (isEn ? `Stickers: <b>${bonus.total}</b>` : `シール<b>${bonus.total}</b>まい`);
+    const stickerStr = isUk ? `Штампів: <b>${bonus.total}</b>` : (isEn ? `Stickers: <b>${bonus.total}</b>` : `シール<b>${bonus.total}</b>まい`);
     badges.push(`<span class="cal-badge stk">${stickerStr}</span>`);
   }
   const hammers = store.items().hammer;
-  const hammerAria = isZh ? `补签铁锤 ${hammers}把` : (isEn ? `No-Count Hammers: ${hammers}` : `ノーカンハンマー ${hammers}本`);
-  const hammerUnit = isZh ? '把' : (isEn ? '' : '本');
+  const hammerAria = isUk ? `Ремонтних молотків: ${hammers}` : (isEn ? `No-Count Hammers: ${hammers}` : `ノーカンハンマー ${hammers}本`);
+  const hammerUnit = isUk ? '' : (isEn ? '' : '本');
   badges.push(`<span class="cal-badge hmr" aria-label="${hammerAria}"><i>${HAMMER_SVG}</i><b>${hammers}</b>${hammerUnit}</span>`);
   $('#cal-badges').innerHTML = badges.join('');
   $('#cal-next').disabled = y > today.getFullYear() || (y === today.getFullYear() && m >= today.getMonth());
@@ -2082,22 +2082,22 @@ function openBonus(res) {
   S.bonusOpen = true;
   const m = $('#bonus');
   m.hidden = false;
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
   $('#bonus-run').innerHTML = res.run >= 2
-    ? (isZh ? `连续签到第 <b>${res.run}</b> 天` : (isEn ? `Day <b>${res.run}</b> Streak!` : `れんぞく<b>${res.run}</b>日め`))
-    : (isZh ? '今日签到奖励' : (isEn ? "Today's Bonus" : 'きょうの ボーナス'));
+    ? (isUk ? `Серія тренувань: <b>${res.run}</b> дн.` : (isEn ? `Day <b>${res.run}</b> Streak!` : `れんぞく<b>${res.run}</b>日め`))
+    : (isUk ? 'Сьогоднішній бонус' : (isEn ? "Today's Bonus" : 'きょうの ボーナス'));
   const slots = [];
   for (let i = 1; i <= 7; i++) {
     const got = i <= res.slot;
     const type = store.STICKERS[i - 1];
-    const dayLabel = isZh ? `第${i}天` : (isEn ? `Day ${i}` : `${i}日め`);
+    const dayLabel = isUk ? `День ${i}` : (isEn ? `Day ${i}` : `${i}日め`);
     slots.push(`<div class="bonus-slot${got ? ' got' : ''}${i === res.slot ? ' today stamping' : ''}${i === 7 ? ' big' : ''}"><span class="d">${dayLabel}</span>${got ? stickerSvg(type) : i === 7 ? '？' : i}</div>`);
   }
   $('#bonus-grid').innerHTML = slots.join('');
   const specialStickerMsg = res.slot === 7
-    ? (isZh ? '获得特别印章！已盖在日历上啦' : (isEn ? 'Special Sticker! Added to calendar!' : 'とくべつシール！ カレンダーに はったよ'))
-    : (isZh ? `再签到 ${7 - res.slot} 天即可获得特别印章` : (isEn ? `${7 - res.slot} days until Special Sticker` : `あと${7 - res.slot}日で とくべつシール`));
+    ? (isUk ? 'Особливий штамп! Додано до календаря!' : (isEn ? 'Special Sticker! Added to calendar!' : 'とくべつシール！ カレンダーに はったよ'))
+    : (isUk ? `Ще ${7 - res.slot} дн. до особливого штампа` : (isEn ? `${7 - res.slot} days until Special Sticker` : `あと${7 - res.slot}日で とくべつシール`));
   $('#bonus-note').textContent = specialStickerMsg;
   audio.unlock();
   requestAnimationFrame(() => {
@@ -2197,21 +2197,21 @@ function openTrophies() {
   ts.batch = null; store.save();
   if (!list.length) return;
   S.trophyOpen = true;
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
   $('#tg-title').textContent = i18n.t('trGotTitle');
   $('#tg-sub').innerHTML = batch.length
-    ? (isZh ? `根据此前的游玩记录，共解锁 <b>${batch.length}</b> 个奖杯！` : (isEn ? `Earned <b>${batch.length}</b> trophies from your records!` : `これまでの きろくで <b>${batch.length}</b>こ ゲット！`))
+    ? (isUk ? `За попередні досягнення здобуто <b>${batch.length}</b> трофеїв!` : (isEn ? `Earned <b>${batch.length}</b> trophies from your records!` : `これまでの きろくで <b>${batch.length}</b>こ ゲット！`))
     : list.length > 1
-    ? (isZh ? `获得了 <b>${list.length}</b> 个新奖杯！` : (isEn ? `Earned <b>${list.length}</b> new trophies!` : `<b>${list.length}</b>こ ゲット！`))
+    ? (isUk ? `Здобуто <b>${list.length}</b> нових трофеїв!` : (isEn ? `Earned <b>${list.length}</b> new trophies!` : `<b>${list.length}</b>こ ゲット！`))
     : '';
   const MAX = 6;
   const rewards = list.map((x) => x.reward && ul.ITEM[x.reward]).filter(Boolean);
-  const moreTxt = isZh ? `另外 ${list.length - MAX} 个` : (isEn ? `${list.length - MAX} more` : `ほか ${list.length - MAX}こ`);
-  const rwGetTxt = (it) => isZh
+  const moreTxt = isUk ? `Ще ${list.length - MAX}` : (isEn ? `${list.length - MAX} more` : `ほか ${list.length - MAX}こ`);
+  const rwGetTxt = (it) => isUk
     ? `获得了${catName(it.cat)}「${itemDisplayName(it)}」！`
     : (isEn ? `Earned ${catName(it.cat)} "${itemDisplayName(it)}"!` : `${catName(it.cat)}「${it.name}」を てにいれた！`);
-  const rwSubTxt = isZh ? '可在宝物收藏库中装备' : (isEn ? 'Available in Collection' : 'コレクションで えらべるよ');
+  const rwSubTxt = isUk ? 'Доступно у Колекції' : (isEn ? 'Available in Collection' : 'コレクションで えらべるよ');
   $('#tg-list').innerHTML = list.slice(0, MAX).map((x) => `<li class="r-${x.rank}"><i>${trophySvg(x.rank)}</i><span><b>${i18n.trophyItemName(x)}</b><small>${i18n.trophyItemDesc(x)}</small></span></li>`).join('') + (list.length > MAX ? `<li class="more">${moreTxt}</li>` : '')
     + rewards.map((it) => `<li class="reward"><i>${itemThumb(it)}</i><span><b>${rwGetTxt(it)}</b><small>${rwSubTxt}</small></span></li>`).join('');
   $('#trophy-got').hidden = false;
@@ -2239,13 +2239,13 @@ function closeTrophies() {
 // The list screen: one card per series, folded; filters for earned / not yet.
 const trFilter = { f: 'all' };
 function trophyValueText(t, v) {
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
-  const curPrefix = isZh ? '当前 ' : (isEn ? 'Now: ' : 'いま ');
+  const curPrefix = isUk ? 'Зараз: ' : (isEn ? 'Now: ' : 'いま ');
   if (t.metric === 'bestDopaL') return `${curPrefix}${fmtDopa(stats().bestDopaL || 0)}`;
-  if (t.metric === 'minutes') return `${curPrefix}${v}${isZh ? '分钟' : (isEn ? 'm' : 'ふん')}`;
+  if (t.metric === 'minutes') return `${curPrefix}${v}${isUk ? ' хв' : (isEn ? 'm' : 'ふん')}`;
   if (/^(flag:|gradeDone|laneDone|allModes)/.test(t.metric)) return '';
-  const locale = isZh ? 'zh-CN' : (isEn ? 'en-US' : 'ja-JP');
+  const locale = isUk ? 'uk-UA' : (isEn ? 'en-US' : 'ja-JP');
   return `${curPrefix}${v.toLocaleString(locale)}`;
 }
 function renderTrophyList() {
@@ -2253,7 +2253,7 @@ function renderTrophyList() {
   const m = tr.trophyMetrics(trophySnap());
   const got = ts.got || {};
   const day = (at) => { const d = new Date(at); return `${d.getMonth() + 1}/${d.getDate()}`; };
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
   let html = '';
   for (const cat of tr.CATS) {
@@ -2266,11 +2266,11 @@ function renderTrophyList() {
       const s = v.series;
       const secret = s.cat === 'ひみつ';
       const dots = s.items.map((x) => `<i class="${got[x.id] ? `on r-${x.rank}` : ''}"></i>`).join('');
-      const nextPrefix = isZh ? '下一个：' : (isEn ? 'Next: ' : 'つぎ：');
-      const completeTxt = isZh ? '全部达成！' : (isEn ? 'Complete!' : 'コンプリート！');
-      const secretName = isZh ? '？？？' : (isEn ? '???' : '？？？');
-      const secretDesc = isZh ? '隐藏成就' : (isEn ? 'Secret Trophy' : 'ひみつの トロフィー');
-      const rewardPrefix = isZh ? '奖励：' : (isEn ? 'Reward: ' : 'ごほうび：');
+      const nextPrefix = isUk ? 'Наступний: ' : (isEn ? 'Next: ' : 'つぎ：');
+      const completeTxt = isUk ? 'Всі здобуто!' : (isEn ? 'Complete!' : 'コンプリート！');
+      const secretName = isUk ? '？？？' : (isEn ? '???' : '？？？');
+      const secretDesc = isUk ? 'Таємний трофей' : (isEn ? 'Secret Trophy' : 'ひみつの トロフィー');
+      const rewardPrefix = isUk ? 'Нагорода: ' : (isEn ? 'Reward: ' : 'ごほうび：');
       const nextTitle = secret ? secretName : i18n.trophyItemName(v.next);
       const next = v.next ? `<span class="tr-next">${nextPrefix}${nextTitle}${!secret && trophyValueText(v.next, v.value) ? `（${trophyValueText(v.next, v.value)}）` : ''}</span>` : `<span class="tr-next done">${completeTxt}</span>`;
       const items = s.items.filter((x) => trFilter.f !== 'got' || got[x.id]).map((x) => {
@@ -2288,14 +2288,14 @@ function renderTrophyList() {
     // Closest next steps first (secrets and yes/no goals left out).
     const soon = tr.SERIES.map((s) => tr.seriesView(s, ts, m)).filter((v) => v.next && v.series.cat !== 'ひみつ' && v.next.need > 1 && v.next.metric !== 'bestDopaL')
       .map((v) => ({ v, k: Math.min(0.999, v.value / v.next.need) })).sort((a, b) => b.k - a.k).slice(0, 12);
-    const needLocale = isZh ? 'zh-CN' : (isEn ? 'en-US' : 'ja-JP');
+    const needLocale = isUk ? 'uk-UA' : (isEn ? 'en-US' : 'ja-JP');
     html = soon.map(({ v, k }) => {
       const itName = i18n.trophyItemName(v.next);
       const sTitle = i18n.trophySeriesTitle(v.series.key, v.series.title);
       return `<div class="tr-soon"><i class="tr-icon">${trophySvg(v.top ? v.top.rank : 'none')}</i><span class="tr-t"><b>${itName}</b><span class="tr-next">${sTitle}　${trophyValueText(v.next, v.value)} / ${v.next.need.toLocaleString(needLocale)}</span></span><span class="tr-pct" style="--p:${k.toFixed(3)}"><b>${Math.floor(k * 100)}%</b></span></div>`;
     }).join('');
   }
-  $('#tr-list').innerHTML = html || `<p class="tr-empty">${isZh ? '暂无成就' : (isEn ? 'No trophies yet' : 'まだ ないよ')}</p>`;
+  $('#tr-list').innerHTML = html || `<p class="tr-empty">${isUk ? 'Поки немає трофеїв' : (isEn ? 'No trophies yet' : 'まだ ないよ')}</p>`;
   $('#trophy-count').textContent = `${tr.earnedCount(ts)} / ${tr.TROPHIES.length}`;
 }
 function openTrophyList() {
@@ -2362,18 +2362,18 @@ function openCollection() {
 }
 function renderCollection() {
   const got = gotTrophies(); const eq = equipState();
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
   $('#co-tabs').innerHTML = ul.CATS.map((c) => { const own = ul.unlockedIn(c.key, got).length; const all = ul.ITEMS.filter((it) => it.cat === c.key).length; return `<button type="button" data-cat="${c.key}" aria-pressed="${c.key === co.cat}">${catName(c.key)}<small>${own}/${all}</small></button>`; }).join('');
   const items = ul.ITEMS.filter((it) => it.cat === co.cat);
   const auto = eq[co.cat] === 'auto';
   $('#co-note').textContent = auto
-    ? (isZh ? '选择“随机轮换”将在已拥有的外观中每局随机更换' : (isEn ? 'Random will pick among unlocked items each play' : '「おまかせ」は もっている ものから まいかい かわるよ'))
-    : (isZh ? '将始终生效当前选中的外观与设置' : (isEn ? 'Always use the selected item' : 'えらんだ ものを いつも つかうよ'));
+    ? (isUk ? '选择“随机轮换”将在已拥有的外观中每局随机更换' : (isEn ? 'Random will pick among unlocked items each play' : '「おまかせ」は もっている ものから まいかい かわるよ'))
+    : (isUk ? '将始终生效当前选中的外观与设置' : (isEn ? 'Always use the selected item' : 'えらんだ ものを いつも つかうよ'));
   const autoTitle = i18n.t('collectAuto');
-  const autoSub = isZh ? '每局随机' : (isEn ? 'Changes each play' : 'まいかい かわる');
-  const lockAria = (tro) => isZh ? `未解锁　达成奖杯「${tro ? tro.name : ''}」即可获得` : (isEn ? `Locked. Unlocked by trophy "${tro ? tro.name : ''}"` : `まだ　トロフィー ${tro ? tro.name : ''}で もらえる`);
-  const lockSub = (tro) => isZh ? `奖杯「${tro ? tro.name : ''}」` : (isEn ? `Trophy "${tro ? tro.name : ''}"` : `トロフィー「${tro ? tro.name : ''}」`);
+  const autoSub = isUk ? '每局随机' : (isEn ? 'Changes each play' : 'まいかい かわる');
+  const lockAria = (tro) => isUk ? `未解锁　达成奖杯「${tro ? tro.name : ''}」即可获得` : (isEn ? `Locked. Unlocked by trophy "${tro ? tro.name : ''}"` : `まだ　トロフィー ${tro ? tro.name : ''}で もらえる`);
+  const lockSub = (tro) => isUk ? `奖杯「${tro ? tro.name : ''}」` : (isEn ? `Trophy "${tro ? tro.name : ''}"` : `トロフィー「${tro ? tro.name : ''}」`);
   $('#co-grid').innerHTML = `<button type="button" class="co-item auto${auto ? ' on' : ''}" data-id="auto"><span class="co-th"><b>？</b></span><span class="co-name">${autoTitle}</span><small>${autoSub}</small></button>`
     + items.map((it) => {
       const own = ul.isUnlocked(it, got);
@@ -2435,20 +2435,20 @@ function openHammer(offer) {
   if (S.guideOpen) return;
   S.hammerOpen = offer;
   $('#hammer-art').innerHTML = HAMMER_SVG;
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
-  const joinWord = isZh ? '与' : (isEn ? ' and ' : 'と');
+  const joinWord = isUk ? '与' : (isEn ? ' and ' : 'と');
   const days = offer.days.map(fmtDay).join(joinWord);
-  const missedDaysMsg = isZh
+  const missedDaysMsg = isUk
     ? `${days} 你没有来练习呢。<br>使用补签铁锤可以将缺席<b>重置豁免</b>，<br>保住连续 <b>${offer.run}</b> 天的打卡记录哦！`
     : (isEn
     ? `You missed ${days}.<br>Use a hammer to <b>bridge the gap</b><br>and keep your <b>${offer.run}</b>-day streak!`
     : `${days}は あそばなかったね。<br>ハンマーで <b>ノーカン</b>に すると<br>れんぞく<b>${offer.run}</b>日が つづくよ！`);
   $('#hammer-msg').innerHTML = missedDaysMsg;
   const max = store.HAMMER.max;
-  const haveHammersLabel = isZh ? '持有补签铁锤 ' : (isEn ? 'Hammers held: ' : 'もっている ハンマー ');
+  const haveHammersLabel = isUk ? '持有补签铁锤 ' : (isEn ? 'Hammers held: ' : 'もっている ハンマー ');
   $('#hammer-have').innerHTML = `${haveHammersLabel}${Array.from({ length: max }, (_, i) => `<i class="${i < offer.hammers ? 'on' : ''}">${HAMMER_SVG}</i>`).join('')}`;
-  $('#hammer-yes').textContent = isZh ? `使用（${offer.days.length}把）` : (isEn ? `Use (${offer.days.length})` : `つかう（${offer.days.length}本）`);
+  $('#hammer-yes').textContent = isUk ? `使用（${offer.days.length}把）` : (isEn ? `Use (${offer.days.length})` : `つかう（${offer.days.length}本）`);
   $('#hammer').hidden = false;
   audio.unlock();
   audio.play('boing', audio.now(), { v: 0.12 });
@@ -2491,9 +2491,9 @@ async function runHammer(offer) {
   const badge = $('.cal-badge');
   if (badge) {
     const c = centerOf(badge);
-    const isZh = i18n.getLanguage() === 'zh';
+    const isUk = i18n.getLanguage() === 'uk';
     const isEn = i18n.getLanguage() === 'en';
-    const keepStreakMsg = isZh ? `连续 ${offer.run} 天打卡保住啦！` : (isEn ? `Kept ${offer.run}-day streak!` : `れんぞく${offer.run}日 キープ！`);
+    const keepStreakMsg = isUk ? `连续 ${offer.run} 天打卡保住啦！` : (isEn ? `Kept ${offer.run}-day streak!` : `れんぞく${offer.run}日 キープ！`);
     if (!S.reduced) { fx.text(c.x, c.y - 30, keepStreakMsg, { color: '#ff7ab6', size: 26, vy: -70, life: 1.4 }); fx.burst(c.x, c.y, { count: 40, kinds: ['star', 'confetti', 'heart'], speed: 520, up: 160 }); }
     audio.unit(0.6);
     popEl(badge, 0.5, 400);
@@ -2568,14 +2568,14 @@ function openDay(key) {
   const [y, m, d] = key.split('-').map(Number);
   const list = store.monthSummary(y, m - 1)[key]?.entries || [];
   $('#day-title').textContent = i18n.dayLogTitleText(m, d);
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
   $('#day-list').innerHTML = list.slice().reverse().map((h) => {
     const t = new Date(h.at);
     const name = (MODE_NAMES[h.mode] || (() => h.mode))(h);
-    const extra = h.extraOk ? (isZh ? `　加时 ${h.extraOk}题` : (isEn ? ` Extra ${h.extraOk}` : `　エクストラ ${h.extraOk}問`)) : '';
-    const correctLabel = isZh ? '正解' : (isEn ? 'Correct' : '正解');
-    const missLabel = isZh ? '差一点' : (isEn ? 'Slips' : 'おしい');
+    const extra = h.extraOk ? (isUk ? `　加时 ${h.extraOk}题` : (isEn ? ` Extra ${h.extraOk}` : `　エクストラ ${h.extraOk}問`)) : '';
+    const correctLabel = isUk ? '正解' : (isEn ? 'Correct' : '正解');
+    const missLabel = isUk ? '差一点' : (isEn ? 'Slips' : 'おしい');
     const ptsUnit = i18n.t('pts');
     return `<li><span class="t">${t.getHours()}:${String(t.getMinutes()).padStart(2, '0')}</span><span class="m">${name}</span><span class="s">${(h.score || 0).toLocaleString('ja-JP')}${ptsUnit}</span><span class="d">${correctLabel} ${h.ok ?? '-'}　${missLabel} ${h.ng ?? '-'}${extra}　${fmtTime(h.timeMs || 0)}</span></li>`;
   }).join('');
@@ -2613,19 +2613,19 @@ function closeSettings() {
 function askReset() {
   if (S.demo || !S.settingsOpen) return;
   closeSettings();
-  const isZh = i18n.getLanguage() === 'zh';
+  const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
   openConfirm({
-    title: isZh ? '全部数据重置' : (isEn ? 'Reset All Data' : 'すべて リセット'),
-    msg: isZh ? '将清除所有历史记录、技能掌握进度、成就奖杯、外观收藏、签到印章和系统设置。' : (isEn ? 'Clear all records, skills, trophies, collection, stickers, and settings.' : 'きろく・スキル・トロフィー・コレクション・シール・せっていを ぜんぶ けします。'),
-    yes: isZh ? '确认重置' : (isEn ? 'Reset' : 'けす'),
-    no: isZh ? '取消' : (isEn ? 'Cancel' : 'やめる'),
+    title: isUk ? '全部数据重置' : (isEn ? 'Reset All Data' : 'すべて リセット'),
+    msg: isUk ? '将清除所有历史记录、技能掌握进度、成就奖杯、外观收藏、签到印章和系统设置。' : (isEn ? 'Clear all records, skills, trophies, collection, stickers, and settings.' : 'きろく・スキル・トロフィー・コレクション・シール・せっていを ぜんぶ けします。'),
+    yes: isUk ? 'Скинути' : (isEn ? 'Reset' : 'けす'),
+    no: isUk ? '取消' : (isEn ? 'Cancel' : 'やめる'),
     focusBack: $('#open-settings'),
     onYes: () => openConfirm({
-      title: isZh ? '真的要全部清除吗？' : (isEn ? 'Are you absolutely sure?' : 'ほんとうに けしますか？'),
-      msg: isZh ? '清除后将无法恢复任何数据，回到初次打开状态。' : (isEn ? 'This cannot be undone.' : 'けしたら もとに もどせません。'),
-      yes: isZh ? '彻底清除并重启' : (isEn ? 'Erase Everything' : 'ぜんぶ けす'),
-      no: isZh ? '放弃' : (isEn ? 'Cancel' : 'やめる'),
+      title: isUk ? '真的要全部清除吗？' : (isEn ? 'Are you absolutely sure?' : 'ほんとうに けしますか？'),
+      msg: isUk ? '清除后将无法恢复任何数据，回到初次打开状态。' : (isEn ? 'This cannot be undone.' : 'けしたら もとに もどせません。'),
+      yes: isUk ? '彻底清除并重启' : (isEn ? 'Erase Everything' : 'ぜんぶ けす'),
+      no: isUk ? '放弃' : (isEn ? 'Cancel' : 'やめる'),
       urgent: true,
       focusBack: $('#open-settings'),
       onYes: () => { store.reset(); location.reload(); },
@@ -2726,10 +2726,10 @@ $('#tree').addEventListener('click', (e) => {
   const id = b.dataset.id; const st = stateOf(progress(), id);
   if (st === 'locked') {
     const need = SKILL[id].req.filter((q) => stateOf(progress(), q) !== 'mastered').map((q) => `「${skillDisplayName(q)}」`);
-    const isZh = i18n.getLanguage() === 'zh';
+    const isUk = i18n.getLanguage() === 'uk';
     const isEn = i18n.getLanguage() === 'en';
-    const joinWord = isZh ? '与' : (isEn ? ' and ' : 'と');
-    const toastMsg = isZh
+    const joinWord = isUk ? '与' : (isEn ? ' and ' : 'と');
+    const toastMsg = isUk
       ? `掌握 ${need.join(joinWord)} 即可解锁`
       : (isEn ? `Master ${need.join(joinWord)} to unlock` : `${need.join('と')}を マスターすると ひらくよ`);
     toast(toastMsg);
@@ -2837,14 +2837,14 @@ function updateI18nDOM() {
 
   const logoTopEl = $('.logo-top');
   if (logoTopEl) {
-    if (lang === 'zh') logoTopEl.innerHTML = '<i data-c="多">多</i><i data-c="帕">帕</i>';
+    if (lang === 'uk') logoTopEl.innerHTML = '<i data-c="До">До</i><i data-c="па">па</i>';
     else if (lang === 'ja') logoTopEl.innerHTML = '<i data-c="ド">ド</i><i data-c="パ">パ</i>';
     else logoTopEl.innerHTML = '<i data-c="Do">Do</i><i data-c="pa">pa</i>';
   }
   const logoRibbonEl = $('.logo-ribbon');
   if (logoRibbonEl) {
     const ribbonSvg = logoRibbonEl.querySelector('.ribbon-bg')?.outerHTML || '';
-    if (lang === 'zh') logoRibbonEl.innerHTML = `${ribbonSvg}<i>速</i><i>算</i>`;
+    if (lang === 'uk') logoRibbonEl.innerHTML = `${ribbonSvg}<i>Дріл</i>`;
     else if (lang === 'ja') logoRibbonEl.innerHTML = `${ribbonSvg}<i>ド</i><i>リ</i><i>ル</i>`;
     else logoRibbonEl.innerHTML = `${ribbonSvg}<i>Drill</i>`;
   }
@@ -2852,7 +2852,7 @@ function updateI18nDOM() {
   // 4. Sound & Mute status texts
   const soundBtn = $('[data-toggle="sound"]');
   if (soundBtn) {
-    soundBtn.querySelector('b').textContent = S.muted ? (lang === 'zh' ? '关闭' : (lang === 'en' ? 'Off' : 'オフ')) : (lang === 'zh' ? '开启' : (lang === 'en' ? 'On' : 'オン'));
+    soundBtn.querySelector('b').textContent = S.muted ? (lang === 'uk' ? 'Вимк' : (lang === 'en' ? 'Off' : 'オフ')) : (lang === 'uk' ? 'Увімк' : (lang === 'en' ? 'On' : 'オン'));
   }
   const muteBtn = $('#mute');
   if (muteBtn) {

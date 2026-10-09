@@ -209,10 +209,10 @@ export function createGuide({ hero, reduced, onClose }) {
     $('#guide-text').textContent = page.text;
     overlay.classList.toggle('guide-last', !!page.recommend);
     if (page.recommend) {
-      const isZh = i18n.getLanguage() === 'zh';
+      const isUk = i18n.getLanguage() === 'uk';
       const isEn = i18n.getLanguage() === 'en';
-      const prefix = isZh ? '本说明在设置下方的\n' : (isEn ? 'You can view this guide\nanytime with ' : 'この せつめいは\n');
-      const suffix = isZh ? ' 中随时可再次查看。' : (isEn ? ' in settings.' : ' で また みられるよ');
+      const prefix = isUk ? 'Цю інструкцію можна\nбудь-коли відкрити через ' : (isEn ? 'You can view this guide\nanytime with ' : 'この せつめいは\n');
+      const suffix = isUk ? ' у налаштуваннях.' : (isEn ? ' in settings.' : ' で また みられるよ');
       $('#guide-text').replaceChildren(document.createTextNode(prefix));
       const icon = document.createElement('span');
       icon.id = 'guide-help-icon';

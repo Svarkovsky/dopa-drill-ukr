@@ -1,27 +1,27 @@
 // Lightweight native i18n module for dopa-drill (zero external dependencies).
-// Supports 'zh' (Simplified Chinese), 'ja' (Japanese), and 'en' (English).
+// Supports 'uk' (Ukrainian), 'en' (English), and 'ja' (Japanese).
 
 const STORAGE_KEY = 'dopa-drill-lang';
 
 export const SUPPORTED_LANGS = [
-  { code: 'zh', name: '简体中文' },
-  { code: 'ja', name: '日本語' },
+  { code: 'uk', name: 'Українська' },
   { code: 'en', name: 'English' },
+  { code: 'ja', name: '日本語' },
 ];
 
-// Active language state. Default is Chinese ('zh').
+// Active language state. Default is Ukrainian ('uk').
 let currentLang = (() => {
   try {
     if (typeof location !== 'undefined') {
       const p = new URLSearchParams(location.search);
       const urlLang = p.get('lang');
-      if (urlLang && ['zh', 'ja', 'en'].includes(urlLang)) return urlLang;
+      if (urlLang && ['uk', 'en', 'ja'].includes(urlLang)) return urlLang;
     }
     const saved = typeof localStorage !== 'undefined' ? localStorage.getItem(STORAGE_KEY) : null;
-    if (saved && ['zh', 'ja', 'en'].includes(saved)) return saved;
-    return 'zh'; // 默认统一使用中文展示
+    if (saved && ['uk', 'en', 'ja'].includes(saved)) return saved;
+    return 'uk';
   } catch {
-    return 'zh';
+    return 'uk';
   }
 })();
 
@@ -30,7 +30,7 @@ export function getLanguage() {
 }
 
 export function setLanguage(lang) {
-  if (!['zh', 'ja', 'en'].includes(lang)) return;
+  if (!['uk', 'en', 'ja'].includes(lang)) return;
   currentLang = lang;
   try {
     localStorage.setItem(STORAGE_KEY, lang);
@@ -42,198 +42,198 @@ export function setLanguage(lang) {
 
 // ---------------------------------------------------------------- Dictionaries
 const STRINGS = {
-  zh: {
+  uk: {
     // Brand & General
-    appTitle: '多帕速算 (Dopa Drill)',
-    gameName: '多帕速算',
-    logoBurstTop: '多帕',
-    logoBurstRibbon: '速算',
-    mascotName: '多帕吉',
-    noscript: '本游戏需要开启 JavaScript 才能运行。',
-    loading: '加载中...',
-    pts: '分',
-    timesUnit: '次',
-    problemsUnit: '题',
-    secondsUnit: '秒',
-    minutesUnit: '分',
-    streakDaysUnit: '天',
-    starCountUnit: '颗',
-    
+    appTitle: 'Допа Дріл (Dopa Drill)',
+    gameName: 'Допа Дріл',
+    logoBurstTop: 'Допа',
+    logoBurstRibbon: 'Дріл',
+    mascotName: 'Допакічі',
+    noscript: 'Для роботи гри потрібен увімкнений JavaScript.',
+    loading: 'Завантаження...',
+    pts: 'балів',
+    timesUnit: 'разів',
+    problemsUnit: 'завдань',
+    secondsUnit: 'с',
+    minutesUnit: 'хв',
+    streakDaysUnit: 'дн.',
+    starCountUnit: 'зірок',
+
     // Top HUD & Controls
-    helpBtnAria: '玩法说明与帮助',
-    settingsBtnAria: '设置',
-    keyboardHint: '支持使用数字键和退格键（Backspace）作答',
-    cellInputAria: '输入框',
-    muteBtnAria: '静音切换',
-    muteOn: '静音',
-    muteOff: '开启声音',
-    demoTag: '演示模式',
+    helpBtnAria: 'Як грати та довідка',
+    settingsBtnAria: 'Налаштування',
+    keyboardHint: 'Можна відповідати цифровими клавішами та Backspace',
+    cellInputAria: 'Поле вводу',
+    muteBtnAria: 'Перемкнути звук',
+    muteOn: 'Без звуку',
+    muteOff: 'Зі звуком',
+    demoTag: 'ДЕМО',
 
     // Modes & Main Menu
-    myLevel: '个性化闯关',
-    myLevelSub: '首次游玩将进行实力诊断测试',
-    review: '巩固错题',
-    skillTree: '技能树',
-    trophy: '成就奖杯',
-    collection: '收藏展示',
-    grade1: '一年级',
-    grade2: '二年级',
-    grade3: '三年级',
-    grade4: '四年级',
-    grade5: '五年级',
-    grade6: '六年级',
-    gradeGroupAria: '按年级练习',
-    
+    myLevel: 'Мій рівень',
+    myLevelSub: 'Починається з перевірки знань',
+    review: 'Робота над помилками',
+    skillTree: 'Дерево навичок',
+    trophy: 'Трофеї',
+    collection: 'Колекція',
+    grade1: '1 клас',
+    grade2: '2 клас',
+    grade3: '3 клас',
+    grade4: '4 клас',
+    grade5: '5 клас',
+    grade6: '6 клас',
+    gradeGroupAria: 'Тренування за класами',
+
     // Quests & Calendar
-    todayQuests: '今日任务',
-    questComplete: '全部完成！',
-    questAllBonus: '全完成奖励',
-    calendarTitle: '出勤打卡日历',
-    calPrevMonth: '上一月',
-    calNextMonth: '下一月',
-    weekDays: ['日', '一', '二', '三', '四', '五', '六'],
-    
+    todayQuests: 'Щоденні завдання',
+    questComplete: 'Виконано!',
+    questAllBonus: 'Бонус за всі завдання',
+    calendarTitle: 'Календар тренувань',
+    calPrevMonth: 'Попередній місяць',
+    calNextMonth: 'Наступний місяць',
+    weekDays: ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+
     // Play Screen HUD
-    targetTime: '目标 {time}',
-    targetOver: '超出目标时间',
-    correctCount: '正确',
-    missCount: '差一点',
-    comboLabel: '连击',
-    dopaLabel: '多帕',
-    dopaMultMax: '多帕×2 极速',
-    dopaMult: '多帕×{val}',
-    stepInputAria: '输入框',
-    hintLabel: '提示',
-    questionLast: '最后一题！',
-    questionIndex: '第 {num} 题',
-    questionExtra: '挑战 EX {num}',
-    unlockCutin: '解锁新技能！ {name}',
-    correctStampText: '正确',
-    fullScoreStamp: '100分！',
-    fullScoreBanner: '100分达成！',
-    perfectRun: '全部做对啦！太棒了！',
+    targetTime: 'Ціль: {time}',
+    targetOver: 'Понад ціль',
+    correctCount: 'Правильно',
+    missCount: 'Близько',
+    comboLabel: 'Комбо',
+    dopaLabel: 'Допа',
+    dopaMultMax: 'Допа×2 МАКС',
+    dopaMult: 'Допа×{val}',
+    stepInputAria: 'Поле вводу',
+    hintLabel: 'Підказка',
+    questionLast: 'Останнє завдання!',
+    questionIndex: 'Завдання {num}',
+    questionExtra: 'EX {num}',
+    unlockCutin: 'Відкрито навичку! {name}',
+    correctStampText: 'Вірно!',
+    fullScoreStamp: '100 балів!',
+    fullScoreBanner: '100 балів досягнуто!',
+    perfectRun: 'Бездоганно! Усі відповіді правильні!',
 
     // Result Screens
-    basicResultTitle: '基础练习完成',
-    reviewResultTitle: '错题复习完成',
-    finalResultTitle: '加时挑战结束',
-    modeResultTitle: '{mode} 闯关成功',
-    scoreLabel: '得分',
-    accuracyLabel: '初次正解率',
-    timeLabel: '用时',
-    growthHeader: '你进步啦！',
-    firstTimeTry: '首次作答（{day}）',
-    yesterday: '昨天',
-    today: '今天',
-    btnGoExtra: '挑战加时赛',
-    btnGoExtraSub: '90秒限时',
-    btnReviewMistakes: '重做错题',
-    btnViewTree: '查看技能树',
-    btnPlayAgain: '再来一次',
-    btnFinish: '结束返回',
-    finalBreakdown: '基础 {basic} ＋ 挑战加分 {extra}',
-    extraSolvedLabel: '挑战答对',
-    extraMissLabel: '挑战失误',
-    basicMissLabel: '基础失误',
-    basicTimeLabel: '基础用时',
+    basicResultTitle: 'Основне тренування завершено',
+    reviewResultTitle: 'Роботу над помилками завершено',
+    finalResultTitle: 'Додатковий раунд завершено',
+    modeResultTitle: '{mode} пройдено',
+    scoreLabel: 'Рахунок',
+    accuracyLabel: 'Влучність з 1-ї спроби',
+    timeLabel: 'Час',
+    growthHeader: 'Твій прогрес!',
+    firstTimeTry: 'Уперше ({day})',
+    yesterday: 'Учора',
+    today: 'Сьогодні',
+    btnGoExtra: 'Додатковий раунд',
+    btnGoExtraSub: '90 секунд',
+    btnReviewMistakes: 'Повторити помилки',
+    btnViewTree: 'Дерево навичок',
+    btnPlayAgain: 'Ще раз',
+    btnFinish: 'Завершити',
+    finalBreakdown: 'Базові {basic} ＋ Додаткові {extra}',
+    extraSolvedLabel: 'Розвʼязано в екстра',
+    extraMissLabel: 'Помилок в екстра',
+    basicMissLabel: 'Базових помилок',
+    basicTimeLabel: 'Базовий час',
 
     // Skill Tree Screen
-    treeHeadTitle: '技能树',
-    treeBackAria: '返回',
-    treeNote: '轻按练习（达到 ☆ 条件可掌握）· 长按可重置该技能及后续节点',
-    treeMasterCond: '掌握条件：近6次中有5次初次答对',
-    treeMastered: '已掌握',
-    treeLearning: '练习中',
-    treeLocked: '未解锁',
+    treeHeadTitle: 'Дерево навичок',
+    treeBackAria: 'Назад',
+    treeNote: 'Торкнись для тренування (виконай умову ☆ для опанування) · Затисни для скидання',
+    treeMasterCond: 'Умова опанування: 5 правильних з 1-ї спроби за останні 6 разів',
+    treeMastered: 'Опановано',
+    treeLearning: 'Тренування',
+    treeLocked: 'Заблоковано',
     treeStarPrefix: '☆{count}',
 
     // Trophies Screen
-    trophyHeadTitle: '成就奖杯',
-    trFilterAll: '全部',
-    trFilterGot: '已获得',
-    trFilterNext: '未获得',
-    trFilterSoon: '即将达成',
-    trCategoryLabel: '分类',
-    trGotTitle: '获得新成就！',
-    trGotButton: '太棒了！',
+    trophyHeadTitle: 'Трофеї',
+    trFilterAll: 'Усі',
+    trFilterGot: 'Здобуті',
+    trFilterNext: 'Не здобуті',
+    trFilterSoon: 'Майже здобуто',
+    trCategoryLabel: 'Категорія',
+    trGotTitle: 'Новий трофей здобуто!',
+    trGotButton: 'Чудово!',
 
     // Collection Screen
-    collectHeadTitle: '宝物收藏库',
-    collectNote: '在此选择游戏中生效的视觉外观、音乐与终场特效（选择“随机”每次将自动随机）',
-    collectAuto: '随机轮换',
+    collectHeadTitle: 'Колекція',
+    collectNote: 'Обирай фони, музику та ефекти, відкриті за трофеї (або ввімкни «Випадково»)',
+    collectAuto: 'Випадково',
 
     // Settings Modal
-    settingsTitle: '系统设置',
-    setLanguage: '语言 / Language',
-    setProblemCount: '每组题数',
-    setSound: '音效与音乐',
-    setSoundOn: '开启',
-    setSoundOff: '关闭',
-    setVolumeAria: '音量调节',
-    setMotion: '动态特效强度',
-    setMotionNote: '调至 0% 可关闭屏幕晃动、强光闪烁与纸屑飘落',
-    setDemo: '自动演示',
-    setDemoBtn: '▶ 查看自动演示',
-    setDemoNote: '轻触屏幕或按任意键即可退出演示（不计入个人记录）',
-    setData: '存档数据',
-    setDataReset: '全部重置',
-    setDataResetNote: '清除此浏览器上的所有游戏进度、成就与自定义设置，回到初始状态',
-    setCreditsLabel: '关于与致谢',
-    setCreditsDesc: '感谢原作者 <b>@grmchn4ai</b> 的精妙原作与开源分享',
-    setCreditsRepo: 'GitHub 原作仓库',
-    setCreditsAria: '前往 GitHub 查看原作仓库',
-    btnClose: '关闭',
+    settingsTitle: 'Налаштування',
+    setLanguage: 'Мова / Language',
+    setProblemCount: 'Кількість завдань',
+    setSound: 'Звук та музика',
+    setSoundOn: 'Увімкнено',
+    setSoundOff: 'Вимкнено',
+    setVolumeAria: 'Гучність',
+    setMotion: 'Інтенсивність анімацій',
+    setMotionNote: '0% вимикає тремтіння екрана, спалахи та конфеті',
+    setDemo: 'Демо-гра',
+    setDemoBtn: '▶ Переглянути демо-гру',
+    setDemoNote: 'Торкнись екрана або натисни будь-яку клавішу для виходу (без збереження)',
+    setData: 'Дані гри',
+    setDataReset: 'Скинути все',
+    setDataResetNote: 'Очистити весь прогрес, трофеї та налаштування в цьому браузері',
+    setCreditsLabel: 'Про проєкт та подяка',
+    setCreditsDesc: 'Дякуємо автору @grmchn4ai за чудову ідею та відкритий код',
+    setCreditsRepo: 'Репозиторій автора на GitHub',
+    setCreditsAria: 'Відкрити оригінальний репозиторій на GitHub',
+    btnClose: 'Закрити',
 
     // Modals: Bonus, Hammer, Confirm, Info
-    bonusTitle: '每日登录奖励',
-    bonusGetBtn: '立即领取',
-    bonusConsecutive: '已连续签到 {days} 天',
-    bonusHammerReward: '获得 补签铁锤 ×1',
-    bonusCardNote: '每天坚持算一算，多多练习更有劲！',
-    hammerTitle: '补签铁锤',
-    hammerNoUse: '暂不使用',
-    hammerUse: '立即补签',
-    hammerHave: '当前持有：{count} 把',
-    hammerOfferMsg: '检测到之前中断了 {days} 天的练习，使用补签铁锤可以拯救保持你的 {run} 天连续打卡记录！',
-    confirmRelockTitle: '重置此技能进度',
-    confirmRelockMsg: '确定要清除该技能及其所有后续依赖技能的练习记录吗？',
-    confirmCancel: '取消',
-    confirmDanger: '确认重置',
-    dayLogTitle: '历史游玩记录',
-    siPracticeBtn: '专项练习',
-    siNextStarLabel: '升至 ☆{n}',
-    siMaxStars: '☆5 达成！超凡大师！',
-    siRustyNote: '技能有点生疏了，初次答对1题即可重新擦亮！',
-    siSolvedCount: '已练习 {count} 题',
-    siBestSpeed: '最快单题用时 {sec} 秒',
+    bonusTitle: 'Щоденний бонус',
+    bonusGetBtn: 'Отримати',
+    bonusConsecutive: 'Серія тренувань: {days} дн.',
+    bonusHammerReward: 'Отримано ремонтний молоток ×1',
+    bonusCardNote: 'Тренуйся щодня, розвивай швидкість і памʼять!',
+    hammerTitle: 'Ремонтний молоток',
+    hammerNoUse: 'Не використовувати',
+    hammerUse: 'Використати',
+    hammerHave: 'У наявності: {count}',
+    hammerOfferMsg: 'Пропущено {days} дн. тренувань! Використай молоток, щоб зберегти свою серію у {run} дн.!',
+    confirmRelockTitle: 'Скинути навичку',
+    confirmRelockMsg: 'Скинути записи для цієї навички та всіх залежних від неї?',
+    confirmCancel: 'Скасувати',
+    confirmDanger: 'Скинути',
+    dayLogTitle: 'Історія тренувань',
+    siPracticeBtn: 'Тренувати',
+    siNextStarLabel: 'До ☆{n}',
+    siMaxStars: '☆5 Досягнуто! Справжній майстер!',
+    siRustyNote: 'Навичка призабулась. Розвʼяжи 1 завдання з першої спроби, щоб освіжити її!',
+    siSolvedCount: 'Розвʼязано завдань: {count}',
+    siBestSpeed: 'Найкращий час: {sec} с',
 
     // Guide Tour
-    guideIntroTitle: '欢迎来到多帕速算',
-    guideIntroText: '这里有 3 种适合不同场景的\n数学算术练习方式',
-    guideLevelTitle: '个性化闯关',
-    guideLevelText: '为你量身定制的动态难度题目。\n首次游玩时会进行实力测评。',
-    guideGradesTitle: '年级分册练习',
-    guideGradesText: '汇集小学各年级核心大纲，\n系统巩固该年级的所有算法。',
-    guideTreeTitle: '完整技能树',
-    guideTreeText: '自由选择感兴趣的算法专项突破，\n一步步解锁更高级的数学技能。',
-    guideTrophyTitle: '成就奖杯',
-    guideTrophyText: '不断练习就能解锁各种成就奖章，\n坚持每天出勤还能收获更多惊喜！',
-    guideCollectTitle: '外观与音乐收藏',
-    guideCollectText: '达成成就可解锁丰富的游戏主题、\n背景乐曲、打击特效与吉祥物装扮！',
-    guideLastTitle: '如果拿不准，就选个性化闯关！',
-    guideLastText: '点击左上角帮助按钮\n随时可以再次查看本说明哦。',
-    guideSkip: '跳过',
-    guideBack: '上一步',
-    guideNext: '下一步',
-    guideStart: '开始游玩！',
-    guideRecommend: '推荐',
-    guidePageOf: '共 {total} 页，第 {cur} 页',
+    guideIntroTitle: 'Ласкаво просимо до Допа Дріл!',
+    guideIntroText: 'Тут є 3 зручні формати\nтренування усного рахунку',
+    guideLevelTitle: 'Мій рівень',
+    guideLevelText: 'Підлаштовує складність під тебе.\nНа старті перевірить твої поточні знання.',
+    guideGradesTitle: 'Тренування за класами',
+    guideGradesText: 'Програма 1–6 класів для закріплення\nвсіх шкільних тем.',
+    guideTreeTitle: 'Дерево навичок',
+    guideTreeText: 'Обирай будь-які математичні теми\nта відкривай нові вершини крок за кроком.',
+    guideTrophyTitle: 'Трофеї та нагороди',
+    guideTrophyText: 'Розвʼязуй завдання, відкривай медалі\nта отримуй щоденні бонуси!',
+    guideCollectTitle: 'Теми та музика',
+    guideCollectText: 'За досягнення ти розблокуєш круті скіни,\nмелодії та ефекти для святкування!',
+    guideLastTitle: 'Сумніваєшся? Обирай «Мій рівень»!',
+    guideLastText: 'Кнопка допомоги вгорі ліворуч\nзавжди поверне цю підказку.',
+    guideSkip: 'Пропустити',
+    guideBack: 'Назад',
+    guideNext: 'Далі',
+    guideStart: 'Почати гру!',
+    guideRecommend: 'Рекомендовано',
+    guidePageOf: '{cur} із {total}',
 
     // Almost / Miss Feedback
-    almost: '差一点！',
-    almostTimeout: '连击中断',
-    almostEnded: '{count} 连击结束',
-    comboCountTxt: '{count} 连击！',
+    almost: 'Близько!',
+    almostTimeout: 'Комбо перервано',
+    almostEnded: 'Серія з {count} комбо завершилась',
+    comboCountTxt: '{count} комбо!',
   },
 
   ja: {
@@ -252,7 +252,7 @@ const STRINGS = {
     minutesUnit: '分',
     streakDaysUnit: '日',
     starCountUnit: 'こ',
-    
+
     // Top HUD & Controls
     helpBtnAria: 'あそびかた',
     settingsBtnAria: 'せってい',
@@ -373,7 +373,7 @@ const STRINGS = {
     setDataReset: 'すべて リセット',
     setDataResetNote: 'すべての データを けして さいしょに もどします',
     setCreditsLabel: 'クレジット',
-    setCreditsDesc: '原作者 <b>@grmchn4ai</b> さんの素晴らしい発想と公開に感謝します',
+    setCreditsDesc: '原作者 @grmchn4ai さんの素晴らしい発想と公開に感謝します',
     setCreditsRepo: 'GitHub 原作リポジトリ',
     setCreditsAria: 'GitHubの原作リポジトリを開く',
     btnClose: 'とじる',
@@ -397,36 +397,36 @@ const STRINGS = {
     siPracticeBtn: 'れんしゅう する',
     siNextStarLabel: 'つぎの ☆{n}',
     siMaxStars: '☆5 たっせい！ すごい！',
-    siRustyNote: 'すこし さびているよ。1もん 初回正解で ピカピカ！　',
-    siSolvedCount: 'といた もんだい {count}もん',
-    siBestSpeed: 'いちばん はやい 1もん {sec}びょう',
+    siRustyNote: 'すこし さびてきたよ。1もん しょかいせいかいで ピカピカに もどるよ',
+    siSolvedCount: 'といたかず：{count}問',
+    siBestSpeed: 'さいそく：{sec}秒',
 
     // Guide Tour
-    guideIntroTitle: 'あそびかた',
-    guideIntroText: 'もんだいは 3つの\nえらびかたが あるよ',
+    guideIntroTitle: 'ドパドリルへ ようこそ！',
+    guideIntroText: '計算の れんしゅうの しかたが\n3つ あります',
     guideLevelTitle: 'じぶんレベル',
-    guideLevelText: 'いまの きみに あった もんだい。\nはじめは じつりょくチェック',
-    guideGradesTitle: '1ねんせい〜6ねんせい',
-    guideGradesText: 'がくねんの もんだいを\nまとめて れんしゅう',
+    guideLevelText: 'あなたに あわせた 問題が 出ます。\nさいしょは「じつりょくチェック」から。',
+    guideGradesTitle: '学年べつ',
+    guideGradesText: '学年ごとの 計算を まとめて\nれんしゅう できます。',
     guideTreeTitle: 'スキルツリー',
-    guideTreeText: 'やりたい もんだいを\n1つ えらんで れんしゅう',
+    guideTreeText: 'すきな スキルを えらんで\nじっくり れんしゅう できます。',
     guideTrophyTitle: 'トロフィー',
-    guideTrophyText: 'あそぶと もらえるよ。\nつづけて あそぶと ふえていく',
+    guideTrophyText: 'れんしゅうすると メダルが もらえます。\nまいにち あそぶと いいことが あるかも！',
     guideCollectTitle: 'コレクション',
-    guideCollectText: 'トロフィーの ごほうびで ふえる\nはいけい・おんがく・きせかえなどを\nえらべるよ',
-    guideLastTitle: 'まよったら じぶんレベル！',
-    guideLastText: 'この せつめいは\n？ で また みられるよ',
-    guideSkip: 'とばす',
-    guideBack: 'もどる',
+    guideCollectText: 'トロフィーを あつめると、がめんの\nもよう や おんがくが ふえます。',
+    guideLastTitle: 'まよったら「じぶんレベル」！',
+    guideLastText: 'ひだりうえの「？」から\nいつでも この せつめいを みられます。',
+    guideSkip: 'スキップ',
+    guideBack: 'まえへ',
     guideNext: 'つぎへ',
     guideStart: 'はじめる！',
     guideRecommend: 'おすすめ',
-    guidePageOf: '{total}つのうち {cur}つめ',
+    guidePageOf: '{total} まい中 {cur} まいめ',
 
     // Almost / Miss Feedback
-    almost: 'おしい',
-    almostTimeout: 'コンボ おわり',
-    almostEnded: '{count}コンボ おわり',
+    almost: 'おしい！',
+    almostTimeout: 'コンボストップ',
+    almostEnded: '{count}コンボ ストップ',
     comboCountTxt: '{count}コンボ！',
   },
 
@@ -492,30 +492,30 @@ const STRINGS = {
     dopaMult: 'Dopa×{val}',
     stepInputAria: 'Input field',
     hintLabel: 'Hint',
-    questionLast: 'Final Problem!',
-    questionIndex: 'Q{num}',
+    questionLast: 'Final Question!',
+    questionIndex: 'Q {num}',
     questionExtra: 'EX {num}',
-    unlockCutin: 'Unlocked! {name}',
+    unlockCutin: 'Skill Unlocked! {name}',
     correctStampText: 'Correct!',
     fullScoreStamp: '100 Pts!',
-    fullScoreBanner: '100 Points!',
-    perfectRun: 'Perfect Clear!',
+    fullScoreBanner: '100 Points Clear!',
+    perfectRun: 'Perfect! All questions answered correctly!',
 
     // Result Screens
-    basicResultTitle: 'Stage Clear!',
-    reviewResultTitle: 'Review Clear!',
-    finalResultTitle: 'Extra Finished!',
-    modeResultTitle: '{mode} Clear',
+    basicResultTitle: 'Drill Complete',
+    reviewResultTitle: 'Review Cleared',
+    finalResultTitle: 'Extra Cleared',
+    modeResultTitle: '{mode} Cleared',
     scoreLabel: 'Score',
-    accuracyLabel: 'First-Try Rate',
+    accuracyLabel: 'First-Try Accuracy',
     timeLabel: 'Time',
-    growthHeader: 'Look at you grow!',
-    firstTimeTry: 'First time ({day})',
+    growthHeader: 'Your Growth!',
+    firstTimeTry: 'First Try ({day})',
     yesterday: 'Yesterday',
     today: 'Today',
     btnGoExtra: 'Go to Extra',
-    btnGoExtraSub: '90 sec',
-    btnReviewMistakes: 'Retry Mistakes',
+    btnGoExtraSub: '90s Limit',
+    btnReviewMistakes: 'Review Mistakes',
     btnViewTree: 'View Skill Tree',
     btnPlayAgain: 'Play Again',
     btnFinish: 'Finish',
@@ -528,8 +528,8 @@ const STRINGS = {
     // Skill Tree Screen
     treeHeadTitle: 'Skill Tree',
     treeBackAria: 'Back',
-    treeNote: 'Tap to practice (Mastery: ☆ requirement) · Long press to reset',
-    treeMasterCond: 'Mastery: 5 first-try clears in last 6 attempts',
+    treeNote: 'Tap to practice (meet ☆ conds to master) · Long press to reset',
+    treeMasterCond: 'Master cond: 5 of last 6 first-try correct',
     treeMastered: 'Mastered',
     treeLearning: 'Learning',
     treeLocked: 'Locked',
@@ -539,153 +539,162 @@ const STRINGS = {
     trophyHeadTitle: 'Trophies',
     trFilterAll: 'All',
     trFilterGot: 'Earned',
-    trFilterNext: 'Locked',
-    trFilterSoon: 'Almost There',
+    trFilterNext: 'Not Yet',
+    trFilterSoon: 'Almost',
     trCategoryLabel: 'Category',
-    trGotTitle: 'Trophy Unlocked!',
+    trGotTitle: 'Trophy Earned!',
     trGotButton: 'Awesome!',
 
     // Collection Screen
     collectHeadTitle: 'Collection',
-    collectNote: 'Equip backgrounds, correct stamps, music, and outfits earned from trophies!',
+    collectNote: 'Choose backgrounds, music, and effects unlocked via trophies (or Pick Random)',
     collectAuto: 'Random',
 
     // Settings Modal
     settingsTitle: 'Settings',
-    setLanguage: 'Language / 言語',
-    setProblemCount: 'Problem Count',
+    setLanguage: 'Language',
+    setProblemCount: 'Questions per set',
     setSound: 'Sound & Music',
     setSoundOn: 'On',
     setSoundOff: 'Off',
     setVolumeAria: 'Volume',
-    setMotion: 'Motion & Effects',
-    setMotionNote: '0% disables screen shakes, flashes, confetti, and big animations',
+    setMotion: 'Motion Intensity',
+    setMotionNote: 'Set to 0% to turn off screen shake, flashes, and confetti',
     setDemo: 'Demo Play',
-    setDemoBtn: '▶ Watch Auto Demo',
-    setDemoNote: 'Tap screen or press any key to exit (will not be saved)',
-    setData: 'Game Data',
-    setDataReset: 'Reset All Data',
-    setDataResetNote: 'Clear all game progress, trophies and settings on this browser',
-    setCreditsLabel: 'Credits',
-    setCreditsDesc: 'Special thanks to original author <b>@grmchn4ai</b> for the wonderful project',
-    setCreditsRepo: 'GitHub Original Repo',
-    setCreditsAria: 'View original repository on GitHub',
+    setDemoBtn: '▶ Watch Demo',
+    setDemoNote: 'Tap screen or press any key to exit (not saved to personal records)',
+    setData: 'Save Data',
+    setDataReset: 'Reset All',
+    setDataResetNote: 'Clear all game progress, trophies, and custom settings on this browser',
+    setCreditsLabel: 'Credits & Thanks',
+    setCreditsDesc: 'Special thanks to original author @grmchn4ai for wonderful design and open source sharing',
+    setCreditsRepo: 'Original GitHub Repository',
+    setCreditsAria: 'Open original GitHub repository',
     btnClose: 'Close',
 
     // Modals: Bonus, Hammer, Confirm, Info
     bonusTitle: 'Daily Login Bonus',
     bonusGetBtn: 'Claim',
-    bonusConsecutive: '{days} Day Streak!',
+    bonusConsecutive: 'Streak: {days} Days!',
     bonusHammerReward: '+1 No-Count Hammer',
-    bonusCardNote: 'Keep up the daily practice!',
+    bonusCardNote: 'Keep practicing daily to build your momentum!',
     hammerTitle: 'No-Count Hammer',
-    hammerNoUse: "Don't Use",
+    hammerNoUse: 'Keep Saved',
     hammerUse: 'Use Hammer',
-    hammerHave: 'Held: {count}',
-    hammerOfferMsg: 'Bridge {days} missed day(s) to protect your {run}-day streak?',
+    hammerHave: 'Currently held: {count}',
+    hammerOfferMsg: 'You missed {days} day(s)! Use a hammer to save your {run}-day streak?',
     confirmRelockTitle: 'Reset Skill',
-    confirmRelockMsg: 'Are you sure you want to reset this skill and all dependent skills?',
+    confirmRelockMsg: 'Are you sure you want to reset this skill and all downstream dependent skills?',
     confirmCancel: 'Cancel',
     confirmDanger: 'Reset',
-    dayLogTitle: 'History Log',
-    siPracticeBtn: 'Practice Now',
-    siNextStarLabel: 'Next ☆{n}',
-    siMaxStars: '☆5 Mastered! Outstanding!',
-    siRustyNote: 'A bit rusty! Clear 1 problem on first try to polish!',
-    siSolvedCount: 'Problems solved: {count}',
-    siBestSpeed: 'Best speed: {sec}s',
+    dayLogTitle: 'Play History',
+    siPracticeBtn: 'Practice',
+    siNextStarLabel: 'Next: ☆{n}',
+    siMaxStars: '☆5 Reached! True Master!',
+    siRustyNote: 'Skill is getting rusty. Solve 1 question on first try to polish it up!',
+    siSolvedCount: 'Total solved: {count}',
+    siBestSpeed: 'Best time: {sec}s',
 
     // Guide Tour
-    guideIntroTitle: 'How to Play',
-    guideIntroText: 'There are 3 ways to choose\nyour math practice:',
+    guideIntroTitle: 'Welcome to Dopa Drill!',
+    guideIntroText: 'There are 3 ways to practice\nmental arithmetic',
     guideLevelTitle: 'My Level',
-    guideLevelText: 'Problems tailored to your level.\nStarts with an assessment.',
-    guideGradesTitle: 'Grades 1 to 6',
-    guideGradesText: 'Practice standard curriculum\nfor each school grade.',
+    guideLevelText: 'Dynamic difficulty tuned for you.\nStarts with a quick diagnostic test.',
+    guideGradesTitle: 'Grade Practice',
+    guideGradesText: 'Grade 1–6 math curricula to\nsystematically consolidate skills.',
     guideTreeTitle: 'Skill Tree',
-    guideTreeText: 'Pick any specific topic\nyou want to master.',
+    guideTreeText: 'Freely pick and master specific skills\nstep by step.',
     guideTrophyTitle: 'Trophies',
-    guideTrophyText: 'Earn trophies by playing\nand keeping daily streaks!',
-    guideCollectTitle: 'Collection',
-    guideCollectText: 'Customize backgrounds, music,\neffects, and mascot outfits!',
-    guideLastTitle: 'When in doubt, pick My Level!',
-    guideLastText: 'Tap the ? button anytime\nto view this guide again.',
+    guideTrophyText: 'Earn badges as you practice.\nDaily check-ins bring extra surprises!',
+    guideCollectTitle: 'Themes & Music',
+    guideCollectText: 'Unlock dynamic backgrounds, music tracks,\nhit effects, and mascot styles!',
+    guideLastTitle: 'Unsure? Start with My Level!',
+    guideLastText: 'Tap the help button at the top left\nto view this guide anytime.',
     guideSkip: 'Skip',
     guideBack: 'Back',
     guideNext: 'Next',
-    guideStart: 'Start!',
+    guideStart: "Let's Play!",
     guideRecommend: 'Recommended',
-    guidePageOf: 'Page {cur} of {total}',
+    guidePageOf: '{cur} of {total}',
 
     // Almost / Miss Feedback
     almost: 'Almost!',
     almostTimeout: 'Combo Lost',
-    almostEnded: '{count} Combo Ended',
+    almostEnded: '{count}-Combo ended',
     comboCountTxt: '{count} Combo!',
   },
 };
 
+export function t(key, params = {}) {
+  const dict = STRINGS[currentLang] || STRINGS.uk;
+  let text = dict[key] || STRINGS.en[key] || key;
+  for (const [k, v] of Object.entries(params)) {
+    text = text.split('{' + k + '}').join(v);
+  }
+  return text;
+}
+
 // ---------------------------------------------------------------- Skills Translation
 export const SKILL_NAMES = {
-  zh: {
-    'g1-compose10': '10的分成与合成',
-    'g1-add-nc': '1位数的加法',
-    'g1-sub-nb': '10以内的减法',
-    'g1-add-c': '进位加法',
-    'g1-sub-b': '退位减法',
-    'g1-add3': '连加与连减',
-    'g1-add-2d1': '两位数加一位数',
-    'g1-sub-2d1': '两位数减一位数',
-    'g2-vadd2-nc': '两位数加法竖式',
-    'g2-vadd2-c': '进位加法竖式',
-    'g2-vsub2-nb': '两位数减法竖式',
-    'g2-vsub2-b': '退位减法竖式',
-    'g2-vadd3s': '过百加法',
-    'g2-vsub3s': '百以内退位减法',
-    'g2-kuku25': '九九乘法 2和5的乘法',
-    'g2-kuku34': '九九乘法 3和4的乘法',
-    'g2-kuku67': '九九乘法 6和7的乘法',
-    'g2-kuku891': '九九乘法 8、9、1的乘法',
-    'g2-kuku-mix': '九九乘法 综合混合',
-    'g2-mul-tens': '整十数乘一位数',
-    'g2-frac-of': '几分之一（1/2与1/4）',
-    'g3-vadd3': '三位数加法',
-    'g3-vsub3': '三位数减法',
-    'g3-vadd4': '四位数加法',
-    'g3-vsub4': '四位数减法',
-    'g3-div-basic': '表内除法',
-    'g3-div-rem': '有余数的除法',
-    'g3-div-tens': '整十数除以一位数',
-    'g3-vmul-2x1': '两位数乘一位数竖式',
-    'g3-vmul-3x1': '三位数乘一位数',
-    'g3-vmul-2x2': '两位数乘两位数',
-    'g3-vmul-3x2': '三位数乘两位数',
-    'g3-dec-add1': '一位小数加法',
-    'g3-dec-sub1': '一位小数减法',
-    'g3-frac-same': '同分母分数加减法',
-    'g4-vdiv-2d1': '两位数除以一位数竖式',
-    'g4-vdiv-3d1': '三位数除以一位数',
-    'g4-vdiv-2d2': '两位数除以两位数',
-    'g4-vdiv-3d2': '三位数除以两位数',
-    'g4-order': '四则混合运算顺序',
-    'g4-round': '近似数（四舍五入）',
-    'g4-dec-add2': '两位小数加减法',
-    'g4-dec-mul': '小数乘整数',
-    'g4-dec-div': '小数除以整数',
-    'g4-frac-mixed': '带分数加减法',
-    'g5-dec-mul': '小数乘小数',
-    'g5-dec-div': '小数除以小数',
-    'g5-gcd': '最大公因数',
-    'g5-lcm': '最小公倍数',
-    'g5-frac-reduce': '分数的约分',
-    'g5-frac-diff': '异分母分数加减法',
-    'g5-frac-int': '分数乘除整数',
-    'g5-percent': '百分数',
-    'g6-frac-mul': '分数乘分数',
-    'g6-frac-div': '分数除以分数',
-    'g6-frac-dec': '分数与小数混合计算',
-    'g6-ratio': '化简比与比例',
-    'g6-letter': '解方程（求未知数x）',
+  uk: {
+    'g1-compose10': 'Склад числа 10',
+    'g1-add-nc': 'Додавання в межах 10',
+    'g1-sub-nb': 'Віднімання в межах 10',
+    'g1-add-c': 'Додавання з переходом через 10',
+    'g1-sub-b': 'Віднімання з переходом через 10',
+    'g1-add3': 'Дії з 3 числами',
+    'g1-add-2d1': 'Двоцифрове + одноцифрове',
+    'g1-sub-2d1': 'Двоцифрове - одноцифрове',
+    'g2-vadd2-nc': 'Додавання 2-цифрових у стовпчик',
+    'g2-vadd2-c': 'Додавання у стовпчик з перенесенням',
+    'g2-vsub2-nb': 'Віднімання 2-цифрових у стовпчик',
+    'g2-vsub2-b': 'Віднімання у стовпчик з позичанням',
+    'g2-vadd3s': 'Додавання з переходом через 100',
+    'g2-vsub3s': 'Віднімання від 100',
+    'g2-kuku25': 'Множення: на 2 і 5',
+    'g2-kuku34': 'Множення: на 3 і 4',
+    'g2-kuku67': 'Множення: на 6 і 7',
+    'g2-kuku891': 'Множення: на 8, 9, 1',
+    'g2-kuku-mix': 'Таблиця множення: мікс',
+    'g2-mul-tens': 'Множення круглих десятків',
+    'g2-frac-of': 'Частини: 1/2 та 1/4',
+    'g3-vadd3': 'Додавання 3-цифрових чисел',
+    'g3-vsub3': 'Віднімання 3-цифрових чисел',
+    'g3-vadd4': 'Додавання 4-цифрових чисел',
+    'g3-vsub4': 'Віднімання 4-цифрових чисел',
+    'g3-div-basic': 'Табличне ділення',
+    'g3-div-rem': 'Ділення з остачею',
+    'g3-div-tens': 'Ділення круглих десятків',
+    'g3-vmul-2x1': 'Множення 2-значного на 1-значне',
+    'g3-vmul-3x1': 'Множення 3-значного на 1-значне',
+    'g3-vmul-2x2': 'Множення 2-значного на 2-значне',
+    'g3-vmul-3x2': 'Множення 3-значного на 2-значне',
+    'g3-dec-add1': 'Додавання десяткових (десяті)',
+    'g3-dec-sub1': 'Віднімання десяткових (десяті)',
+    'g3-frac-same': 'Дроби з однаковими знаменниками',
+    'g4-vdiv-2d1': 'Ділення 2-значного на 1-значне куточком',
+    'g4-vdiv-3d1': 'Ділення 3-значного на 1-значне',
+    'g4-vdiv-2d2': 'Ділення 2-значного на 2-значне',
+    'g4-vdiv-3d2': 'Ділення 3-значного на 2-значне',
+    'g4-order': 'Порядок виконання дій',
+    'g4-round': 'Округлення чисел',
+    'g4-dec-add2': 'Додавання й віднімання десяткових (соті)',
+    'g4-dec-mul': 'Множення десяткового на ціле',
+    'g4-dec-div': 'Ділення десяткового на ціле',
+    'g4-frac-mixed': 'Дії з мішаними числами',
+    'g5-dec-mul': 'Множення десяткових дробів',
+    'g5-dec-div': 'Ділення десяткових дробів',
+    'g5-gcd': 'Найбільший спільний дільник (НСД)',
+    'g5-lcm': 'Найменше спільне кратне (НСК)',
+    'g5-frac-reduce': 'Скорочення дробів',
+    'g5-frac-diff': 'Дроби з різними знаменниками',
+    'g5-frac-int': 'Дроби та цілі числа (× ÷)',
+    'g5-percent': 'Відсотки',
+    'g6-frac-mul': 'Множення звичайних дробів',
+    'g6-frac-div': 'Ділення звичайних дробів',
+    'g6-frac-dec': 'Десяткові та звичайні дроби',
+    'g6-ratio': 'Відношення та пропорції',
+    'g6-letter': 'Рівняння (знаходження x)',
   },
   en: {
     'g1-compose10': 'Pairs to 10',
@@ -750,26 +759,26 @@ export const SKILL_NAMES = {
 };
 
 export const LANES_I18N = {
-  zh: ['加减法', '乘除法', '小数与分数', '综合拓展'],
+  uk: ['Додавання і віднімання', 'Множення і ділення', 'Дроби та десяткові', 'Інші теми'],
   ja: ['たし・ひき', 'かけ・わり', '小数・分数', 'そのほか'],
   en: ['Add & Sub', 'Mult & Div', 'Dec & Frac', 'Other Topics'],
 };
 
 // ---------------------------------------------------------------- Trophy Translations
 export const CATS_I18N = {
-  zh: {
-    'つづける': '坚持不懈',
-    'たくさん': '练习海量',
-    'スキル': '技能大师',
-    'せいちょう': '自我成长',
-    'エクストラ': '极限挑战',
-    'コンボ': '连击大师',
-    'せいかく': '精准无误',
-    'ドパ': '多帕能量',
-    'ふくしゅう': '温故知新',
-    'がくねん': '年级全通',
-    'コレクション': '宝物收藏',
-    'ひみつ': '隐藏成就',
+  uk: {
+    'つづける': 'Постійність',
+    'たくさん': 'Кількість',
+    'スキル': 'Навички',
+    'せいちょう': 'Розвиток',
+    'エクストラ': 'Екстра-раунд',
+    'コンボ': 'Комбо',
+    'せいかく': 'Точність',
+    'ドパ': 'Допа-енергія',
+    'ふくしゅう': 'Повторення',
+    'がくねん': 'Класи',
+    'コレクション': 'Колекція',
+    'ひみつ': 'Таємниці',
   },
   ja: {
     'つづける': 'つづける',
@@ -802,52 +811,51 @@ export const CATS_I18N = {
 };
 
 export const RANK_NAME_I18N = {
-  zh: { bronze: '铜牌', silver: '银牌', gold: '金牌', rainbow: '彩虹', secret: '绝密' },
+  uk: { bronze: 'Бронза', silver: 'Срібло', gold: 'Золото', rainbow: 'Веселка', secret: 'Секрет' },
   ja: { bronze: 'どう', silver: 'ぎん', gold: 'きん', rainbow: 'にじ', secret: 'ひみつ' },
   en: { bronze: 'Bronze', silver: 'Silver', gold: 'Gold', rainbow: 'Rainbow', secret: 'Secret' },
 };
 
-const fmtZh = (n) => (n >= 10000 && n % 10000 === 0 ? `${n / 10000}万` : Number(n).toLocaleString('zh-CN'));
-const DOPA_LABELS_ZH = { 2: '100', 3: '1000', 4: '1万', 5: '10万', 6: '100万', 7: '1000万', 8: '1亿', 9: '10亿' };
+const fmtUk = (n) => Number(n).toLocaleString('uk-UA');
+const DOPA_LABELS_UK = { 2: '100', 3: '1 000', 4: '10 тис.', 5: '100 тис.', 6: '1 млн', 7: '10 млн', 8: '100 млн', 9: '1 млрд' };
 const DOPA_LABELS_EN = { 2: '100', 3: '1,000', 4: '10K', 5: '100K', 6: '1M', 7: '10M', 8: '100M', 9: '1B' };
 
-// Trophy series & descriptions
 export const TROPHY_SERIES_I18N = {
-  zh: {
-    days: { title: '每日出勤', name: (v) => `坚持 ${fmtZh(v)} 天`, desc: (v) => `累计游玩达到 ${fmtZh(v)} 天` },
-    streak: { title: '连续打卡', name: (v) => `连续 ${v} 天`, desc: (v) => `不间断连续游玩 ${v} 天` },
-    stickers: { title: '日历印章', name: (v) => `印章 ${v} 枚`, desc: (v) => `在打卡日历上收集 ${v} 枚印章` },
-    crowns: { title: '完美皇冠', name: (v) => `皇冠 ${v} 顶`, desc: (v) => `在日历上累计收获 ${v} 顶满分皇冠` },
-    plays: { title: '游玩次数', name: (v) => `游玩 ${fmtZh(v)} 轮`, desc: (v) => `完成 ${fmtZh(v)} 轮基础算术练习` },
-    minutes: { title: '练习时长', name: (v) => (v >= 60 ? `累计 ${v / 60} 小时` : `时长 ${v} 分钟`), desc: (v) => (v >= 60 ? `累计练习时间达 ${v / 60} 小时` : `累计练习时间达 ${v} 分钟`) },
-    problems: { title: '做题总数', name: (v) => `解题 ${fmtZh(v)} 道`, desc: (v) => `累计答对 ${fmtZh(v)} 道数学题` },
-    cells: { title: '填入数字', name: (v) => `填写 ${fmtZh(v)} 格`, desc: (v) => `在算式中正确输入 ${fmtZh(v)} 个数字格` },
-    unlocked: { title: '技能解锁', name: (v) => `解锁 ${v} 项`, desc: (v) => `在技能树中解锁 ${v} 项技能` },
-    mastered: { title: '技能掌握', name: (v) => `掌握 ${v} 项`, desc: (v) => `在技能树中彻底掌握 ${v} 项技能` },
-    extras: { title: '进入挑战', name: (v) => `挑战 ${v} 次`, desc: (v) => `进入加时挑战关卡 ${v} 次` },
-    extraBest: { title: '挑战单场答对', name: (v) => `单场挑战 ${v} 题`, desc: (v) => `在单次加时挑战中答对 ${v} 题` },
-    extraSolved: { title: '挑战累计答对', name: (v) => `挑战累计 ${fmtZh(v)} 题`, desc: (v) => `在加时挑战中累计答对 ${fmtZh(v)} 题` },
-    combo: { title: '连击达人', name: (v) => `${v} 连击`, desc: (v) => `达成 ${v} 次连续正确连击` },
-    perfects: { title: '满分全对', name: (v) => `100分 ${v} 次`, desc: (v) => `以初次100%全对成绩通关 ${v} 次` },
-    firstTry: { title: '初次正解', name: (v) => `首次答对 ${fmtZh(v)} 题`, desc: (v) => `第一遍就正确回答 ${fmtZh(v)} 题` },
-    dopa: { title: '多帕能量', name: (v) => `${DOPA_LABELS_ZH[v] || v}多帕`, desc: (v) => `单场比赛中多帕能量达到 ${DOPA_LABELS_ZH[v] || v}` },
-    bestDopa: { title: '多帕能量', name: (v) => `${DOPA_LABELS_ZH[v] || v}多帕`, desc: (v) => `单场比赛中多帕能量达到 ${DOPA_LABELS_ZH[v] || v}` },
-    review: { title: '错题攻坚', name: (v) => `复习 ${v} 题`, desc: (v) => `在复习模式中重新答对 ${v} 道错题` },
-    questDays: { title: '每日任务全清', name: (v) => `任务全清 ${v} 天`, desc: (v) => `完成当天全部 3 个每日任务达 ${v} 天` },
-    questRun: { title: '连续任务全清', name: (v) => `连续全清 ${v} 天`, desc: (v) => `连续 ${v} 天全部完成每日任务` },
-    hammer: { title: '补签铁锤', name: (v) => (v === 1 ? '初次补签' : `补签 ${v} 次`), desc: (v) => `使用补签铁锤拯救连续记录 ${v} 次` },
-    starsTotal: { title: '星星总数', name: (v) => `星星 ${v} 颗`, desc: (v) => `技能树中累计收集 ${v} 颗星星` },
-    star5: { title: '5星技能', name: (v) => `☆5 技能 ${v} 个`, desc: (v) => `将 ${v} 个技能提升至满级 ☆5` },
-    gradeStar3: { title: '全学年达☆3', name: (g) => `${g}年级全达☆3`, desc: (g) => `将${g}年级所有技能全部升至☆3及以上` },
-    gradeDone: { title: '学年掌握', name: (g) => `${g}年级大圆满`, desc: (g) => `彻底掌握${g}年级的所有技能` },
-    gradePlays: { title: '学年练习', name: (g) => `${g}年级练习`, desc: (g, v) => `在${g}年级分册中游玩 ${v} 轮` },
-    laneDone: { title: '领域大圆满', name: (idx) => `${LANES_I18N.zh[idx]}全掌握`, desc: (idx) => `彻底掌握“${LANES_I18N.zh[idx]}”分类下的全部技能` },
-    polished: { title: '擦亮技能', name: (v) => `擦亮 ${v} 次`, desc: (v) => `将生疏技能重新擦亮复习 ${v} 次` },
-    capsules: { title: '时光胶囊', name: (v) => `开启胶囊 ${v} 个`, desc: (v) => `开启 ${v} 个过去的时光胶囊挑战` },
-    capsuleFaster: { title: '超越过去', name: (v) => `超越过去 ${v} 次`, desc: (v) => `在时光胶囊中比最初答题速度更快 ${v} 次` },
-    grew: { title: '见证成长', name: (v) => `突破进步 ${v} 次`, desc: (v) => `在结算中触发“你进步啦！”记录 ${v} 次` },
-    items: { title: '外观收集', name: (v) => `收集外观 ${v} 个`, desc: (v) => `在宝物库中解锁收集 ${v} 种外观` },
-    catComplete: { title: '分类大圆满', name: (v) => `集齐 ${v} 大类`, desc: (v) => `完全集齐 ${v} 个外观分类的全部物品` },
+  uk: {
+    days: { title: 'Днів у грі', name: (v) => `${v} дн.`, desc: (v) => `Грати ${v} різних днів` },
+    streak: { title: 'Серія тренувань', name: (v) => `Серія ${v} дн.`, desc: (v) => `Тренуватися ${v} днів поспіль` },
+    stickers: { title: 'Штампи календаря', name: (v) => `Штампів: ${v}`, desc: (v) => `Зібрати ${v} штампів у календарі` },
+    crowns: { title: 'Ідеальні корони', name: (v) => `Корон: ${v}`, desc: (v) => `Зібрати ${v} корон за 100 балів у календарі` },
+    plays: { title: 'Зіграно раундів', name: (v) => `${v} раундів`, desc: (v) => `Пройти ${v} раундів тренувань` },
+    minutes: { title: 'Загальний час', name: (v) => (v >= 60 ? `${v / 60} год` : `${v} хв`), desc: (v) => `Тренуватися загалом ${v} хв` },
+    problems: { title: 'Розвʼязано завдань', name: (v) => `${fmtUk(v)} завдань`, desc: (v) => `Правильно розвʼязати ${fmtUk(v)} завдань` },
+    cells: { title: 'Введено цифр', name: (v) => `${fmtUk(v)} цифр`, desc: (v) => `Правильно ввести ${fmtUk(v)} цифр у розвʼязках` },
+    unlocked: { title: 'Відкрито навичок', name: (v) => `Відкрито ${v}`, desc: (v) => `Розблокувати ${v} навичок у дереві` },
+    mastered: { title: 'Опановано навичок', name: (v) => `Опановано ${v}`, desc: (v) => `Повністю опанувати ${v} навичок у дереві` },
+    extras: { title: 'Екстра-раунди', name: (v) => `Екстра ${v}`, desc: (v) => `Увійти до екстра-раунду ${v} разів` },
+    extraBest: { title: 'Рекорд в екстра', name: (v) => `Рекорд екстра: ${v}`, desc: (v) => `Розвʼязати ${v} завдань за один екстра-раунд` },
+    extraSolved: { title: 'Всього в екстра', name: (v) => `Всього в екстра: ${fmtUk(v)}`, desc: (v) => `Загалом розвʼязати ${fmtUk(v)} завдань в екстра-раундах` },
+    combo: { title: 'Майстер комбо', name: (v) => `Комбо ${v}`, desc: (v) => `Досягти серії з ${v} правильних відповідей` },
+    perfects: { title: 'Ідеальні 100 балів', name: (v) => `100 балів ×${v}`, desc: (v) => `Пройти раунд на 100 балів ${v} разів` },
+    firstTry: { title: 'З першої спроби', name: (v) => `З 1-ї спроби: ${fmtUk(v)}`, desc: (v) => `Розвʼязати ${fmtUk(v)} завдань з першої спроби` },
+    dopa: { title: 'Допа-енергія', name: (v) => `${DOPA_LABELS_UK[v] || v} Допа`, desc: (v) => `Досягти ${DOPA_LABELS_UK[v] || v} енергії за раунд` },
+    bestDopa: { title: 'Допа-енергія', name: (v) => `${DOPA_LABELS_UK[v] || v} Допа`, desc: (v) => `Досягти ${DOPA_LABELS_UK[v] || v} енергії за раунд` },
+    review: { title: 'Виправлення помилок', name: (v) => `Повторено: ${v}`, desc: (v) => `Виправити ${v} помилок у режимі повторення` },
+    questDays: { title: 'Дні бездоганних квестів', name: (v) => `Квести: ${v} дн.`, desc: (v) => `Виконати всі 3 щоденні завдання ${v} днів` },
+    questRun: { title: 'Серія щоденних квестів', name: (v) => `Квести поспіль: ${v} дн.`, desc: (v) => `Виконувати всі квести ${v} днів поспіль` },
+    hammer: { title: 'Рятувальний молоток', name: (v) => (v === 1 ? 'Перший порятунок' : `Молотків: ${v}`), desc: (v) => `Використати ремонтний молоток ${v} разів` },
+    starsTotal: { title: 'Зірки дерева навичок', name: (v) => `Зірок: ${v}`, desc: (v) => `Зібрати ${v} зірок у дереві навичок` },
+    star5: { title: 'Навички рівня ☆5', name: (v) => `☆5 навичок: ${v}`, desc: (v) => `Розвинути ${v} навичок до максимального рівня ☆5` },
+    gradeStar3: { title: 'Всі навички класу на ☆3', name: (g) => `${g} клас: всі на ☆3`, desc: (g) => `Підняти всі навички ${g} класу до ☆3 і вище` },
+    gradeDone: { title: 'Опанування класу', name: (g) => `${g} клас опановано`, desc: (g) => `Повністю опанувати всі навички ${g} класу` },
+    gradePlays: { title: 'Тренування за класами', name: (g) => `${g} клас тренування`, desc: (g, v) => `Зіграти ${v} раундів у розділі ${g} класу` },
+    laneDone: { title: 'Опанування розділу', name: (idx) => `Розділ: ${LANES_I18N.uk[idx]} опановано`, desc: (idx) => `Опанувати всі навички розділу «${LANES_I18N.uk[idx]}»` },
+    polished: { title: 'Освіження навичок', name: (v) => `Освіжено: ${v}`, desc: (v) => `Освіжити забуті навички ${v} разів` },
+    capsules: { title: 'Капсули часу', name: (v) => `Капсул: ${v}`, desc: (v) => `Відкрити ${v} капсул часу` },
+    capsuleFaster: { title: 'Швидше за минуле', name: (v) => `Швидше: ${v}`, desc: (v) => `Розвʼязати завдання з капсули швидше, ніж уперше (${v} разів)` },
+    grew: { title: 'Особистий прогрес', name: (v) => `Прогрес ×${v}`, desc: (v) => `Побачити екран «Твій прогрес!» ${v} разів` },
+    items: { title: 'Збирання колекції', name: (v) => `Предметів: ${v}`, desc: (v) => `Відкрити ${v} предметів у скарбниці` },
+    catComplete: { title: 'Повна категорія', name: (v) => `Категорій: ${v}`, desc: (v) => `Повністю зібрати всі предмети в ${v} категоріях` },
   },
   en: {
     days: { title: 'Days Played', name: (v) => `${v} Days`, desc: (v) => `Play on ${v} different days` },
@@ -860,40 +868,41 @@ export const TROPHY_SERIES_I18N = {
     cells: { title: 'Cells Filled', name: (v) => `${v} Cells`, desc: (v) => `Fill ${v} math digits correctly` },
     unlocked: { title: 'Skills Unlocked', name: (v) => `${v} Skills`, desc: (v) => `Unlock ${v} skills in the tree` },
     mastered: { title: 'Skills Mastered', name: (v) => `${v} Mastered`, desc: (v) => `Master ${v} skills in the tree` },
-    extras: { title: 'Extra Stages', name: (v) => `${v} Extras`, desc: (v) => `Reach the Extra stage ${v} times` },
-    extraBest: { title: 'Best Extra Run', name: (v) => `${v} in Extra`, desc: (v) => `Solve ${v} problems in a single Extra stage` },
-    extraSolved: { title: 'Total Extra Solved', name: (v) => `${v} Extra Total`, desc: (v) => `Solve ${v} problems across all Extra stages` },
-    combo: { title: 'Combos', name: (v) => `${v} Combo`, desc: (v) => `Reach a ${v} combo streak` },
-    perfects: { title: 'Perfect 100s', name: (v) => `${v} Perfect 100s`, desc: (v) => `Score 100 on first try ${v} times` },
-    firstTry: { title: 'First-Try Answers', name: (v) => `${v} First-Try`, desc: (v) => `Answer ${v} problems correctly on the first try` },
-    bestDopa: { title: 'Dopa Record', name: (v) => `Dopa ${v}`, desc: (v) => `Reach ${v} Dopa energy in one session` },
-    review: { title: 'Review Solved', name: (v) => `${v} Reviewed`, desc: (v) => `Solve ${v} mistakes in Review mode` },
-    questDays: { title: 'Quests Completed', name: (v) => `${v} Quest Days`, desc: (v) => `Complete all 3 daily quests on ${v} days` },
-    questRun: { title: 'Quest Streak', name: (v) => `${v}-Day Quest Streak`, desc: (v) => `Clear all daily quests for ${v} consecutive days` },
-    hammer: { title: 'Hammer Used', name: (v) => (v === 1 ? 'First Hammer' : `${v} Hammers`), desc: (v) => `Use a No-Count Hammer ${v} times` },
-    starsTotal: { title: 'Total Stars', name: (v) => `${v} Stars`, desc: (v) => `Earn a total of ${v} stars in the skill tree` },
-    star5: { title: '5-Star Skills', name: (v) => `${v} 5-Star Skills`, desc: (v) => `Raise ${v} skills to ☆5` },
-    gradeStar3: { title: 'All Grade ☆3', name: (g) => `Grade ${g} all ☆3`, desc: (g) => `Reach ☆3 or higher on all Grade ${g} skills` },
+    extras: { title: 'Extras Entered', name: (v) => `${v} Extras`, desc: (v) => `Enter the Extra stage ${v} times` },
+    extraBest: { title: 'Extra Best Solved', name: (v) => `${v} Solved`, desc: (v) => `Solve ${v} problems in a single Extra stage` },
+    extraSolved: { title: 'Extra Total Solved', name: (v) => `${v} Solved`, desc: (v) => `Solve ${v} problems total in Extra stages` },
+    combo: { title: 'Combo Master', name: (v) => `${v} Combo`, desc: (v) => `Achieve a streak of ${v} correct answers` },
+    perfects: { title: '100% Clears', name: (v) => `${v} Perfects`, desc: (v) => `Clear with 100% first-try accuracy ${v} times` },
+    firstTry: { title: 'First-Try Solved', name: (v) => `${v} Solved`, desc: (v) => `Solve ${v} problems correctly on the first try` },
+    dopa: { title: 'Dopa Energy', name: (v) => `${DOPA_LABELS_EN[v] || v} Dopa`, desc: (v) => `Reach ${DOPA_LABELS_EN[v] || v} Dopa in a single session` },
+    bestDopa: { title: 'Dopa Energy', name: (v) => `${DOPA_LABELS_EN[v] || v} Dopa`, desc: (v) => `Reach ${DOPA_LABELS_EN[v] || v} Dopa in a single session` },
+    review: { title: 'Mistakes Cleared', name: (v) => `${v} Cleared`, desc: (v) => `Re-solve ${v} mistakes in Review mode` },
+    questDays: { title: 'All Quests Done', name: (v) => `${v} Days`, desc: (v) => `Clear all 3 daily quests on ${v} days` },
+    questRun: { title: 'Quest Streak', name: (v) => `${v} Days`, desc: (v) => `Clear all daily quests for ${v} consecutive days` },
+    hammer: { title: 'No-Count Hammer', name: (v) => (v === 1 ? '1st Save' : `${v} Saves`), desc: (v) => `Use a No-Count Hammer to protect your streak ${v} times` },
+    starsTotal: { title: 'Total Stars', name: (v) => `${v} Stars`, desc: (v) => `Collect a total of ${v} stars across skills` },
+    star5: { title: '5-Star Skills', name: (v) => `${v} Skills`, desc: (v) => `Upgrade ${v} skills to max ☆5` },
+    gradeStar3: { title: 'All Skills to ☆3', name: (g) => `Grade ${g} ☆3`, desc: (g) => `Raise all skills in Grade ${g} to ☆3 or higher` },
     gradeDone: { title: 'Grade Mastered', name: (g) => `Grade ${g} Mastered`, desc: (g) => `Master all skills in Grade ${g}` },
     gradePlays: { title: 'Grade Practice', name: (g) => `Grade ${g} Practice`, desc: (g, v) => `Play ${v} sessions in Grade ${g}` },
-    laneDone: { title: 'Lane Mastered', name: (idx) => `${LANES_I18N.en[idx]} Mastered`, desc: (idx) => `Master all skills in ${LANES_I18N.en[idx]}` },
-    polished: { title: 'Skills Polished', name: (v) => `${v} Polished`, desc: (v) => `Polish a rusty skill ${v} times` },
-    capsules: { title: 'Time Capsules', name: (v) => `${v} Capsules`, desc: (v) => `Open ${v} time capsules` },
-    capsuleFaster: { title: 'Beating the Past', name: (v) => `${v} Times Faster`, desc: (v) => `Beat your past time in a time capsule ${v} times` },
-    grew: { title: 'Milestones Reached', name: (v) => `${v} Growth Hits`, desc: (v) => `Trigger the "Look at you grow!" card ${v} times` },
-    items: { title: 'Collection Items', name: (v) => `${v} Items`, desc: (v) => `Collect ${v} cosmetic items` },
-    catComplete: { title: 'Categories Done', name: (v) => `${v} Categories`, desc: (v) => `Collect every item in ${v} cosmetic categories` },
+    laneDone: { title: 'Lane Mastered', name: (idx) => `${LANES_I18N.en[idx]} Mastered`, desc: (idx) => `Master all skills under "${LANES_I18N.en[idx]}"` },
+    polished: { title: 'Skills Polished', name: (v) => `${v} Polished`, desc: (v) => `Polish rusty skills ${v} times` },
+    capsules: { title: 'Time Capsules', name: (v) => `${v} Capsules`, desc: (v) => `Open ${v} Time Capsules from past plays` },
+    capsuleFaster: { title: 'Faster than Past', name: (v) => `${v} Faster`, desc: (v) => `Solve a Time Capsule problem faster than your past record ${v} times` },
+    grew: { title: 'Growth Moments', name: (v) => `${v} Growths`, desc: (v) => `Trigger the "Your Growth!" breakdown ${v} times` },
+    items: { title: 'Items Collected', name: (v) => `${v} Items`, desc: (v) => `Unlock ${v} customization items` },
+    catComplete: { title: 'Categories Done', name: (v) => `${v} Categories`, desc: (v) => `Collect all items in ${v} different categories` },
   }
 };
 
 export const SECRET_TROPHIES_I18N = {
-  zh: {
-    'secret-perfect14': { name: '14题满分全对', desc: '在14题模式中零失误完美通关' },
-    'secret-extraClean': { name: '加时挑战无懈可击', desc: '在挑战阶段答对5题以上且零失误' },
-    'secret-sunday': { name: '星期天的数学', desc: '在周日开启数学速算练习' },
-    'secret-newyear': { name: '新年第一练', desc: '在1月1日元旦游玩' },
-    'secret-comeback': { name: '欢迎回来！', desc: '间隔一周以上重新回归游戏' },
-    'secret-allmodes': { name: '全能玩家', desc: '完整体验过个性化、年级、专项与复习全部模式' },
+  uk: {
+    'secret-perfect14': { name: '14 завдань без помилок', desc: 'Пройти раунд із 14 завдань без жодної похибки' },
+    'secret-extraClean': { name: 'Бездоганна екстра', desc: 'Розвʼязати від 5 завдань в екстра-раунді без жодної помилки' },
+    'secret-sunday': { name: 'Недільна математика', desc: 'Тренуватися у неділю' },
+    'secret-newyear': { name: 'Новорічний старт', desc: 'Зіграти 1 січня' },
+    'secret-comeback': { name: 'З поверненням!', desc: 'Повернутися до гри після перерви у тиждень або більше' },
+    'secret-allmodes': { name: 'Універсальний гравець', desc: 'Спробувати всі режими: Мій рівень, Класи, Тренування та Повторення' },
   },
   en: {
     'secret-perfect14': { name: '14-Problem Perfect', desc: 'Clear a 14-problem set with zero misses' },
@@ -907,15 +916,15 @@ export const SECRET_TROPHIES_I18N = {
 
 // ---------------------------------------------------------------- Unlocks Translation
 export const UNLOCK_CATS_I18N = {
-  zh: {
-    bg: '背景主题',
-    mark: '正确印记',
-    particle: '碎彩纸特效',
-    music: '游戏音乐',
-    costume: '角色装扮',
-    color: '多帕吉体色',
-    crowd: '观众小人',
-    finale: '终场演出',
+  uk: {
+    bg: 'Тема фону',
+    mark: 'Позначка успіху',
+    particle: 'Ефект конфеті',
+    music: 'Музика',
+    costume: 'Костюм',
+    color: 'Колір Допакічі',
+    crowd: 'Глядачі',
+    finale: 'Фінальне шоу',
   },
   ja: {
     bg: 'はいけい',
@@ -940,322 +949,266 @@ export const UNLOCK_CATS_I18N = {
 };
 
 export const UNLOCK_ITEMS_I18N = {
-  zh: {
-    'bg:classic': '动感光芒',
-    'mark:hanamaru': '樱花红圈',
-    'particle:classic': '碎彩纸',
-    'music:classic': '马林巴进行曲',
-    'costume:none': '原版无装扮',
-    'color:pink': '经典粉',
-    'crowd:classic': '缤纷观众',
-    'finale:classic': '巨大多帕吉',
-    'costume:cap': '棒球帽',
-    'particle:note': '欢乐音符',
-    'mark:stamp': '正确印章',
-    'bg:night': '宁静夜空',
-    'color:blue': '清新蓝',
-    'finale:fireworks': '盛大烟花秀',
-    'music:chip': '8-bit 复古电子',
-    'crowd:costume': '盛装观众',
-    'bg:sea': '海底气泡',
-    'bg:festival': '庙会祭典',
-    'bg:paper': '折纸手作',
-    'bg:space': '浩瀚宇宙',
-    'mark:medal': '闪耀奖章',
-    'mark:crown': '胜利王冠',
-    'mark:ring': '烟花之环',
-    'particle:petal': '飞舞花瓣',
-    'particle:digit': '跃动数字',
-    'particle:bubble': '梦幻泡泡',
-    'particle:candy': '甜蜜糖果',
-    'music:matsuri': '祭典伴奏',
-    'music:brass': '铜管管乐队',
-    'music:electro': '流行电音',
-    'costume:hachimaki': '必胜头巾',
-    'costume:cape': '英雄披风',
-    'costume:glasses': '圆框眼镜',
-    'costume:ribbon': '蝴蝶结发带',
-    'costume:crown': '迷你皇冠',
-    'costume:wizard': '魔法师尖帽',
-    'costume:headphones': '潮流耳机',
-    'color:mint': '薄荷绿',
-    'color:snow': '纯净雪白',
-    'color:yellow': '活力黄',
-    'color:violet': '梦幻紫',
-    'color:gold': '闪耀金',
-    'color:rainbow': '幻彩霓虹',
-    'crowd:rainbow': '彩虹观众',
-    'crowd:twins': '孪生同款观众',
-    'finale:parade': '狂欢大游行',
-    'finale:rocket': '飞天小火箭',
+  uk: {
+    'bg:classic': 'Динамічні промені',
+    'mark:hanamaru': 'Квіткове коло',
+    'particle:classic': 'Різнокольорове конфеті',
+    'music:classic': 'Марш маримби',
+    'costume:none': 'Без костюма',
+    'color:pink': 'Класичний рожевий',
+    'crowd:classic': 'Яскраві глядачі',
+    'finale:classic': 'Свято кульок',
+    'bg:night': 'Нічне небо',
+    'bg:sea': 'Морська блакить',
+    'bg:space': 'Глибокий космос',
+    'bg:festival': 'Яскравий фестиваль',
+    'bg:paper': 'Паперовий колаж',
+    'mark:star': 'Золота зірка',
+    'mark:check': 'Зелена галочка',
+    'mark:heart': 'Червоне серце',
+    'mark:double': 'Подвійне коло',
+    'mark:crown': 'Королівська корона',
+    'particle:note': 'Музичні ноти',
+    'particle:petal': 'Пелюстки квітів',
+    'particle:bubble': 'Мильні бульбашки',
+    'particle:candy': 'Солодощі',
+    'particle:digit': 'Сяючі цифри',
+    'music:electro': 'Електронний пульс',
+    'music:carnival': 'Карнавальний біт',
+    'music:chiptune': '8-бітний ретро-звук',
+    'music:brass': 'Святкові мідні духові',
+    'costume:ribbon': 'Милий бант',
+    'costume:cap': 'Кепка козирком назад',
+    'costume:glasses': 'Розумні окуляри',
+    'costume:crown': 'Сяюча корона',
+    'costume:headphones': 'DJ-навушники',
+    'costume:grad': 'Академічна шапочка',
+    'color:mint': 'Свіжа мʼята',
+    'color:yellow': 'Сонячно-жовтий',
+    'color:blue': 'Небесно-блакитний',
+    'color:violet': 'Чарівний фіолетовий',
+    'color:white': 'Сніжно-білий',
+    'crowd:costume': 'Глядачі в костюмах',
+    'crowd:rainbow': 'Веселкова група',
+    'crowd:twins': 'Близнюки-вболівальники',
+    'finale:fireworks': 'Грандіозний феєрверк',
+    'finale:rocket': 'Запуск ракети',
+    'finale:parade': 'Святковий парад',
   },
   en: {
-    'bg:classic': 'Sunburst',
-    'mark:hanamaru': 'Hanamaru Flower',
-    'particle:classic': 'Confetti',
+    'bg:classic': 'Dynamic Rays',
+    'mark:hanamaru': 'Cherry Ring',
+    'particle:classic': 'Confetti Streamers',
     'music:classic': 'Marimba March',
-    'costume:none': 'None',
-    'color:pink': 'Pink',
+    'costume:none': 'Default (No Costume)',
+    'color:pink': 'Classic Pink',
     'crowd:classic': 'Colorful Crowd',
-    'finale:classic': 'Giant Dopakichi',
-    'costume:cap': 'Baseball Cap',
+    'finale:classic': 'Balloon Fiesta',
+    'bg:night': 'Starlit Night',
+    'bg:sea': 'Ocean Breeze',
+    'bg:space': 'Cosmic Galaxy',
+    'bg:festival': 'Carnival Stripes',
+    'bg:paper': 'Origami Scrapbook',
+    'mark:star': 'Golden Star',
+    'mark:check': 'Green Check',
+    'mark:heart': 'Bright Heart',
+    'mark:double': 'Double Ring',
+    'mark:crown': 'Royal Crown',
     'particle:note': 'Musical Notes',
-    'mark:stamp': 'Stamp of Approval',
-    'bg:night': 'Night Sky',
-    'color:blue': 'Sky Blue',
-    'finale:fireworks': 'Grand Fireworks',
-    'music:chip': '8-Bit Chiptune',
-    'crowd:costume': 'Costumed Crowd',
-    'bg:sea': 'Ocean Bubbles',
-    'bg:festival': 'Festival Lanterns',
-    'bg:paper': 'Origami Paper',
-    'bg:space': 'Deep Space',
-    'mark:medal': 'Gold Medal',
-    'mark:crown': 'Victory Crown',
-    'mark:ring': 'Sparkler Ring',
-    'particle:petal': 'Flower Petals',
-    'particle:digit': 'Bouncing Numbers',
+    'particle:petal': 'Sakura Petals',
     'particle:bubble': 'Soap Bubbles',
-    'particle:candy': 'Sweet Candies',
-    'music:matsuri': 'Festival Drums',
-    'music:brass': 'Brass Band',
-    'music:electro': 'Electro Pop',
-    'costume:hachimaki': 'Headband',
-    'costume:cape': 'Hero Cape',
-    'costume:glasses': 'Round Glasses',
+    'particle:candy': 'Fruity Candies',
+    'particle:digit': 'Glowing Digits',
+    'music:electro': 'Electro Pulse',
+    'music:carnival': 'Carnival Beat',
+    'music:chiptune': '8-Bit Chiptune',
+    'music:brass': 'Festival Brass',
     'costume:ribbon': 'Cute Ribbon',
-    'costume:crown': 'Royal Crown',
-    'costume:wizard': 'Wizard Hat',
+    'costume:cap': 'Backwards Cap',
+    'costume:glasses': 'Smart Glasses',
+    'costume:crown': 'Golden Crown',
     'costume:headphones': 'DJ Headphones',
-    'color:mint': 'Mint Green',
-    'color:snow': 'Snow White',
+    'costume:grad': 'Graduation Cap',
+    'color:mint': 'Mint Breeze',
     'color:yellow': 'Sunny Yellow',
+    'color:blue': 'Sky Blue',
     'color:violet': 'Magic Violet',
-    'color:gold': 'Shining Gold',
-    'color:rainbow': 'Rainbow Glow',
-    'crowd:rainbow': 'Rainbow Crowd',
-    'crowd:twins': 'Twin Crowd',
-    'finale:parade': 'Festive Parade',
-    'finale:rocket': 'Space Rocket',
+    'color:white': 'Snow White',
+    'crowd:costume': 'Costumed Crowd',
+    'crowd:rainbow': 'Rainbow Friends',
+    'crowd:twins': 'Cheering Twins',
+    'finale:fireworks': 'Sky Fireworks',
+    'finale:rocket': 'Rocket Launch',
+    'finale:parade': 'Gala Parade',
   }
 };
 
-// ---------------------------------------------------------------- Helper Functions
-export function t(key, params = {}) {
-  const dict = STRINGS[currentLang] || STRINGS.zh;
-  let str = dict[key] ?? (STRINGS.ja[key] || key);
-  for (const [k, v] of Object.entries(params)) {
-    str = str.replace(new RegExp(`\\{${k}\\}`, 'g'), v);
-  }
-  return str;
-}
-
 export function skillName(id) {
-  if (currentLang === 'ja') return null; // fallback to native sk.name
+  if (currentLang === 'ja') return null;
   const dict = SKILL_NAMES[currentLang];
-  return dict ? dict[id] : null;
+  return (dict && dict[id]) || null;
 }
 
-export function laneName(idx) {
-  const lanes = LANES_I18N[currentLang] || LANES_I18N.zh;
-  return lanes[idx] || '';
+export function laneName(index) {
+  const lanes = LANES_I18N[currentLang] || LANES_I18N.uk;
+  return lanes[index] || '';
 }
 
 export function trophyCatName(cat) {
-  const dict = CATS_I18N[currentLang] || CATS_I18N.zh;
+  const dict = CATS_I18N[currentLang] || CATS_I18N.uk;
   return dict[cat] || cat;
 }
 
 export function rankName(rank) {
-  const dict = RANK_NAME_I18N[currentLang] || RANK_NAME_I18N.zh;
+  const dict = RANK_NAME_I18N[currentLang] || RANK_NAME_I18N.uk;
   return dict[rank] || rank;
 }
 
-export function unlockCatName(catKey) {
-  const dict = UNLOCK_CATS_I18N[currentLang] || UNLOCK_CATS_I18N.zh;
-  return dict[catKey] || catKey;
+export function unlockCatName(cat) {
+  const dict = UNLOCK_CATS_I18N[currentLang] || UNLOCK_CATS_I18N.uk;
+  return dict[cat] || cat;
 }
 
 export function unlockItemName(id) {
   if (currentLang === 'ja') return null;
   const dict = UNLOCK_ITEMS_I18N[currentLang];
-  return dict ? dict[id] : null;
+  return (dict && dict[id]) || null;
 }
 
-export function trophySeriesInfo(key) {
-  const dict = TROPHY_SERIES_I18N[currentLang];
-  return dict ? dict[key] : null;
-}
-
-export function secretTrophyInfo(id) {
-  const dict = SECRET_TROPHIES_I18N[currentLang];
-  return dict ? dict[id] : null;
-}
-
-export function trophySeriesTitle(seriesKey, fallbackTitle) {
-  if (currentLang === 'ja' || !seriesKey) return fallbackTitle;
-  const lang = currentLang === 'en' ? 'en' : 'zh';
-  const dict = TROPHY_SERIES_I18N[lang] || TROPHY_SERIES_I18N.zh;
-  if (!dict) return fallbackTitle;
+export function trophySeriesTitle(seriesKey, jaTitle) {
+  if (currentLang === 'ja') return jaTitle;
+  const lang = currentLang === 'en' ? 'en' : 'uk';
+  const dict = TROPHY_SERIES_I18N[lang] || TROPHY_SERIES_I18N.uk;
   const gm = /^grade([1-6])$/.exec(seriesKey);
   if (gm) {
     const g = gm[1];
-    return lang === 'zh' ? `${g}年级练习` : `Grade ${g} Practice`;
+    return lang === 'uk' ? `Тренування ${g} класу` : `Grade ${g} Practice`;
   }
-  if (seriesKey === 'dopa' && dict.dopa) return dict.dopa.title;
-  if (seriesKey === 'dopa' && dict.bestDopa) return dict.bestDopa.title;
-  if (dict[seriesKey] && dict[seriesKey].title) return dict[seriesKey].title;
-  return fallbackTitle;
+  return (dict[seriesKey] && dict[seriesKey].title) || jaTitle;
 }
 
-export function trophyItemI18n(item) {
-  if (!item) return { name: '', desc: '' };
-  if (currentLang === 'ja') return { name: item.name, desc: item.desc };
-
-  const lang = currentLang === 'en' ? 'en' : 'zh';
+export function trophyItemName(item) {
+  if (!item) return '';
+  if (currentLang === 'ja') return item.name;
+  const lang = currentLang === 'en' ? 'en' : 'uk';
   const id = item.id || '';
   const seriesKey = item.series || '';
   const need = item.need;
 
-  // 1. Secrets
-  if (id.startsWith('secret-')) {
+  if (item.secret) {
     const sdict = SECRET_TROPHIES_I18N[lang] || {};
-    if (sdict[id]) return sdict[id];
+    if (sdict[id]) return sdict[id].name;
   }
-
-  // 2. Grade Done
   const gDone = /^gradeDone-([1-6])$/.exec(id);
   if (gDone) {
     const g = gDone[1];
-    return lang === 'zh'
-      ? { name: `${g}年级大圆满`, desc: `彻底掌握${g}年级的所有技能` }
-      : { name: `Grade ${g} Mastered`, desc: `Master all skills in Grade ${g}` };
+    return lang === 'uk' ? `${g} клас опановано` : `Grade ${g} Mastered`;
   }
-
-  // 3. Grade Star 3
   const gStar = /^gradeStar3-([1-6])$/.exec(id);
   if (gStar) {
     const g = gStar[1];
-    return lang === 'zh'
-      ? { name: `${g}年级全达☆3`, desc: `将${g}年级所有技能全部升至☆3及以上` }
-      : { name: `Grade ${g} all ☆3`, desc: `Reach ☆3 or higher on all Grade ${g} skills` };
+    return lang === 'uk' ? `${g} клас: всі на ☆3` : `Grade ${g} All ☆3`;
   }
-
-  // 4. Lane Done
   const lDone = /^laneDone-([0-3])$/.exec(id);
   if (lDone) {
     const idx = Number(lDone[1]);
-    const lName = (LANES_I18N[lang] && LANES_I18N[lang][idx]) || `分类${idx}`;
-    return lang === 'zh'
-      ? { name: `「${lName}」全掌握`, desc: `彻底掌握“${lName}”分类下的全部技能` }
-      : { name: `${lName} Mastered`, desc: `Master all skills in ${lName}` };
+    const lName = (LANES_I18N[lang] && LANES_I18N[lang][idx]) || `Розділ ${idx}`;
+    return lang === 'uk' ? `${lName} опановано` : `${lName} Mastered`;
   }
-
-  // 5. Grade 1 ~ 6 Plays
   const gPlay = /^grade([1-6])$/.exec(seriesKey);
   if (gPlay) {
     const g = gPlay[1];
-    return lang === 'zh'
-      ? { name: `${g}年级 ${need} 轮`, desc: `在「${g}年级」分册中游玩 ${need} 轮` }
-      : { name: `Grade ${g} (${need} Sessions)`, desc: `Play ${need} sessions in Grade ${g}` };
+    return lang === 'uk' ? `${g} клас: ${need} раундів` : `Grade ${g}: ${need} Plays`;
   }
-
-  // 6. Dopa
   if (seriesKey === 'dopa') {
-    const dLabel = (lang === 'zh' ? DOPA_LABELS_ZH[need] : DOPA_LABELS_EN[need]) || String(need);
-    return lang === 'zh'
-      ? { name: `${dLabel}多帕`, desc: `单场比赛中多帕能量达到 ${dLabel}` }
-      : { name: `${dLabel} Dopa`, desc: `Reach ${dLabel} Dopa energy in one session` };
+    const dLabel = (lang === 'uk' ? DOPA_LABELS_UK[need] : DOPA_LABELS_EN[need]) || String(need);
+    return lang === 'uk' ? `${dLabel} Допа` : `${dLabel} Dopa`;
   }
 
-  // 7. General Series
   const dict = TROPHY_SERIES_I18N[lang] || {};
   const sdict = dict[seriesKey] || (seriesKey === 'dopa' ? dict.bestDopa : null);
   if (sdict) {
     const name = typeof sdict.name === 'function' ? sdict.name(need) : sdict.name;
-    const desc = typeof sdict.desc === 'function' ? sdict.desc(need) : sdict.desc;
-    if (name && desc) return { name, desc };
+    if (name) return name;
   }
-
-  return { name: item.name, desc: item.desc };
-}
-
-export function trophyItemName(item) {
-  return trophyItemI18n(item).name;
+  return item.name;
 }
 
 export function trophyItemDesc(item) {
-  return trophyItemI18n(item).desc;
-}
+  if (!item) return '';
+  if (currentLang === 'ja') return item.desc;
+  const lang = currentLang === 'en' ? 'en' : 'uk';
+  const id = item.id || '';
+  const seriesKey = item.series || '';
+  const need = item.need;
 
-export function questTextI18n(q, fallbackText) {
-  if (currentLang === 'ja') return fallbackText;
-  if (!q) return '';
-  if (currentLang === 'zh') {
-    switch (q.id) {
-      case 'play1': return '游玩 1 轮算术练习';
-      case 'play2': return '游玩 2 轮算术练习';
-      case 'combo5': return '达成 5 连击';
-      case 'combo20': return '达成 20 连击';
-      case 'first5': return '初次正解 5 道题';
-      case 'review1': return '复习攻克 1 道错题';
-      case 'new1': return '学习 1 道新技能题目';
-      case 'extra': return '进入加时挑战关卡';
-      case 'extra5': return '在加时挑战中答对 5 题';
-      case 'grade1': return '在年级分册中游玩 1 轮';
-      case 'learn10': return '练习中的技能答对 10 题';
-      case 'polish': return `擦亮生疏技能「${skillName(q.skill) || ''}」（答对3题）`;
-      default: return fallbackText;
-    }
+  if (item.secret) {
+    const sdict = SECRET_TROPHIES_I18N[lang] || {};
+    if (sdict[id]) return sdict[id].desc;
   }
-  if (currentLang === 'en') {
-    switch (q.id) {
-      case 'play1': return 'Play 1 session';
-      case 'play2': return 'Play 2 sessions';
-      case 'combo5': return 'Reach a 5 combo';
-      case 'combo20': return 'Reach a 20 combo';
-      case 'first5': return 'Answer 5 problems on first try';
-      case 'review1': return 'Review 1 mistake';
-      case 'new1': return 'Solve 1 problem of a NEW skill';
-      case 'extra': return 'Reach the Extra stage';
-      case 'extra5': return 'Solve 5 problems in Extra stage';
-      case 'grade1': return 'Play 1 session by grade';
-      case 'learn10': return 'Solve 10 problems of learning skills';
-      case 'polish': return `Polish rusty skill "${skillName(q.skill) || ''}" (3 problems)`;
-      default: return fallbackText;
-    }
+  const gDone = /^gradeDone-([1-6])$/.exec(id);
+  if (gDone) {
+    const g = gDone[1];
+    return lang === 'uk' ? `Повністю опанувати всі навички ${g} класу` : `Master all skills in Grade ${g}`;
   }
-  return fallbackText;
+  const gStar = /^gradeStar3-([1-6])$/.exec(id);
+  if (gStar) {
+    const g = gStar[1];
+    return lang === 'uk' ? `Підняти всі навички ${g} класу до ☆3 і вище` : `Raise all skills in Grade ${g} to ☆3 or higher`;
+  }
+  const lDone = /^laneDone-([0-3])$/.exec(id);
+  if (lDone) {
+    const idx = Number(lDone[1]);
+    const lName = (LANES_I18N[lang] && LANES_I18N[lang][idx]) || `Розділ ${idx}`;
+    return lang === 'uk' ? `Повністю опанувати всі навички розділу «${lName}»` : `Master all skills under "${lName}"`;
+  }
+  const gPlay = /^grade([1-6])$/.exec(seriesKey);
+  if (gPlay) {
+    const g = gPlay[1];
+    return lang === 'uk' ? `Зіграти ${need} раундів у розділі ${g} класу` : `Play ${need} sessions in Grade ${g}`;
+  }
+  if (seriesKey === 'dopa') {
+    const dLabel = (lang === 'uk' ? DOPA_LABELS_UK[need] : DOPA_LABELS_EN[need]) || String(need);
+    return lang === 'uk' ? `Досягти ${dLabel} енергії Допа за один раунд` : `Reach ${dLabel} Dopa in a single session`;
+  }
+
+  const dict = TROPHY_SERIES_I18N[lang] || {};
+  const sdict = dict[seriesKey] || (seriesKey === 'dopa' ? dict.bestDopa : null);
+  if (sdict) {
+    const desc = typeof sdict.desc === 'function' ? sdict.desc(need) : sdict.desc;
+    if (desc) return desc;
+  }
+  return item.desc;
 }
 
 export function problemTitle(jaTitle) {
   if (currentLang === 'ja' || !jaTitle) return jaTitle;
-  const dictZh = {
-    'わりざん': '除法',
-    'あまりのあるわりざん': '有余数的除法',
-    '小数のたしざん': '小数加法',
-    '小数のひきざん': '小数减法',
-    '小数のかけざん': '小数乘法',
-    '小数のわりざん': '小数除法',
-    'たしざん': '加法',
-    'ひきざん': '减法',
-    '3つのかず': '连加连减',
-    'かけざん': '乘法',
-    'ぶんすう': '分数',
-    '最大公約数': '最大公因数',
-    '最小公倍数': '最小公倍数',
-    'けいさんのきまり': '运算顺序',
-    'がい数': '近似数',
-    '百分率': '百分数',
-    'ひ': '比例',
-    'xをもとめる': '解方程',
-    '約分': '约分',
-    '分数のたしひき': '分数加减法',
-    '分数と整数': '分数与整数运算',
-    '分数のかけざん': '分数乘法',
-    '分数のわりざん': '分数除法',
-    '小数と分数': '小数与分数运算',
-    'いくつといくつ': '数的分解与组成',
+  const dictUk = {
+    'わりざん': 'Ділення',
+    'あまりのあるわりざん': 'Ділення з остачею',
+    '小数のたしざん': 'Додавання десяткових дробів',
+    '小数のひきざん': 'Віднімання десяткових дробів',
+    '小数のかけざん': 'Множення десяткових дробів',
+    '小数のわりざん': 'Ділення десяткових дробів',
+    'たしざん': 'Додавання',
+    'ひきざん': 'Віднімання',
+    '3つのかず': 'Дії з 3 числами',
+    'かけざん': 'Множення',
+    'ぶんすう': 'Дроби',
+    '最大公約数': 'НСД',
+    '最小公倍数': 'НСК',
+    'けいさんのきまり': 'Порядок дій',
+    'がい数': 'Округлення',
+    '百分率': 'Відсотки',
+    'ひ': 'Пропорції',
+    'xをもとめる': 'Знаходження x',
+    '約分': 'Скорочення дробів',
+    '分数のたしひき': 'Додавання та віднімання дробів',
+    '分数と整数': 'Дроби та цілі числа',
+    '分数のかけざん': 'Множення дробів',
+    '分数のわりざん': 'Ділення дробів',
+    '小数と分数': 'Десяткові та звичайні дроби',
+    'いくつといくつ': 'Склад числа',
   };
   const dictEn = {
     'わりざん': 'Division',
@@ -1284,32 +1237,32 @@ export function problemTitle(jaTitle) {
     '小数と分数': 'Decimals & Fractions',
     'いくつといくつ': 'Making Numbers',
   };
-  const d = currentLang === 'en' ? dictEn : dictZh;
+  const d = currentLang === 'en' ? dictEn : dictUk;
   return d[jaTitle] || jaTitle;
 }
 
 export function stepLabel(jaLabel) {
   if (currentLang === 'ja' || !jaLabel) return jaLabel;
   const isEn = currentLang === 'en';
-  const dictZh = {
-    '一の位': '个位',
-    '十の位': '十位',
-    '百の位': '百位',
-    '千の位': '千位',
-    '万の位': '万位',
-    '十万の位': '十万位',
-    '小数第一位': '十分位',
-    '小数第二位': '百分位',
-    '小数第三位': '千分位',
-    '整数の部分': '整数部分',
-    '分子': '分子',
-    '分母': '分母',
-    '商': '商',
-    'あまり': '余数',
-    'こたえ': '答案',
-    'くりあがり': '进位',
-    'くりさがり': '退位',
-    'ひいた のこり': '相减求差',
+  const dictUk = {
+    '一の位': 'Одиниці',
+    '十の位': 'Десятки',
+    '百の位': 'Сотні',
+    '千の位': 'Тисячі',
+    '万の位': 'Десятки тисяч',
+    '十万の位': 'Сотні тисяч',
+    '小数第一位': 'Десяті',
+    '小数第二位': 'Соті',
+    '小数第三位': 'Тисячні',
+    '整数の部分': 'Ціла частина',
+    '分子': 'Чисельник',
+    '分母': 'Знаменник',
+    '商': 'Частка',
+    'あまり': 'Остача',
+    'こたえ': 'Відповідь',
+    'くりあがり': 'Перенесення',
+    'くりさがり': 'Позичання',
+    'ひいた のこり': 'Різниця',
   };
   const dictEn = {
     '一の位': 'Ones',
@@ -1321,7 +1274,7 @@ export function stepLabel(jaLabel) {
     '小数第一位': 'Tenths',
     '小数第二位': 'Hundredths',
     '小数第三位': 'Thousandths',
-    '整数の部分': 'Whole number',
+    '整数の部分': 'Integer Part',
     '分子': 'Numerator',
     '分母': 'Denominator',
     '商': 'Quotient',
@@ -1329,272 +1282,186 @@ export function stepLabel(jaLabel) {
     'こたえ': 'Answer',
     'くりあがり': 'Carry',
     'くりさがり': 'Borrow',
-    'ひいた のこり': 'Subtract',
+    'ひいた のこり': 'Remainder',
   };
-  const d = isEn ? dictEn : dictZh;
+  const d = isEn ? dictEn : dictUk;
   if (d[jaLabel]) return d[jaLabel];
 
-  // 动态模式 1: `${factor}をかける`，如 "2をかける"
   const mMul = /^(\d+)をかける$/.exec(jaLabel);
   if (mMul) {
-    return isEn ? `Multiply by ${mMul[1]}` : `乘以 ${mMul[1]}`;
+    return isEn ? `Multiply by ${mMul[1]}` : `Помножити на ${mMul[1]}`;
   }
-
-  // 动态模式 2: `たす（${PLACE[i]}）`，如 "たす（一の位）"
   const mAdd = /^たす（(.+)）$/.exec(jaLabel);
   if (mAdd) {
     const sub = d[mAdd[1]] || mAdd[1];
-    return isEn ? `Add (${sub})` : `相加（${sub}）`;
+    return isEn ? `Add (${sub})` : `Додати (${sub})`;
   }
-
-  // 动态模式 3: `商の${PLACE[cols - 1 - col]}`，如 "商の一の位"
   const mQuot = /^商の(.+)$/.exec(jaLabel);
   if (mQuot) {
     const sub = d[mQuot[1]] || mQuot[1];
-    return isEn ? `Quotient ${sub}` : `商的${sub}`;
+    return isEn ? `Quotient (${sub})` : `Частка (${sub})`;
   }
-
   return jaLabel;
 }
 
 export function formatDopaValue(L) {
+  if (L <= 0) return '0';
   const v = Math.round(10 ** L);
-  if (currentLang === 'en') {
-    if (v >= 1e9) return `${(v / 1e9).toFixed(1)}B`;
-    if (v >= 1e6) return `${(v / 1e6).toFixed(1)}M`;
-    if (v >= 1e3) return `${(v / 1e3).toFixed(1)}K`;
+  if (currentLang === 'ja') {
+    if (v >= 100000000) return `${v / 100000000}億`;
+    if (v >= 10000) return `${v / 10000}万`;
     return String(v);
   }
-  if (currentLang === 'zh') {
-    if (v >= 1e8) return `${Math.round(v / 1e8)}亿`;
-    if (v >= 1e4) return `${Math.round(v / 1e4)}万`;
+  if (currentLang === 'uk') {
+    if (v >= 1000000000) return `${v / 1000000000} млрд`;
+    if (v >= 1000000) return `${v / 1000000} млн`;
+    if (v >= 1000) return `${v / 1000} тис.`;
     return String(v);
   }
-  // ja default
-  if (v >= 1e8) return `${Math.round(v / 1e8)}億`;
-  if (v >= 1e4) return `${Math.round(v / 1e4)}万`;
+  if (v >= 1000000000) return `${v / 1000000000}B`;
+  if (v >= 1000000) return `${v / 1000000}M`;
+  if (v >= 1000) return `${v / 1000}K`;
   return String(v);
 }
 
 export function nextStarI18n(next) {
-  if (!next) return null;
-  if (currentLang === 'ja') return next;
+  if (!next) return next;
   const { n, text, now } = next;
-  if (currentLang === 'zh') {
-    let zhText = text;
-    let zhNow = now;
+  if (currentLang === 'ja') return next;
+
+  if (currentLang === 'uk') {
+    let ukText = text;
+    let ukNow = now;
     if (n === 2) {
-      zhText = text.replace(/さいきん\s*(\d+)もんの\s*初回正解が\s*(\d+)%\s*いじょう/, '最近 $1 题初次正解率达 $2% 以上');
-      zhNow = now.replace(/いま\s*(\d+)もん・(\d+)%/, '当前 $1 题·$2%');
+      ukText = text.replace(/さいきん\s*(\d+)もんの\s*初回正解が\s*(\d+)%\s*いじょう/, 'Влучність з 1-ї спроби за останні $1 завдань від $2%');
+      ukNow = now.replace(/いま\s*(\d+)もん・(\d+)%/, 'Зараз $1 завд. · $2%');
     } else if (n === 3) {
-      zhText = text.replace(/1もんを\s*だいたい\s*([\d.]+)びょう\s*いないで\s*とく/, '每题平均在 $1 秒内解答完毕');
-      zhNow = now.replace(/いま\s*(\d+)もん/, '当前已答 $1 题')
-        .replace(/いま\s*([\d.]+)びょう（(\d+)\/(\d+)もん）/, '当前 $1 秒（已答 $2/$3 题）');
+      ukText = text.replace(/1もんを\s*だいたい\s*([\d.]+)\s*びょう\s*いないで\s*とく/, 'Середній час на завдання до $1 с');
+      ukNow = now.replace(/いま\s*([\d.]+)\s*びょう（(\d+)\/(\d+)もん）/, 'Зараз $1 с ($2/$3 завд.)');
     } else if (n === 4) {
-      zhText = text.replace(/☆3から\s*(\d+)日\s*たってから、(\d+)もん\s*つづけて\s*初回正解/, '达到 ☆3 后满 $1 天，且连续 $2 题初次答对');
-      zhNow = now.replace(/あと\s*(\d+)日\s*まってね/, '还需等待 $1 天')
-        .replace(/きょうから\s*ちょうせん\s*できるよ/, '今天即可开始挑战！');
+      ukText = text.replace(/☆3から\s*(\d+)日\s*たってから、(\d+)もん\s*つづけて\s*初回正解/, 'Через $1 дн. після ☆3, $2 поспіль з 1-ї спроби');
+      ukNow = now.replace(/あと\s*(\d+)日\s*まってね/, 'Зачекай ще $1 дн.');
     } else if (n === 5) {
-      zhText = text.replace(/さいきん\s*(\d+)もんの\s*初回正解が\s*(\d+)%\s*いじょうで、1もん\s*([\d.]+)びょう\s*いない/, '最近 $1 题初次正解率达 $2% 以上，且每题在 $3 秒以内');
-      zhNow = now.replace(/いま\s*(\d+)%・([\d.]+)びょう/, '当前 $1%·$2 秒')
-        .replace(/いま\s*(\d+)%/, '当前 $1%');
+      ukText = text.replace(/☆4から\s*(\d+)日\s*たってから、(\d+)もん\s*つづけて\s*初回正解/, 'Через $1 дн. після ☆4, $2 поспіль з 1-ї спроби');
+      ukNow = now.replace(/あと\s*(\d+)日\s*まってね/, 'Зачекай ще $1 дн.');
     }
-    return { n, text: zhText, now: zhNow };
+    return { n, text: ukText, now: ukNow };
   }
-  if (currentLang === 'en') {
-    let enText = text;
-    let enNow = now;
-    if (n === 2) {
-      enText = text.replace(/さいきん\s*(\d+)もんの\s*初回正解が\s*(\d+)%\s*いじょう/, 'First-try rate >= $2% on last $1 problems');
-      enNow = now.replace(/いま\s*(\d+)もん・(\d+)%/, 'Now: $1 problems, $2%');
-    } else if (n === 3) {
-      enText = text.replace(/1もんを\s*だいたい\s*([\d.]+)びょう\s*いないで\s*とく/, 'Solve each problem within ~$1s');
-      enNow = now.replace(/いま\s*(\d+)もん/, 'Now: $1 problems')
-        .replace(/いま\s*([\d.]+)びょう（(\d+)\/(\d+)もん）/, 'Now: $1s ($2/$3 problems)');
-    } else if (n === 4) {
-      enText = text.replace(/☆3から\s*(\d+)日\s*たってから、(\d+)もん\s*つづけて\s*初回正解/, '$1 days after ☆3, get $2 first-try answers in a row');
-      enNow = now.replace(/あと\s*(\d+)日\s*まってね/, '$1 more day(s) to wait')
-        .replace(/きょうから\s*ちょうせん\s*できるよ/, 'Ready to challenge today!');
-    } else if (n === 5) {
-      enText = text.replace(/さいきん\s*(\d+)もんの\s*初回正解が\s*(\d+)%\s*いじょうで、1もん\s*([\d.]+)びょう\s*いない/, 'Last $1 problems: first-try >= $2% and under $3s each');
-      enNow = now.replace(/いま\s*(\d+)%・([\d.]+)びょう/, 'Now: $1% · $2s')
-        .replace(/いま\s*(\d+)%/, 'Now: $1%');
-    }
-    return { n, text: enText, now: enNow };
+
+  // English fallback
+  let enText = text;
+  let enNow = now;
+  if (n === 2) {
+    enText = text.replace(/さいきん\s*(\d+)もんの\s*初回正解が\s*(\d+)%\s*いじょう/, 'First-try accuracy 80%+ over last 10 questions');
+    enNow = now.replace(/いま\s*(\d+)もん・(\d+)%/, 'Currently $1 Qs · $2%');
+  } else if (n === 3) {
+    enText = text.replace(/1もんを\s*だいたい\s*([\d.]+)\s*びょう\s*いないで\s*とく/, 'Solve each in approx. $1s or less');
+    enNow = now.replace(/いま\s*([\d.]+)\s*びょう（(\d+)\/(\d+)もん）/, 'Now $1s ($2/$3 Qs)');
+  } else if (n === 4) {
+    enText = text.replace(/☆3から\s*(\d+)日\s*たってから、(\d+)もん\s*つづけて\s*初回正解/, '$1 days after ☆3, get $2 in a row on first try');
+    enNow = now.replace(/あと\s*(\d+)日\s*まってね/, '$1 day(s) remaining');
+  } else if (n === 5) {
+    enText = text.replace(/☆4から\s*(\d+)日\s*たってから、(\d+)もん\s*つづけて\s*初回正解/, '$1 days after ☆4, get $2 in a row on first try');
+    enNow = now.replace(/あと\s*(\d+)日\s*まってね/, '$1 day(s) remaining');
   }
-  return next;
+  return { n, text: enText, now: enNow };
 }
 
-export function monthYearText(y, m) {
-  if (currentLang === 'zh') return `${y}年${m + 1}月`;
-  if (currentLang === 'en') {
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    return `${months[m]} ${y}`;
+export function monthYearText(year, month) {
+  if (currentLang === 'ja') return `${year}年${month + 1}月`;
+  if (currentLang === 'uk') {
+    const months = ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'];
+    return `${months[month]} ${year}`;
   }
-  return `${y}年${m + 1}月`;
-}
-
-export function dayKeyFormat(d) {
-  if (currentLang === 'zh') return `${d}日`;
-  if (currentLang === 'en') return `${d}`;
-  return `${d}日`;
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  return `${months[month]} ${year}`;
 }
 
 export function dayLogTitleText(m, d) {
-  if (currentLang === 'zh') return `${m}月${d}日的练习记录`;
-  if (currentLang === 'en') return `Records for ${m}/${d}`;
-  return `${m}月${d}日のきろく`;
+  if (currentLang === 'ja') return `${m}月${d}日の きろく`;
+  if (currentLang === 'uk') {
+    const genitive = ['січня', 'лютого', 'березня', 'квітня', 'травня', 'червня', 'липня', 'серпня', 'вересня', 'жовтня', 'листопада', 'грудня'];
+    return `Записи за ${d} ${genitive[m - 1] || m}`;
+  }
+  return `Record for ${m}/${d}`;
 }
 
-export function cellTextI18n(text, lang = currentLang) {
-  if (!text || lang === 'ja') return text;
-  if (lang === 'zh') {
-    if (text === 'は') return '分成';
-    if (text === 'と') return '和';
-    if (text === 'の') return '的';
-    if (text === 'あまり') return '余';
-    if (text === '最大公約数') return '最大公因数';
-    if (text === '最小公倍数') return '最小公倍数';
-    if (text === 'を') return '精确到';
-    const m = /^([一十百千万]+)の位まで$/.exec(text);
-    if (m) {
-      const pl = m[1] === '一' ? '个' : m[1];
-      return `${pl}位`;
-    }
-  } else if (lang === 'en') {
-    if (text === 'は') return 'is';
-    if (text === 'と') return 'and';
-    if (text === 'の') return 'of';
-    if (text === 'あまり') return 'R';
-    if (text === '最大公約数') return 'GCD';
-    if (text === '最小公倍数') return 'LCM';
-    if (text === 'を') return 'rounded to';
-    const m = /^([一十百千万]+)の位まで$/.exec(text);
-    if (m) {
-      const pl = m[1] === '一' ? 'ones' : m[1] === '十' ? 'tens' : m[1] === '百' ? 'hundreds' : m[1] === '千' ? 'thousands' : 'ten-thousands';
-      return `${pl} place`;
-    }
+export function cellTextI18n(text) {
+  if (currentLang === 'ja' || !text) return text;
+  if (currentLang === 'uk') {
+    if (text === '最大公約数') return 'НСД';
+    if (text === '最小公倍数') return 'НСК';
+    if (text === 'あまり') return 'остача';
+    if (text === '十の位まで') return 'до десятків';
+    if (text === '百の位まで') return 'до сотень';
+    if (text === '千の位まで') return 'до тисяч';
+    if (text === '一の位まで') return 'до одиниць';
+    return text;
   }
+  if (text === '最大公約数') return 'GCD';
+  if (text === '最小公倍数') return 'LCM';
+  if (text === 'あまり') return 'rem';
+  if (text === '十の位まで') return 'to tens';
+  if (text === '百の位まで') return 'to 100s';
+  if (text === '千の位まで') return 'to 1000s';
   return text;
 }
 
-export function stepHint(jaHint) {
+export function problemHelpText(jaHint) {
   if (currentLang === 'ja' || !jaHint) return jaHint;
-  const isEn = currentLang === 'en';
-  const m = /^(\d+)の中に(\d+)はいくつ$/.exec(jaHint);
-  if (m) {
-    return isEn ? `How many ${m[2]}s in ${m[1]}?` : `${m[1]} 里面有几个 ${m[2]}？`;
+  if (currentLang === 'uk') {
+    if (jaHint === 'どちらも わりきれる 数') return 'Спільний дільник: ділить обидва числа';
+    if (jaHint === 'どちらの 倍数にも なっている 数') return 'Спільне кратне: ділиться на обидва числа';
+    const m = /^(\d+)の中に(\d+)はいくつ$/.exec(jaHint);
+    if (m) return `Скільки разів ${m[2]} вміщується в ${m[1]}?`;
+    return jaHint;
   }
+  if (jaHint === 'どちらも わりきれる 数') return 'Common factor: divides both';
+  if (jaHint === 'どちらの 倍数にも なっている 数') return 'Common multiple: multiple of both';
+  const m = /^(\d+)の中に(\d+)はいくつ$/.exec(jaHint);
+  if (m) return `How many ${m[2]}s in ${m[1]}?`;
   return jaHint;
 }
 
-export function problemHelpText(jaText) {
-  if (currentLang === 'ja' || !jaText) return jaText;
-  const isEn = currentLang === 'en';
-
-  if (jaText === 'どちらも わりきれる 数') {
-    return isEn ? 'Common factor: divides both' : '公因数：都能整除的数';
+export function answerTextI18n(ansText) {
+  if (currentLang === 'ja' || !ansText) return ansText;
+  if (currentLang === 'uk') {
+    return ansText
+      .replace(/と/g, ' і ')
+      .replace(/の最大公約数/g, ' НСД')
+      .replace(/の最小公倍数/g, ' НСК')
+      .replace(/あまり/g, ' остача ');
   }
-  if (jaText === '分母どうし・分子どうしをかける') {
-    return isEn ? 'Multiply numerators & denominators' : '分子与分子相乘，分母与分母相乘';
-  }
-  if (jaText === 'くりあがりの 1') {
-    return isEn ? 'Carry 1' : '进位的 1';
-  }
-
-  let m;
-  if ((m = /^くりあがりの\s*(\d+)$/.exec(jaText))) {
-    return isEn ? `Carry ${m[1]}` : `进位的 ${m[1]}`;
-  }
-  if ((m = /^(\d+)のだん\s*(.*)$/.exec(jaText))) {
-    return isEn ? `${m[1]} times table: ${m[2]}` : `${m[1]}的倍数: ${m[2]}`;
-  }
-  if ((m = /^(\d+)に\s*いくつで\s*(\d+)$/.exec(jaText))) {
-    return isEn ? `${m[1]} + ? = ${m[2]}` : `${m[1]} 加上几等于 ${m[2]}`;
-  }
-  if ((m = /^(\d+)に\s*(\d+)で\s*10$/.exec(jaText))) {
-    return isEn ? `Make 10: ${m[1]} + ${m[2]}` : `${m[1]} 凑十差 ${m[2]}`;
-  }
-  if ((m = /^まず\s*(.+)$/.exec(jaText))) {
-    return isEn ? `First ${m[1]}` : `先算 ${m[1]}`;
-  }
-  if ((m = /^先に\s*(.+)$/.exec(jaText))) {
-    return isEn ? `First ${m[1]}` : `先算 ${m[1]}`;
-  }
-  if ((m = /^(.+)の\s*10こぶん$/.exec(jaText))) {
-    return isEn ? `10 times of ${m[1]}` : `${m[1]} 的 10 倍`;
-  }
-  if ((m = /^(\d+)を\s*(\d+)つに\s*わける$/.exec(jaText))) {
-    return isEn ? `Divide ${m[1]} into ${m[2]} parts` : `把 ${m[1]} 平均分成 ${m[2]} 份`;
-  }
-  if ((m = /^(.+)\s*と\s*(.+)$/.exec(jaText))) {
-    return isEn ? `${m[1]} and ${m[2]}` : `${m[1]} 和 ${m[2]}`;
-  }
-  if ((m = /^(.+)\s*を\s*考える$/.exec(jaText))) {
-    return isEn ? `Think about ${m[1]}` : `先思考 ${m[1]}`;
-  }
-  if ((m = /^(.+)\s*と\s*同じ$/.exec(jaText))) {
-    return isEn ? `Same as ${m[1]}` : `相当于 ${m[1]}`;
-  }
-  if ((m = /^(\d+)のばいすう$/.exec(jaText))) {
-    return isEn ? `Multiples of ${m[1]}` : `找 ${m[1]} 的倍数`;
-  }
-  if ((m = /^([一十百千万]+)の位を\s*四捨五入$/.exec(jaText))) {
-    const plZh = m[1] === '一' ? '个' : m[1];
-    const plEn = m[1] === '一' ? 'ones' : m[1] === '十' ? 'tens' : 'hundreds';
-    return isEn ? `Round at ${plEn} place` : `对${plZh}位四舍五入`;
-  }
-  if ((m = /^(\d+)ばい$/.exec(jaText))) {
-    return isEn ? `× ${m[1]}` : `${m[1]} 倍`;
-  }
-  if ((m = /^(\d+)で\s*わる$/.exec(jaText))) {
-    return isEn ? `Divide by ${m[1]}` : `除以 ${m[1]}`;
-  }
-  if ((m = /^分母は\s*(.+)\s*のまま$/.exec(jaText))) {
-    return isEn ? `Keep denominator ${m[1]}` : `分母保持 ${m[1]} 不变`;
-  }
-  if ((m = /^通分すると\s*分母は\s*(.+)$/.exec(jaText))) {
-    return isEn ? `Common denominator is ${m[1]}` : `通分公分母为 ${m[1]}`;
-  }
-  if ((m = /^分子に\s*(.+)\s*をかける$/.exec(jaText))) {
-    return isEn ? `Multiply numerator by ${m[1]}` : `分子乘以 ${m[1]}`;
-  }
-  if ((m = /^分母に\s*(.+)\s*をかける$/.exec(jaText))) {
-    return isEn ? `Multiply denominator by ${m[1]}` : `分母乘以 ${m[1]}`;
-  }
-  if ((m = /^(.+)\s*を\s*ひっくりかえして\s*かける$/.exec(jaText))) {
-    return isEn ? `Invert ${m[1]} and multiply` : `把 ${m[1]} 颠倒过来相乘`;
-  }
-
-  return jaText;
+  return ansText
+    .replace(/と/g, ' and ')
+    .replace(/の最大公約数/g, ' GCD')
+    .replace(/の最小公倍数/g, ' LCM')
+    .replace(/あまり/g, ' rem ');
 }
 
-export function answerTextI18n(text, lang = currentLang) {
-  if (!text || lang === 'ja') return text;
-  if (lang === 'zh') {
-    return text
-      .replace(/あまり/g, ' 余 ')
-      .replace(/最大公約数/g, '最大公因数')
-      .replace(/最小公倍数/g, '最小公倍数')
-      .replace(/(\d+)と(\d+\/\d+)/g, '$1又$2')
-      .replace(/(\d+)と(\d+)/g, '$1 和 $2')
-      .replace(/の/g, ' 的 ')
-      .replace(/を/g, ' 精确到 ')
-      .replace(/([一十百千万]+)の位まで/g, '$1位')
-      .replace(/\s+/g, ' ')
-      .trim();
+export function questTextI18n(q, fallback) {
+  if (currentLang === 'ja' || !q) return fallback;
+  const id = q.id || '';
+  if (currentLang === 'uk') {
+    if (id === 'play1') return 'Зіграти 1 раунд тренування';
+    if (id === 'play2') return 'Зіграти 2 раунди тренувань';
+    if (id === 'combo5') return 'Досягти 5 комбо';
+    if (id === 'combo10') return 'Досягти 10 комбо';
+    if (id === 'extra') return 'Увійти до додаткового раунду';
+    if (id === 'perfect') return 'Пройти раунд на 100 балів';
+    if (id === 'review') return 'Повторити помилки у режимі повторення';
+    if (id === 'grade') return 'Пройти тренування у розділі класів';
+    if (id === 'speed') return 'Розвʼязати завдання швидше ніж за 2.5 с';
+    return fallback;
   }
-  if (lang === 'en') {
-    return text
-      .replace(/あまり/g, ' R ')
-      .replace(/最大公約数/g, 'GCD')
-      .replace(/最小公倍数/g, 'LCM')
-      .replace(/(\d+)と(\d+\/\d+)/g, '$1 and $2')
-      .replace(/(\d+)と(\d+)/g, '$1 and $2')
-      .replace(/の/g, ' of ')
-      .replace(/を/g, ' rounded to ')
-      .replace(/\s+/g, ' ')
-      .trim();
-  }
-  return text;
+  if (id === 'play1') return 'Play 1 session of math drill';
+  if (id === 'play2') return 'Play 2 sessions of math drill';
+  if (id === 'combo5') return 'Achieve a 5-combo';
+  if (id === 'combo10') return 'Achieve a 10-combo';
+  if (id === 'extra') return 'Enter the Extra Stage';
+  if (id === 'perfect') return 'Clear a session with 100 pts';
+  if (id === 'review') return 'Review mistakes in Review mode';
+  if (id === 'grade') return 'Practice in Grade mode';
+  if (id === 'speed') return 'Solve a problem under 2.5 seconds';
+  return fallback;
 }
