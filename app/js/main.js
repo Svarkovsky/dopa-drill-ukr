@@ -161,7 +161,7 @@ const CHECK_SVG = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5 
 function questRows(list) {
   return list.map((q) => {
     const k = Math.min(1, q.prog / q.goal);
-    return `<li class="${q.done ? 'done' : ''}${q.skill && !q.done ? ' go' : ''}"${q.skill ? ` data-skill="${q.skill}"` : ''}><i class="qchk">${q.done ? CHECK_SVG : ''}</i><span class="qt">${i18n.questTextI18n(q, qs.questText(q))}</span><span class="qp">${Math.min(q.prog, q.goal)}/${q.goal}</span><i class="qbar" style="--p:${k.toFixed(3)}"></i></li>`;
+    return `<li class="${q.done ? 'done' : ''}${!q.done ? ' go' : ''}" data-qid="${q.id}"${q.skill ? ` data-skill="${q.skill}"` : ''}><i class="qchk">${q.done ? CHECK_SVG : ''}</i><span class="qt">${i18n.questTextI18n(q, qs.questText(q))}</span><span class="qp">${Math.min(q.prog, q.goal)}/${q.goal}</span><i class="qbar" style="--p:${k.toFixed(3)}"></i></li>`;
   }).join('');
 }
 function questRewardText(q) {
@@ -1905,7 +1905,7 @@ function askRelock(id) {
     msg: isUk ? msgZh : (isEn ? msgEn : msgJa),
     list: ids.slice(0, MAX).map((x) => `<li>${skillDisplayName(x)}</li>`).join('') + (ids.length > MAX ? `<li class="more">${moreTxt(ids.length - MAX)}</li>` : ''),
     yes: isUk ? 'Скинути' : (isEn ? 'Reset' : 'けす'),
-    no: isUk ? '取消' : (isEn ? 'Cancel' : 'やめる'),
+    no: isUk ? 'Скасувати' : (isEn ? 'Cancel' : 'やめる'),
     onYes: () => doRelock(id),
     focusBack: $(`.node[data-id="${id}"]`),
   });
@@ -2209,7 +2209,7 @@ function openTrophies() {
   const rewards = list.map((x) => x.reward && ul.ITEM[x.reward]).filter(Boolean);
   const moreTxt = isUk ? `Ще ${list.length - MAX}` : (isEn ? `${list.length - MAX} more` : `ほか ${list.length - MAX}こ`);
   const rwGetTxt = (it) => isUk
-    ? `获得了${catName(it.cat)}「${itemDisplayName(it)}」！`
+    ? `Отримано ${catName(it.cat)} «${itemDisplayName(it)}»!`
     : (isEn ? `Earned ${catName(it.cat)} "${itemDisplayName(it)}"!` : `${catName(it.cat)}「${it.name}」を てにいれた！`);
   const rwSubTxt = isUk ? 'Доступно у Колекції' : (isEn ? 'Available in Collection' : 'コレクションで えらべるよ');
   $('#tg-list').innerHTML = list.slice(0, MAX).map((x) => `<li class="r-${x.rank}"><i>${trophySvg(x.rank)}</i><span><b>${i18n.trophyItemName(x)}</b><small>${i18n.trophyItemDesc(x)}</small></span></li>`).join('') + (list.length > MAX ? `<li class="more">${moreTxt}</li>` : '')
@@ -2368,12 +2368,12 @@ function renderCollection() {
   const items = ul.ITEMS.filter((it) => it.cat === co.cat);
   const auto = eq[co.cat] === 'auto';
   $('#co-note').textContent = auto
-    ? (isUk ? '选择“随机轮换”将在已拥有的外观中每局随机更换' : (isEn ? 'Random will pick among unlocked items each play' : '「おまかせ」は もっている ものから まいかい かわるよ'))
-    : (isUk ? '将始终生效当前选中的外观与设置' : (isEn ? 'Always use the selected item' : 'えらんだ ものを いつも つかうよ'));
+    ? (isUk ? 'Режим «Випадково» обиратиме серед розблокованих предметів перед кожною грою' : (isEn ? 'Random will pick among unlocked items each play' : '「おまかせ」は もっている ものから まいかい かわるよ'))
+    : (isUk ? 'Завжди використовувати обраний предмет' : (isEn ? 'Always use the selected item' : 'えらんだ ものを いつも つかうよ'));
   const autoTitle = i18n.t('collectAuto');
-  const autoSub = isUk ? '每局随机' : (isEn ? 'Changes each play' : 'まいかい かわる');
-  const lockAria = (tro) => isUk ? `未解锁　达成奖杯「${tro ? tro.name : ''}」即可获得` : (isEn ? `Locked. Unlocked by trophy "${tro ? tro.name : ''}"` : `まだ　トロフィー ${tro ? tro.name : ''}で もらえる`);
-  const lockSub = (tro) => isUk ? `奖杯「${tro ? tro.name : ''}」` : (isEn ? `Trophy "${tro ? tro.name : ''}"` : `トロフィー「${tro ? tro.name : ''}」`);
+  const autoSub = isUk ? 'Змінюється щогри' : (isEn ? 'Changes each play' : 'まいかい かわる');
+  const lockAria = (tro) => isUk ? `Заблоковано. Здобудь трофей «${tro ? i18n.trophyItemName(tro) : ''}»` : (isEn ? `Locked. Unlocked by trophy "${tro ? tro.name : ''}"` : `まだ　トロフィー ${tro ? tro.name : ''}で もらえる`);
+  const lockSub = (tro) => isUk ? `Трофей «${tro ? i18n.trophyItemName(tro) : ''}»` : (isEn ? `Trophy "${tro ? tro.name : ''}"` : `トロフィー「${tro ? tro.name : ''}」`);
   $('#co-grid').innerHTML = `<button type="button" class="co-item auto${auto ? ' on' : ''}" data-id="auto"><span class="co-th"><b>？</b></span><span class="co-name">${autoTitle}</span><small>${autoSub}</small></button>`
     + items.map((it) => {
       const own = ul.isUnlocked(it, got);
@@ -2437,18 +2437,18 @@ function openHammer(offer) {
   $('#hammer-art').innerHTML = HAMMER_SVG;
   const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
-  const joinWord = isUk ? '与' : (isEn ? ' and ' : 'と');
+  const joinWord = isUk ? ' та ' : (isEn ? ' and ' : 'と');
   const days = offer.days.map(fmtDay).join(joinWord);
   const missedDaysMsg = isUk
-    ? `${days} 你没有来练习呢。<br>使用补签铁锤可以将缺席<b>重置豁免</b>，<br>保住连续 <b>${offer.run}</b> 天的打卡记录哦！`
+    ? `У дні ${days} тренувань не було.<br>Використай ремонтний молоток, щоб <b>зберегти серію</b><br>у <b>${offer.run}</b> дн. безперервних тренувань!`
     : (isEn
     ? `You missed ${days}.<br>Use a hammer to <b>bridge the gap</b><br>and keep your <b>${offer.run}</b>-day streak!`
     : `${days}は あそばなかったね。<br>ハンマーで <b>ノーカン</b>に すると<br>れんぞく<b>${offer.run}</b>日が つづくよ！`);
   $('#hammer-msg').innerHTML = missedDaysMsg;
   const max = store.HAMMER.max;
-  const haveHammersLabel = isUk ? '持有补签铁锤 ' : (isEn ? 'Hammers held: ' : 'もっている ハンマー ');
+  const haveHammersLabel = isUk ? 'У наявності молотків: ' : (isEn ? 'Hammers held: ' : 'もっている ハンマー ');
   $('#hammer-have').innerHTML = `${haveHammersLabel}${Array.from({ length: max }, (_, i) => `<i class="${i < offer.hammers ? 'on' : ''}">${HAMMER_SVG}</i>`).join('')}`;
-  $('#hammer-yes').textContent = isUk ? `使用（${offer.days.length}把）` : (isEn ? `Use (${offer.days.length})` : `つかう（${offer.days.length}本）`);
+  $('#hammer-yes').textContent = isUk ? `Використати (${offer.days.length})` : (isEn ? `Use (${offer.days.length})` : `つかう（${offer.days.length}本）`);
   $('#hammer').hidden = false;
   audio.unlock();
   audio.play('boing', audio.now(), { v: 0.12 });
@@ -2493,7 +2493,7 @@ async function runHammer(offer) {
     const c = centerOf(badge);
     const isUk = i18n.getLanguage() === 'uk';
     const isEn = i18n.getLanguage() === 'en';
-    const keepStreakMsg = isUk ? `连续 ${offer.run} 天打卡保住啦！` : (isEn ? `Kept ${offer.run}-day streak!` : `れんぞく${offer.run}日 キープ！`);
+    const keepStreakMsg = isUk ? `Серію у ${offer.run} дн. збережено!` : (isEn ? `Kept ${offer.run}-day streak!` : `れんぞく${offer.run}日 キープ！`);
     if (!S.reduced) { fx.text(c.x, c.y - 30, keepStreakMsg, { color: '#ff7ab6', size: 26, vy: -70, life: 1.4 }); fx.burst(c.x, c.y, { count: 40, kinds: ['star', 'confetti', 'heart'], speed: 520, up: 160 }); }
     audio.unit(0.6);
     popEl(badge, 0.5, 400);
@@ -2573,9 +2573,9 @@ function openDay(key) {
   $('#day-list').innerHTML = list.slice().reverse().map((h) => {
     const t = new Date(h.at);
     const name = (MODE_NAMES[h.mode] || (() => h.mode))(h);
-    const extra = h.extraOk ? (isUk ? `　加时 ${h.extraOk}题` : (isEn ? ` Extra ${h.extraOk}` : `　エクストラ ${h.extraOk}問`)) : '';
-    const correctLabel = isUk ? '正解' : (isEn ? 'Correct' : '正解');
-    const missLabel = isUk ? '差一点' : (isEn ? 'Slips' : 'おしい');
+    const extra = h.extraOk ? (isUk ? `　Екстра: ${h.extraOk} завд.` : (isEn ? ` Extra ${h.extraOk}` : `　エクストラ ${h.extraOk}問`)) : '';
+    const correctLabel = isUk ? 'Вірно' : (isEn ? 'Correct' : '正解');
+    const missLabel = isUk ? 'Помилок' : (isEn ? 'Slips' : 'おしい');
     const ptsUnit = i18n.t('pts');
     return `<li><span class="t">${t.getHours()}:${String(t.getMinutes()).padStart(2, '0')}</span><span class="m">${name}</span><span class="s">${(h.score || 0).toLocaleString('ja-JP')}${ptsUnit}</span><span class="d">${correctLabel} ${h.ok ?? '-'}　${missLabel} ${h.ng ?? '-'}${extra}　${fmtTime(h.timeMs || 0)}</span></li>`;
   }).join('');
@@ -2616,16 +2616,16 @@ function askReset() {
   const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
   openConfirm({
-    title: isUk ? '全部数据重置' : (isEn ? 'Reset All Data' : 'すべて リセット'),
-    msg: isUk ? '将清除所有历史记录、技能掌握进度、成就奖杯、外观收藏、签到印章和系统设置。' : (isEn ? 'Clear all records, skills, trophies, collection, stickers, and settings.' : 'きろく・スキル・トロフィー・コレクション・シール・せっていを ぜんぶ けします。'),
+    title: isUk ? 'Скинути всі дані' : (isEn ? 'Reset All Data' : 'すべて リセット'),
+    msg: isUk ? 'Буде видалено всі збережені записи, навички, трофеї, колекцію, штампи та налаштування.' : (isEn ? 'Clear all records, skills, trophies, collection, stickers, and settings.' : 'きろく・スキル・トロフィー・コレクション・シール・せっていを ぜんぶ けします。'),
     yes: isUk ? 'Скинути' : (isEn ? 'Reset' : 'けす'),
-    no: isUk ? '取消' : (isEn ? 'Cancel' : 'やめる'),
+    no: isUk ? 'Скасувати' : (isEn ? 'Cancel' : 'やめる'),
     focusBack: $('#open-settings'),
     onYes: () => openConfirm({
-      title: isUk ? '真的要全部清除吗？' : (isEn ? 'Are you absolutely sure?' : 'ほんとうに けしますか？'),
-      msg: isUk ? '清除后将无法恢复任何数据，回到初次打开状态。' : (isEn ? 'This cannot be undone.' : 'けしたら もとに もどせません。'),
-      yes: isUk ? '彻底清除并重启' : (isEn ? 'Erase Everything' : 'ぜんぶ けす'),
-      no: isUk ? '放弃' : (isEn ? 'Cancel' : 'やめる'),
+      title: isUk ? 'Справді все видалити?' : (isEn ? 'Are you absolutely sure?' : 'ほんとうに けしますか？'),
+      msg: isUk ? 'Після очищення відновити дані буде неможливо. Гру буде повернуто до початкового стану.' : (isEn ? 'This cannot be undone.' : 'けしたら もとに もどせません。'),
+      yes: isUk ? 'Стерти все та перезапустити' : (isEn ? 'Erase Everything' : 'ぜんぶ けす'),
+      no: isUk ? 'Скасувати' : (isEn ? 'Cancel' : 'やめる'),
       urgent: true,
       focusBack: $('#open-settings'),
       onYes: () => { store.reset(); location.reload(); },
@@ -2665,7 +2665,36 @@ $$('.pick button').forEach((b) => b.addEventListener('click', () => {
   if (!S.reduced) hero.hop(20 + Number(b.dataset.count) * 2 * S.motion, 320, { audio });
 }));
 $('#start').addEventListener('click', () => startGame('level'));
-$('#quest-list').addEventListener('click', (e) => { const li = e.target.closest('li.go'); if (li && SKILL[li.dataset.skill]) { audio.unlock(); audio.play('blip', audio.now(), { m: 84, v: 0.12 }); startGame('practice', li.dataset.skill); } });
+$('#quest-list').addEventListener('click', (e) => {
+  const li = e.target.closest('li.go');
+  if (!li) return;
+  audio.unlock();
+  audio.play('blip', audio.now(), { m: 84, v: 0.12 });
+  const qid = li.dataset.qid;
+  const skill = li.dataset.skill;
+  if (skill && SKILL[skill]) {
+    startGame('practice', skill);
+  } else if (qid === 'grade1') {
+    startGame('grade', S.grade || 1);
+  } else if (qid === 'review1') {
+    const st = store.load();
+    if (st.review && st.review.length > 0) {
+      startGame('review');
+    } else {
+      startGame('drill');
+    }
+  } else if (qid === 'new1') {
+    const prog = progress();
+    const newSkill = SKILLS.find((sk) => stateOf(prog, sk.id) === 'new' || stateOf(prog, sk.id) === 'learning');
+    if (newSkill) {
+      startGame('practice', newSkill.id);
+    } else {
+      openTree();
+    }
+  } else {
+    startGame('drill');
+  }
+});
 $('#cal-prev').addEventListener('click', () => moveMonth(-1));
 $('#cal-next').addEventListener('click', () => moveMonth(1));
 $('#cal-grid').addEventListener('click', (e) => { const b = e.target.closest('[data-day]'); if (b) openDay(b.dataset.day); });
@@ -2728,9 +2757,9 @@ $('#tree').addEventListener('click', (e) => {
     const need = SKILL[id].req.filter((q) => stateOf(progress(), q) !== 'mastered').map((q) => `「${skillDisplayName(q)}」`);
     const isUk = i18n.getLanguage() === 'uk';
     const isEn = i18n.getLanguage() === 'en';
-    const joinWord = isUk ? '与' : (isEn ? ' and ' : 'と');
+    const joinWord = isUk ? ' та ' : (isEn ? ' and ' : 'と');
     const toastMsg = isUk
-      ? `掌握 ${need.join(joinWord)} 即可解锁`
+      ? `Опануй ${need.join(joinWord)}, щоб розблокувати`
       : (isEn ? `Master ${need.join(joinWord)} to unlock` : `${need.join('と')}を マスターすると ひらくよ`);
     toast(toastMsg);
     audio.play('boing', audio.now(), { v: 0.12 });
