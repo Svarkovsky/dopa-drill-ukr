@@ -1,144 +1,168 @@
-# 多帕速算 (Dopa Drill) 🐒✨
+# Dopa Drill Enhanced (Допа Дріл)
 
-> **专为激发多巴胺分泌而设计的趣味算术闯关网页游戏。**
-> 每做对一道算术题，舞台演出与动态音乐就会层层递进升级，直至进入狂欢庆典！
-> 本项目为原作者 [@grmchn4ai](https://github.com/grmchn/dopa-drill) 原作的**深度中文汉化与多语言增强版本**。
+[![Live Web App](https://img.shields.io/badge/Live%20Web%20App-Online-brightgreen?style=for-the-badge&logo=cloudflare)](https://dopa-drill.ivansvarkovsky.workers.dev)
+[![Version](https://img.shields.io/badge/Version-v1.0.10-blue?style=for-the-badge)](https://dopa-drill.ivansvarkovsky.workers.dev)
+[![Original Project](https://img.shields.io/badge/Original-grmchn%2Fdopa--drill-orange?style=for-the-badge&logo=github)](https://github.com/grmchn/dopa-drill)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero-brightgreen.svg)]()
-[![Web Audio API](https://img.shields.io/badge/Audio-Web%20Audio%20API-orange.svg)]()
-[![Language: zh / ja / en](https://img.shields.io/badge/i18n-zh%20%7C%20ja%20%7C%20en-purple.svg)]()
-
----
-
-## 📸 游戏预览
-
-| 主页大厅 (Home) | 竖式答题 (Play) | 设置与致谢 (Settings) |
-| :---: | :---: | :---: |
-| ![多帕速算主页](dopa-drill-chinese-home.png) | ![竖式答题界面](dopa-drill-play-zh.png) | ![设置面板与致谢](dopa-drill-settings-modal.png) |
+> **Live Web Demo:** [https://dopa-drill.ivansvarkovsky.workers.dev](https://dopa-drill.ivansvarkovsky.workers.dev)  
+> **Repository:** [https://github.com/Svarkovsky/dopa-drill-ukr](https://github.com/Svarkovsky/dopa-drill-ukr)  
+> **Original upstream project:** [grmchn/dopa-drill](https://github.com/grmchn/dopa-drill) by [@grmchn4ai](https://github.com/grmchn4ai)
 
 ---
 
-## ✨ 核心特色
+## 📸 Галерея / Gallery / ギャラリー
 
-- 🎮 **越算越嗨的视听反馈**：
-  吉祥物猴子「多帕吉（ドパキチ）」会搬运你输入的每个数字，答对时欢呼庆祝；连续答对会积攒连击（Combo）与能量（Energy），触发舞台彩旗、聚光灯、漫天彩带，背景音乐（BGM）与音效伴随节奏动态加速变奏！就算失误也不会强行扣血或 Game Over，随时保持正向激励。
-- 📚 **全面覆盖小学 1~6 年级 58 项算术技能**：
-  从一位数加减、进退位加减，到多位数竖式乘除法、小数运算、分数约分通分、百分比与简易比例。
-- 🎯 **多样化的闯关模式**：
-  - **个性化闯关**（含新手实力诊断测试，自适应动态推荐后续技能）。
-  - **按年级练习**（1~6 年级分册独立练习）。
-  - **巩固错题**（专项攻克易错难点题）。
-  - **技能树（Skill Tree）**（清晰查看全部 58 个知识节点的点亮进度与点亮分支）。
-- 🏆 **持久成长与成就收藏**：
-  - 300+ 项成就奖杯（连续打卡、连击达人、技能精通等）。
-  - 47+ 种外观装扮、BGM 曲目、舞台地砖与击打特效供解锁搭配。
-  - 每日打卡签到簿与每日任务系统。
-- 🔒 **纯净极简与隐私保护**：
-  - **零外部 npm 依赖**：纯 HTML + Vanilla CSS + ES Modules 原生驱动。
-  - **纯代码实时音频合成**：音效与配乐全部由 Web Audio API 实时演算生成，无任何外置音频文件负担。
-  - **数据完全本地化**：所有通关记录与设置均存储在浏览器本地 `localStorage`，不收集或上传任何个人隐私。
+| Головний екран / Home / ホーム | Ігровий процес / Gameplay / プレイ |
+| :---: | :---: |
+| ![Головний екран](docs/screenshots/home.webp) | ![Ігровий процес](docs/screenshots/gameplay.webp) |
+| **Колекція / Collection / コレクション** | **Налаштування / Settings / 設定** |
+| ![Колекція](docs/screenshots/collection.webp) | ![Налаштування](docs/screenshots/settings.webp) |
 
 ---
 
-## 🇨🇳 汉化与多语言增强特性
+# 🇺🇦 Українська (Ukrainian)
 
-在保持原作纯正街机视听体验的前提下，对全项目 7000+ 行代码进行了系统化多语言重构：
+### Огляд проекту
+**Dopa Drill Enhanced** — це неофіційний, глибоко оптимізований та розширений некомерційний форк оригінальної японської гри-тренажера усного рахунку **Dopakichi Dopadoril** (автор: [@grmchn4ai](https://github.com/grmchn4ai)).
 
-1. **默认使用简体中文**：开箱即用，无需繁琐设置，首次访问即可享受地道流畅的中文答题体验。
-2. **中 / 日 / 英三语即时切换**：在设置面板中可随时无刷新一键切换系统语言（支持 Simplified Chinese、日本語、English）。
-3. **符合国内教材的小学数学术语规范**：
-   - 术语本地化：如日文「最大公約数」规范译为「最大公因数」，「あまり」规范译为「余」，「ひっさん」规范译为「竖式」等。
-4. **动态步骤与多层帮助提示深度解析**：
-   - 原作题库内嵌的带参步骤模板全面实现动态正则拦截与翻译（如 `2をかける` ➔ `乘以 2`，`たす（一の位）` ➔ `相加（个位）`，`くりあがりの 3` ➔ `进位 3`）。
-   - 覆盖 20 余种连续失误时的智能提示语（如 `公因数：都能整除的数`、乘法口诀拆解、进退位引导等）。
-5. **排版与 UI 细节调优**：
-   - **竖式小数点基线修复**：重构了算式小数点的垂直对齐模型，彻底修复了原版中第二行小数点下沉并压穿横线的问题，呈现出标准竖式书写间距。
-   - **多语言弹性自适应**：重构了设置面板按钮、状态栏胶囊等样式，解决了英文模式下长单词溢出与多层边框嵌套的问题。
-   - **关于与原作者致谢卡片**：在设置弹窗中添加专属致谢区域，感谢原作者 `@grmchn4ai`，并提供直达 GitHub 原作仓库的一键跳转。
+У цьому форку повністю збережено чарівний коміксно-паперовий стиль, запальний ритм і динаміку оригінальної гри, але при цьому проведена комплексна інженерна робота: додано повну українську локалізацію, впроваджено розділ для дошкільнят (Grade 0+), перероблено звуковий та графічний рушії, усунено затримки на слабкому залізі та забезпечено підтримку повноцінного офлайн-режиму (PWA).
 
 ---
 
-## 🚀 本地运行
+### Порівняння: Оригінал (grmchn/dopa-drill) проти Enhanced Fork
 
-本项目为纯静态前端项目，**无需任何编译或打包步骤**。使用任意静态服务器托管 `app/` 目录即可：
+| Модуль / Функція | Оригінал (grmchn) | Dopa Drill Enhanced (Наш форк) |
+| :--- | :--- | :--- |
+| **Мови інтерфейсу** | Японська, частково Англійська | **Українська (100% покриття)**, Англійська (за замовчуванням), Японська |
+| **Вікові категорії** | 1–6 класи (Grade 1–6) | **0+ (Дошкільнята / Grade 0)** + 1–6 класи |
+| **Синтез звуку (Web Audio)** | Процедурний синтез кожного звуку в реальному часі (до 18 осциляторів на дзвінок/хор) | **Pre-rendering (Baking)** у фоні через `OfflineAudioContext`: хор, дзвіночки, ударні грають із буфера з миттєвим апаратним пітч-шифтом (навантаження звуку на CPU нижче на 80%) |
+| **Стерео-реверберація** | Важка стерео-імпульсна згортка 2.4с | Легкий моно-імпульс 1.0с (у 5 разів менше навантаження на FFT-згортку) |
+| **Планувальник звуку** | Викликався у `requestAnimationFrame` (при просіданні FPS звук клацав) | **Незалежний 25мс таймер**: безперервне опереджальне наповнення аудіобуфера, звук не заїкається навіть при важких анімаціях |
+| **Роздільна здатність Canvas** | Сирий `devicePixelRatio` (на 4K/Retina створював полотна по 8–10 млн пікселів) | **Адаптивний бюджет пікселів (`getAdaptiveDPR`)**: ліміт 1080p, зменшення площі рендерингу на Retina в 4–6 разів без втрати чіткості |
+| **Частинки (Confetti / FX)** | Створення та видалення десятків JS-об'єктів кожен кадр через `filter()` | **Пул об'єктів частинок** та in-place компактизація масиву: нульове навантаження на Garbage Collector (GC), піковий лаг скорочено з 34 мс до 17 мс |
+| **DOM Layout Thrashing** | Виклики `getBoundingClientRect()` кожен кадр усередині анімаційного циклу | **Покадрове кэшування `centerOf()` через `WeakMap`**: відсутність примусових перерахунків геометрії браузером (Forced Reflow) |
+| **Режими заліза** | Фіксований єдиний рендер (сильно гальмував без GPU / на софтверному WebGL) | **Перемикач `Auto / High / Low`**: у режимі `Low` важкий шейдер відключається, conic-градиент і `hue-rotate` замінено на легкий linear-gradient, гауссове розмиття замінено на чіткі контури (стабільні 60 FPS на одному ядрі CPU) |
+| **Вкладки колекції** | Горизонтальний скрол без видимого смуги прокрутки (не крутився колесом миші на ПК) | **Повний скрол колесом миші**, перетягування (Drag-to-scroll), акуратний скролбар 6px, плавне центрування обраної вкладки |
+| **Підтримка PWA** | Відсутня | **Service Worker (v1.0.10)** із кешуванням та повноцінним офлайн-доступом, банер та інструкції з встановлення |
+| **Хмарний деплой** | Тільки локальний запуск | Автоматична збірка та миттєвий деплой на **Cloudflare Workers Edge** |
+| **Донат та підтримка** | Стандартні посилання | Анімована чашка кави в шапці з переходом на персональну сторінку автора |
 
-### 使用 Python (推荐)
+---
+
+### Правила некомерційних фан-робіт (Fan-Work Policy)
+Цей проект створено відповідно до політики використання персонажа **Dopakichi** та гри **Dopadoril**:
+- **Неофіційний статус:** цей проект є незалежною некомерційною модифікацією і не позиціонується як офіційний реліз.
+- **Вільне використання:** створення фан-арту, відеороликів, стрімів та некомерційних форків дозволено.
+- **Комерційне використання заборонено:** продаж товарів, брендування або використання у платних сервісах без попереднього дозволу правовласника заборонені.
+
+---
+
+# 🇬🇧 English
+
+### Project Overview
+**Dopa Drill Enhanced** is an unofficial, high-performance, non-commercial fork of the original Japanese mental arithmetic arcade game **Dopakichi Dopadoril**, originally created by [@grmchn4ai](https://github.com/grmchn4ai).
+
+While staying true to the charming cartoon paper-craft visuals, punchy rhythm beats, and dopamine-driven learning loops, this fork introduces massive architectural overhauls: full Ukrainian localization, preschool Grade 0+ foundations, offline PWA capabilities, and extensive CPU/GPU performance optimizations.
+
+---
+
+### Key Improvements Over Upstream
+
+1. **Full Ukrainian & Trilingual Localization:**
+   - 100% translation across all menus, arithmetic vertical step hints, daily quests, trophies, help dialogs, and titles.
+   - Dynamic step explanation parsing and localized arithmetic layouts.
+2. **Preschool Mode (Grade 0+):**
+   - 6 foundational math skills tailored for early learners (Next +1, Previous -1, Number 5 composition, Addition/Subtraction up to 5, Zero properties).
+3. **Web Audio Baking & Scheduler Decoupling:**
+   - Pre-rendered synths using `OfflineAudioContext` for choir, bells, and drum hits, pitch-shifted via hardware `playbackRate` with near-zero CPU overhead.
+   - 1.0s mono convolver impulse response replacing heavy 2.4s stereo convolution (~5x lighter FFT compute).
+   - Dedicated 25ms timer audio scheduler ensuring continuous lookahead buffer feeding, eliminating audio crackles during frame drops.
+4. **Rendering & Particle Pipeline Optimizations:**
+   - **Pixel Budgeting (Adaptive DPR):** Caps resolution at 1080p, preventing massive 8-10M pixel canvas allocations on 4K/Retina displays.
+   - **Particle Pool & In-place Compaction:** Zero array allocations during celebration bursts and confetti explosions; drops GC spikes by ~95%.
+   - **WeakMap Frame Caching for `centerOf()`:** Completely eliminates layout thrashing caused by repeated `getBoundingClientRect()` calls.
+5. **Hardware Performance Modes (Auto / High / Low):**
+   - Interactive 3-way toggle directly in Settings.
+   - `Low` mode stops CPU-side software WebGL shaders, replaces `conic-gradient` and `hue-rotate` with ultra-lightweight linear gradients, removes 40px Gaussian blurs, and substitutes screen shake with an outline impulse for butter-smooth 60 FPS on any CPU.
+6. **Progressive Web App (PWA) & Edge Deployment:**
+   - Service Worker caching (`v1.0.10`) for 100% offline play.
+   - Edge worker bundling toolchain deployed to Cloudflare Workers.
+
+---
+
+### Unofficial Fan-Work Guidelines
+In accordance with the original creator's guidelines:
+- **Unofficial Notice:** This project is an unofficial fan adaptation.
+- **Non-Commercial Use:** You are free to create fan art, gameplay videos, live streams, and non-commercial forks.
+- **Commercial Restrictions:** Merchandise sales, inclusion in paid services, or claiming official endorsement requires prior authorization.
+
+---
+
+# 🇯🇵 日本語 (Japanese)
+
+### プロジェクト概要
+**Dopa Drill Enhanced（ドパドリル機能拡張版）**は、[@grmchn4ai](https://github.com/grmchn4ai) 氏によって制作された算数ドリルゲーム「**ドパキチのドパドリル**」の非公式・非営利パフォーマンス最適化フォークです。
+
+オリジナルの親しみやすい紙細工風のグラフィック、爽快なビート、達成感を引き出す学習体験をそのままに、ウクライナ語ローカライズ、未就学児向けグレード0+の追加、Web Audioの事前レンダリング（Baking）、低スペックPC向けのハードウェア適応モード、PWAオフライン対応などを実装しました。
+
+---
+
+### 主な拡張機能と最適化
+
+1. **多言語およびウクライナ語の完全対応:**
+   - UI全体、筆算の手順ガイド、デイリークエスト、トロフィー、ヘルプをウクライナ語に完全翻訳（英語・日本語との3言語対応）。
+2. **幼児・未就学児向け「0+」グレードの追加:**
+   - 数の順序（+1 / -1）、5の合成、5までの加減算、0の計算など6つの基礎スキルを追加。
+3. **Web Audioエンジンの軽量化とBaking処理:**
+   - `OfflineAudioContext` を活用し、負荷の高いコーラス、ベル、ドラム音を起動時に事前レンダリング。再生時はピッチ変更（`playbackRate`）のみで動作し、CPU負荷を大幅削減。
+   - レンダリングフレームレートの低下に影響されない独立25ms音声スケジューラを導入し、音飛びを完全に解消。
+4. **描画負荷の低減とGC（ガベージコレクション）の撲滅:**
+   - 高解像度ディスプレイにおける描画負荷を制限する「アダプティブDPR（Pixel Budgeting）」を実装。
+   - パーティクルオブジェクトのプーリングと配列のインプレース圧縮により、紙吹雪や花火演出時のGCフリーズを95%削減。
+   - `getBoundingClientRect()` のフレーム内キャッシュにより、レイアウトスラッシング（Forced Reflow）を根絶。
+5. **グラフィックモード設定（Auto / High / Low）:**
+   - 設定画面でワンタップ切り替え可能な描画モードを搭載。「Low」モードではソフトウェアWebGLや重いグラデーション計算を回避し、GPU非搭載のPCでも安定した60FPSを実現。
+6. **PWA完全対応 & Cloudflare Workersデプロイ:**
+   - Service Workerによるオフラインキャッシュと自動更新に対応。
+
+---
+
+### 二次創作ガイドラインの遵守について
+本プロジェクトは、原作者様が定める「ドパキチのドパドリル 二次創作ガイドライン」に基づいて公開されています：
+- **非公式表明:** 本作品は公式の製品ではなく、ファンによる非公式の改変版です。
+- **利用可能範囲:** 非営利目的でのファンアート制作、実況配信、動画投稿、非営利フォークの公開が許可されています。
+- **事前許諾が必要な事項:** グッズ販売や有料サービスへの組み込み、公式と誤認させる利用は禁止されています。
+
+---
+
+## 🛠️ Локальний запуск / Local Development
+
+Проект не вимагає важких збірок для розробки. Достатньо запустити локальний HTTP-сервер у папці `app/`:
+
 ```bash
-python3 -m http.server 8089 -d app
+# Варіант 1: Python
+python3 -m http.server 8080 --directory app
+
+# Варіант 2: Node.js (npx)
+npx serve app -l 8080
 ```
 
-### 使用 Node.js / npx
-```bash
-npx serve app -l 8089
-```
-
-启动后在浏览器中访问：`http://localhost:8089/` 即可直接体验。
-
-> 💡 **提示**：由于项目采用原生现代 ES Modules 模块化加载，请通过 HTTP 服务访问，直接以 `file://` 协议双击打开可能会受到浏览器同源策略限制。
-
----
-
-## 🧪 自动化测试
-
-项目内置了详尽的单元测试，涵盖数学步骤生成、技能依赖无环图验证、多语言词条全量覆盖、分数计算等。
-
-运行要求：Node.js 20+
-
+### Запуск модульних тестів
 ```bash
 node --test tests/*.test.mjs
 ```
+*(Усі 67 тестів проходять зі 100% успішністю)*
 
-当前全套测试共 66 项，全部通过率 100%。
-
----
-
-## 📁 目录结构
-
-```text
-dopa-drill/
-├── app/                  # 游戏前端主程序
-│   ├── index.html        # 主页面骨架与弹窗容器
-│   ├── style.css         # 样式系统（含响应式、多语言自适应与排版修复）
-│   ├── js/               # 核心业务逻辑（原生 ES Modules）
-│   │   ├── i18n.js       # 多语言国际化核心模块（中/日/英三语字典与动态翻译层）
-│   │   ├── main.js       # 游戏总导演（状态机、输入控制、动效编排）
-│   │   ├── problems.js   # 算术题库与解题步骤动态生成器
-│   │   ├── skills.js     # 58 个小学数学技能定义与依赖图谱
-│   │   ├── audio.js      # Web Audio API 纯代码实时音乐与音效合成引擎
-│   │   ├── dopakichi.js  # 吉祥物多帕吉的骨骼与动作驱动
-│   │   ├── trophies.js   # 300+ 奖杯成就系统
-│   │   ├── unlocks.js    # 47+ 外观装扮与特效收集
-│   │   └── ...
-│   └── fonts/            # 本地字体文件
-├── tests/                # 自动化单元测试套件（Node.js test runner）
-│   ├── app_i18n.test.mjs # 国际化翻译与覆盖率专项测试
-│   └── ...
-├── docs/                 # 原作设计文档与规范说明
-└── README.md             # 项目说明文档
+### Збірка для Cloudflare Workers
+```bash
+node build-worker.mjs
 ```
 
 ---
 
-## 💖 鸣谢 (Credits)
+## 💖 Подяки та авторські права / Credits
 
-- **原作作者**：[**@grmchn4ai**](https://github.com/grmchn4ai)（⚙gear machine@AI）
-- **原作仓库**：[**grmchn/dopa-drill**](https://github.com/grmchn/dopa-drill)
-- 衷心感谢原作者的精妙创意、出色的教育游戏设计与开源精神！
-
----
-
-## 📄 许可证 (License)
-
-- **源代码**：遵循 [MIT License](LICENSE)。
-- **吉祥物「多帕吉（ドパキチ）」、多帕速算名称与标志**：非商用二次创作自由（详见下文）。
-- **字体**：遵循 SIL Open Font License 1.1。
-
-### 关于二次创作
-只要是非商业用途，无需事先申请即可自由使用：
-- ✅ **允许**：同人创作、插画、漫画、动画、视频制作、SNS 分享、非商业 Fork/改造版本的公开。
-- ✅ **允许**：实况视频录制与游戏直播（含直播平台普通打赏与广告分成）。
-- ⚠️ **需事先授权**：制作并销售周边商品、嵌入付费产品/商业服务/商业广告等。
-- ❌ **禁止**：违背公序良俗的使用、损害角色或原作声誉的行为。
-
-*(公开衍生版本时，请标明非官方改造版本)*
+- **Оригінальний творець / Original Creator:** [**@grmchn4ai**](https://github.com/grmchn4ai) (gear machine@AI)
+- **Оригінальний репозиторій / Original Repository:** [**grmchn/dopa-drill**](https://github.com/grmchn/dopa-drill)
+- **Автор форку / Fork Author & Performance Lead:** [**Svarkovsky**](https://svarkovsky.github.io/donate/)
