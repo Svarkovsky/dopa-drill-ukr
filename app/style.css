@@ -481,6 +481,29 @@ body.reduced .logo span, body.reduced .spot, body.reduced .marquee, body.reduced
 .grades button small { font-family: var(--round); font-weight: 900; font-size: 12px; margin-left: 2px; }
 .grades button:nth-child(6n+1) { background: #ffe3ef; } .grades button:nth-child(6n+2) { background: #e3ebff; } .grades button:nth-child(6n+3) { background: #fff4c4; }
 .grades button:nth-child(6n+4) { background: #d9fbef; } .grades button:nth-child(6n+5) { background: #efe6ff; } .grades button:nth-child(6n+6) { background: #ffe6dc; }
+.grades button.btn-zero {
+  grid-column: 1 / -1;
+  height: 50px;
+  background: #fff8d6 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 20px;
+}
+.grades button.btn-zero b {
+  font-family: var(--chunky);
+  color: #ff3377;
+}
+.grades button.btn-zero small {
+  font-family: var(--round);
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--ink);
+}
+.grades button.btn-zero .zero-emoji {
+  font-size: 20px;
+}
 .grades button:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--ink); }
 .mode-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
 .mode-row .sub-btn { min-width: 150px; font-weight: 900; }

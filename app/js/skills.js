@@ -8,6 +8,14 @@ export const LANES = ['たし・ひき', 'かけ・わり', '小数・分数', '
 export const MASTERY = { window: 6, need: 5 };
 
 export const SKILLS = [
+  // ---------------------------------------------------------------- grade 0 (Preschool / 0+)
+  { id: 'g0-next1', name: 'Наступне число (+1)', grade: 0, lane: 0, req: [], gen: ['hadd', { a: [1, 9], b: [1, 1], carry: 'none' }] },
+  { id: 'g0-prev1', name: 'Попереднє число (−1)', grade: 0, lane: 0, req: ['g0-next1'], gen: ['hsub', { a: [2, 10], b: [1, 1], borrow: 'none' }] },
+  { id: 'g0-compose5', name: 'Склад числа 5', grade: 0, lane: 0, req: [], gen: ['compose', { total: 5 }] },
+  { id: 'g0-add5', name: 'Додавання в межах 5', grade: 0, lane: 0, req: ['g0-next1', 'g0-compose5'], gen: ['hadd', { a: [1, 4], b: [1, 4], max: 5, carry: 'none' }] },
+  { id: 'g0-sub5', name: 'Віднімання в межах 5', grade: 0, lane: 0, req: ['g0-prev1', 'g0-add5'], gen: ['hsub', { a: [2, 5], b: [1, 4], borrow: 'none' }] },
+  { id: 'g0-zero', name: 'Дії з нулем (＋0, −0)', grade: 0, lane: 0, req: ['g0-add5'], gen: ['hzero', {}] },
+
   // ---------------------------------------------------------------- grade 1
   { id: 'g1-compose10', name: '10のまとまり', grade: 1, lane: 0, req: [], gen: ['compose', { total: 10 }] },
   { id: 'g1-add-nc', name: '1けたのたしざん', grade: 1, lane: 0, req: [], gen: ['hadd', { a: [1, 9], b: [1, 9], carry: 'none' }] },

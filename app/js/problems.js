@@ -341,11 +341,12 @@ const GEN = {
       help: `${a} ＋ ${b} ＝ ${total}`
     });
   },
-  hadd(rng, { a, b, carry, tensToo }) {
+  hadd(rng, { a, b, carry, tensToo, max }) {
     const r = R(rng);
     for (let g = 0; g < 400; g++) {
       let x; let y;
       if (tensToo && rng() < 0.3) { x = r(1, 8) * 10; y = r(1, 9 - x / 10) * 10; } else { x = range(a, rng); y = range(b, rng); }
+      if (max && x + y > max) continue;
       const c = carries(x, y);
       if (carry === 'none' && c) continue;
       if (carry === 'yes' && !c) continue;
@@ -368,6 +369,18 @@ const GEN = {
       return buildH([{ n: x }, { op: '−' }, { n: y }, { op: '＝' }, { ans: x - y }], { title: 'ひきざん', text: `${x} − ${y}`, answer: String(x - y), help });
     }
     throw new Error('hsub');
+  },
+  hzero(rng) {
+    const r = R(rng);
+    const n = r(1, 9);
+    const isSub = rng() < 0.35;
+    if (isSub) {
+      return buildH([{ n }, { op: '−' }, { n: 0 }, { op: '＝' }, { ans: n }], { title: 'ひきざん', text: `${n}-0`, answer: String(n), help: `${n} − 0 ＝ ${n}` });
+    }
+    const zeroFirst = rng() < 0.5;
+    const x = zeroFirst ? 0 : n;
+    const y = zeroFirst ? n : 0;
+    return buildH([{ n: x }, { op: '＋' }, { n: y }, { op: '＝' }, { ans: n }], { title: 'たしざん', text: `${x}+${y}`, answer: String(n), help: `${x} ＋ ${y} ＝ ${n}` });
   },
   add3(rng) {
     const r = R(rng);

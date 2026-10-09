@@ -1723,7 +1723,7 @@ function renderTree(justIds = [], starIds = []) {
     b.className = `node ${st}${justIds.includes(sk.id) ? ' just' : ''}${starIds.includes(sk.id) ? ' star-up' : ''}${rusty ? ' rusty' : ''}`;
     b.dataset.id = sk.id;
     b.style.cssText = `left:${pos[sk.id].x}px;top:${pos[sk.id].y}px;width:${nodeW}px;height:${NODE_H}px;--p:${masteryRatio(prog, sk.id)}`;
-    const gradeStr = isUk ? `${sk.grade} кл` : (isEn ? `G${sk.grade}` : `${sk.grade} кл`);
+    const gradeStr = sk.grade === 0 ? '0+' : (isUk ? `${sk.grade} кл` : (isEn ? `G${sk.grade}` : `${sk.grade} кл`));
     const nameStr = skillDisplayName(sk.id);
     const rustBadge = isUk ? 'Освіжити' : (isEn ? 'Rusty' : 'さび');
     b.innerHTML = `<i class="hold"></i><span class="g">${gradeStr}</span><span>${nameStr}</span>${st === 'learning' ? '<i class="ring"></i>' : ''}${st === 'mastered' ? `<i class="stars s${stars}">${starRow(stars)}</i>` : ''}${rusty ? `<i class="rust" aria-hidden="true">${rustBadge}</i>` : ''}`;
@@ -1780,7 +1780,7 @@ function openSkillInfo(id) {
   const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
   const laneStr = i18n.laneName(sk.lane) || LANES[sk.lane];
-  const gradeStr = isUk ? `${sk.grade} клас` : (isEn ? `Grade ${sk.grade}` : `${sk.grade} кл`);
+  const gradeStr = sk.grade === 0 ? (isUk ? 'Дошкілля (0+)' : (isEn ? 'Preschool (0+)' : '0+')) : (isUk ? `${sk.grade} клас` : (isEn ? `Grade ${sk.grade}` : `${sk.grade} кл`));
   $('#si-grade').textContent = `${gradeStr}　${laneStr}`;
   $('#si-title').textContent = skillDisplayName(id);
   $('#si-stars').innerHTML = `${starRow(n)}<span>☆${n} / ${STAR_MAX}</span>`;

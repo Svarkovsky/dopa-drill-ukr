@@ -81,7 +81,7 @@ test('recent signatures are avoided', () => {
       if (recent.has(signature(p)) && firstRepeat === Infinity) firstRepeat = i;
       recent.add(signature(p));
     }
-    const need = s.id === 'g1-compose10' ? 8 : 15;
+    const need = s.id.startsWith('g0-') ? (s.id === 'g0-compose5' ? 4 : 8) : (s.id === 'g1-compose10' ? 8 : 15);
     assert.ok(firstRepeat >= need, `${s.id} repeated at ${firstRepeat}`);
   }
 });

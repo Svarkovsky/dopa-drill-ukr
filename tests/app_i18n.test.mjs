@@ -37,7 +37,7 @@ test('i18n default language and switching', () => {
 
 test('every skill has a Ukrainian name mapping', () => {
   setLanguage('uk');
-  assert.equal(SKILLS.length, 58);
+  assert.equal(SKILLS.length, 64);
   for (const sk of SKILLS) {
     const uk = skillName(sk.id);
     assert.ok(uk, `Missing Ukrainian translation for skill: ${sk.id} (${sk.name})`);

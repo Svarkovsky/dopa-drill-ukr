@@ -76,6 +76,8 @@ const STRINGS = {
     skillTree: 'Дерево навичок',
     trophy: 'Трофеї',
     collection: 'Колекція',
+    grade0: '0+',
+    grade0Sub: 'Підготовка до школи',
     grade1: 'кл',
     grade2: 'кл',
     grade3: 'кл',
@@ -270,6 +272,8 @@ const STRINGS = {
     skillTree: 'スキルツリー',
     trophy: 'トロフィー',
     collection: 'コレクション',
+    grade0: '0+',
+    grade0Sub: 'にゅうがくまえ',
     grade1: '1ねんせい',
     grade2: '2ねんせい',
     grade3: '3ねんせい',
@@ -637,6 +641,12 @@ export function t(key, params = {}) {
 // ---------------------------------------------------------------- Skills Translation
 export const SKILL_NAMES = {
   uk: {
+    'g0-next1': 'Наступне число (+1)',
+    'g0-prev1': 'Попереднє число (−1)',
+    'g0-compose5': 'Склад числа 5',
+    'g0-add5': 'Додавання в межах 5',
+    'g0-sub5': 'Віднімання в межах 5',
+    'g0-zero': 'Дії з нулем (＋0, −0)',
     'g1-compose10': 'Склад числа 10',
     'g1-add-nc': 'Додавання в межах 10',
     'g1-sub-nb': 'Віднімання в межах 10',
@@ -697,6 +707,12 @@ export const SKILL_NAMES = {
     'g6-letter': 'Рівняння (знаходження x)',
   },
   en: {
+    'g0-next1': 'Next Number (+1)',
+    'g0-prev1': 'Previous Number (-1)',
+    'g0-compose5': 'Pairs to 5',
+    'g0-add5': 'Addition within 5',
+    'g0-sub5': 'Subtraction within 5',
+    'g0-zero': 'Operations with 0',
     'g1-compose10': 'Pairs to 10',
     'g1-add-nc': '1-Digit Addition',
     'g1-sub-nb': 'Subtraction within 10',
