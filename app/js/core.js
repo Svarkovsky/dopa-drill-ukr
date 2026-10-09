@@ -95,9 +95,21 @@ export function quadPoint(a, c, b, t) {
   return { x: u * u * a.x + 2 * u * t * c.x + t * t * b.x, y: u * u * a.y + 2 * u * t * c.y + t * t * b.y };
 }
 
+let _centerFrame = 0;
+const _centerCache = new WeakMap();
+
+export function advanceFrame() {
+  _centerFrame++;
+}
+
 export function centerOf(el) {
+  if (!el || typeof el.getBoundingClientRect !== 'function') return { x: 0, y: 0, w: 0, h: 0 };
+  const cached = _centerCache.get(el);
+  if (cached && cached.f === _centerFrame) return cached.val;
   const r = el.getBoundingClientRect();
-  return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width, h: r.height };
+  const val = { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width, h: r.height };
+  _centerCache.set(el, { f: _centerFrame, val });
+  return val;
 }
 
 export const params = new URLSearchParams(typeof location !== 'undefined' ? location.search : '');

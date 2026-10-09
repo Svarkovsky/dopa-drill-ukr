@@ -1,7 +1,7 @@
 console.log('🎮 Dopa Drill v1.0.4');
 // Game flow, input, scoring, and the "director" that turns every event into
 // escalating visuals and sound.
-import { startClock, onFrame, wait, tween, clamp, lerp, rand, pick, chance, centerOf, params,
+import { startClock, onFrame, wait, tween, clamp, lerp, rand, pick, chance, centerOf, advanceFrame, params,
   easeOutBack, easeOutCubic, easeInCubic, easeInOutCubic, easeOutQuint } from './core.js';
 import { makeRng, generate, makeProblem, signature, BASIC_SETS, EXTRA_TIERS } from './problems.js';
 import { AudioEngine } from './audio.js';
@@ -1507,20 +1507,34 @@ setInterval(() => {
 
 // ---------------------------------------------------------------- frame loop
 let lastClockText = '';
+let lastKickVal = -1;
+let wasShake = false;
+let wasFlash = false;
+const domDopa = $('#dopa');
+const domClock = $('#clock');
+const domClockLabel = $('#clock-label');
+const domClockBox = $('.clock');
+const domHud = $('.hud');
+const domFlash = $('#flash');
+
 onFrame((dt, t) => {
+  advanceFrame();
   audio.update();
   demoTick(t);
   tickCombo(t);
   const pulse = audio.pulse();
   const targetKick = audio.playing ? pulse.kick * (S.level >= 1 ? 1 : 0.2) : 0;
   S.kick = S.reduced ? 0 : targetKick;
-  body.style.setProperty('--kick', S.kick.toFixed(3));
+  if (Math.abs(lastKickVal - S.kick) > 0.005) {
+    body.style.setProperty('--kick', S.kick.toFixed(3));
+    lastKickVal = S.kick;
+  }
 
   // dopa counter rolls in log space
   const d = S.dopa;
   if (d.shown < d.L) {
     d.shown = Math.min(d.L, d.shown + Math.max(0.02, (d.L - d.shown) * Math.min(1, dt * 7)));
-    $('#dopa').textContent = fmtDopa(d.shown);
+    if (domDopa) domDopa.textContent = fmtDopa(d.shown);
     const u = unitOf(d.shown);
     if (u !== d.unit) { if (u) unitSlam(u, d.shown); d.unit = u; }
   }
@@ -1531,7 +1545,7 @@ onFrame((dt, t) => {
     if (S.mode === 'extra') {
       const left = Math.max(0, S.extra.end - t);
       txt = fmtTime(left + 999);
-      $('.clock').classList.toggle('hurry', left < 10000);
+      if (domClockBox) domClockBox.classList.toggle('hurry', left < 10000);
       if (left < 5500 && left > 0) {
         const sec = Math.ceil(left / 1000);
         if (sec !== S.lastTick) { S.lastTick = sec; audio.tick(sec <= 1); }
@@ -1540,10 +1554,10 @@ onFrame((dt, t) => {
     } else {
       const el = (S.endT || t) - S.startT;
       txt = fmtTime(el);
-      $('.clock').classList.toggle('over', el > S.targetMs);
-      if (el > S.targetMs) $('#clock-label').textContent = i18n.t('targetOver');
+      if (domClockBox) domClockBox.classList.toggle('over', el > S.targetMs);
+      if (el > S.targetMs && domClockLabel) domClockLabel.textContent = i18n.t('targetOver');
     }
-    if (txt !== lastClockText) { $('#clock').textContent = txt; lastClockText = txt; }
+    if (txt !== lastClockText) { if (domClock) domClock.textContent = txt; lastClockText = txt; }
 
     // Hero wanders around the stage between actions.
     if (!S.reduced && S.motion >= 0.35 && S.E > 0.3 && t > S.idleAt && t > S.busyUntil && !S.reach && !hero.hands.some((h) => h.job)) {
@@ -1559,13 +1573,26 @@ onFrame((dt, t) => {
   // screen shake (keypad stays still to keep tap targets stable)
   S.shake = Math.max(0, S.shake - dt * 30);
   const shk = S.shake * S.motion;
-  const sx = shk > 0.1 && !S.reduced ? rand(-shk, shk) : 0;
-  const sy = shk > 0.1 && !S.reduced ? rand(-shk, shk) : 0;
-  const tr = shk > 0.1 ? `translate(${sx}px, ${sy}px)` : '';
-  stage.style.translate = tr ? `${sx}px ${sy}px` : '';
-  $('.hud').style.translate = tr ? `${sx * 0.5}px ${sy * 0.5}px` : '';
+  if (shk > 0.1 && !S.reduced) {
+    const sx = rand(-shk, shk);
+    const sy = rand(-shk, shk);
+    stage.style.translate = `${sx}px ${sy}px`;
+    if (domHud) domHud.style.translate = `${sx * 0.5}px ${sy * 0.5}px`;
+    wasShake = true;
+  } else if (wasShake) {
+    stage.style.translate = '';
+    if (domHud) domHud.style.translate = '';
+    wasShake = false;
+  }
+
   S.flash = Math.max(0, S.flash - dt * 3.2);
-  $('#flash').style.opacity = S.reduced ? 0 : ((S.flash * S.motion) ** 1.5 * 0.6).toFixed(3);
+  if (S.flash > 0.005 && !S.reduced) {
+    if (domFlash) domFlash.style.opacity = ((S.flash * S.motion) ** 1.5 * 0.6).toFixed(3);
+    wasFlash = true;
+  } else if (wasFlash) {
+    if (domFlash) domFlash.style.opacity = '0';
+    wasFlash = false;
+  }
 
   // backdrop
   const vE = S.settingsOpen || S.screen === 'collect' ? S.previewE : (S.screen === 'title' || S.screen === 'tree' || S.screen === 'trophy') ? 0.04 : lerp(Math.min(S.E, 0.3), S.E, S.motion);

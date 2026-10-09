@@ -14,6 +14,7 @@ export class FX {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.parts = [];
+    this.pool = [];
     this.reduced = false;
     this.motion = 1;
     // Unlockable particle theme (id041, id042): replaces part of the confetti.
@@ -26,8 +27,14 @@ export class FX {
     if (this.canvas.width !== w || this.canvas.height !== h) { this.canvas.width = w; this.canvas.height = h; }
     this.dpr = dpr;
   }
+  allocPart() {
+    return this.pool.pop() || {};
+  }
   add(p) {
-    if (this.parts.length >= this.max) this.parts.splice(0, 1 + Math.floor(this.max * 0.02));
+    if (this.parts.length >= this.max) {
+      const dropped = this.parts.splice(0, 1 + Math.floor(this.max * 0.02));
+      for (const d of dropped) if (this.pool.length < this.max) this.pool.push(d);
+    }
     p.age = 0;
     this.parts.push(p);
     return p;
@@ -112,7 +119,16 @@ export class FX {
       if (p.trail) { p.trail.push({ x: p.x, y: p.y }); if (p.trail.length > 18) p.trail.shift(); }
       if (p.y > H) p.life = 0;
     }
-    this.parts = this.parts.filter((p) => p.age < p.life || (p.kind === 'shell' && !p.done));
+    let alive = 0;
+    for (let i = 0; i < this.parts.length; i++) {
+      const p = this.parts[i];
+      if (p.age < p.life || (p.kind === 'shell' && !p.done)) {
+        this.parts[alive++] = p;
+      } else {
+        if (this.pool.length < this.max) this.pool.push(p);
+      }
+    }
+    this.parts.length = alive;
   }
 
   sprite(key, w, h, paint) {

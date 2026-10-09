@@ -39,9 +39,32 @@ export function load(storage = backend()) {
   return cache;
 }
 
-export function save(storage = backend()) {
+let _saveTimer = null;
+
+export function flush(storage = backend()) {
+  if (_saveTimer) { clearTimeout(_saveTimer); _saveTimer = null; }
   if (!cache || !storage) return false;
   try { storage.setItem(KEY, JSON.stringify(cache)); return true; } catch { return false; }
+}
+
+export function save(storage = backend()) {
+  if (!cache || !storage) return false;
+  // In real browser runtime, debounce writes to prevent main-thread serialization hitches
+  if (typeof window !== 'undefined' && storage === backend()) {
+    if (!_saveTimer) {
+      _saveTimer = setTimeout(() => {
+        _saveTimer = null;
+        try { storage.setItem(KEY, JSON.stringify(cache)); } catch {}
+      }, 250);
+    }
+    return true;
+  }
+  return flush(storage);
+}
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('beforeunload', () => flush());
+  window.addEventListener('pagehide', () => flush());
 }
 
 export function settings() { return load().settings; }
