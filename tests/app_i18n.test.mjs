@@ -57,7 +57,7 @@ test('problemTitle and stepLabel translate accurately', () => {
   assert.equal(stepLabel('たす（一の位）'), 'Додати (Одиниці)');
   assert.equal(stepLabel('商の一の位'), 'Частка (Одиниці)');
   assert.equal(cellTextI18n('最大公約数'), 'НСД');
-  assert.equal(cellTextI18n('あまり'), 'остача');
+  assert.equal(cellTextI18n('あまり'), 'ост.');
   assert.equal(cellTextI18n('十の位まで'), 'до десятків');
   assert.equal(problemHelpText('どちらも わりきれる 数'), 'Спільний дільник: ділить обидва числа');
   assert.equal(answerTextI18n('14と42の最大公約数 ＝ 7'), '14 і 42 НСД ＝ 7');
@@ -110,6 +110,12 @@ test('questTextI18n translations', () => {
   setLanguage('uk');
   assert.equal(questTextI18n({ id: 'play1' }, 'fallback'), 'Зіграти 1 раунд тренування');
   assert.equal(questTextI18n({ id: 'combo5' }, 'fallback'), 'Досягти 5 комбо');
+  assert.equal(questTextI18n({ id: 'combo20' }, 'fallback'), 'Досягти 20 комбо');
+  assert.equal(questTextI18n({ id: 'new1' }, 'fallback'), '1 завдання з нової навички');
+  assert.equal(questTextI18n({ id: 'grade1' }, 'fallback'), 'Зіграти 1 раунд у розділі класів');
+  assert.equal(questTextI18n({ id: 'first5' }, 'fallback'), '5 правильних з 1-ї спроби');
+  assert.equal(questTextI18n({ id: 'extra5' }, 'fallback'), 'Розвʼязати 5 завдань в екстра');
+  assert.equal(questTextI18n({ id: 'learn10' }, 'fallback'), '10 завдань навичок, що вивчаються');
   assert.equal(questTextI18n({ id: 'extra' }, 'fallback'), 'Увійти до додаткового раунду');
 });
 

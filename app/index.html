@@ -35,7 +35,7 @@
       <div class="modes" id="modes">
         <button type="button" id="start" class="big-btn level-btn"><span data-i18n="myLevel">Мій рівень</span><small id="level-sub" data-i18n="myLevelSub">Починається з перевірки знань</small></button>
         <button type="button" id="start-review" class="sub-btn review-btn review-main" hidden><span data-i18n="review">Робота над помилками</span> <b id="review-count">0</b></button>
-        <div class="grades" role="group" aria-label="按年级练习" data-i18n-aria="gradeGroupAria">
+        <div class="grades" role="group" aria-label="Тренування за класами" data-i18n-aria="gradeGroupAria">
           <button type="button" data-grade="1">1<small data-i18n="grade1">кл</small></button><button type="button" data-grade="2">2<small data-i18n="grade2">кл</small></button><button type="button" data-grade="3">3<small data-i18n="grade3">кл</small></button>
           <button type="button" data-grade="4">4<small data-i18n="grade4">кл</small></button><button type="button" data-grade="5">5<small data-i18n="grade5">кл</small></button><button type="button" data-grade="6">6<small data-i18n="grade6">кл</small></button>
         </div>
@@ -51,26 +51,26 @@
       </section>
       <section class="cal-card" id="calendar" aria-labelledby="cal-title">
         <div class="cal-head">
-          <button type="button" class="cal-nav" id="cal-prev" aria-label="上一月" data-i18n-aria="calPrevMonth">‹</button>
-          <h2 id="cal-title" data-i18n="calendarTitle">出勤打卡日历</h2>
-          <button type="button" class="cal-nav" id="cal-next" aria-label="下一月" data-i18n-aria="calNextMonth">›</button>
+          <button type="button" class="cal-nav" id="cal-prev" aria-label="Попередній місяць" data-i18n-aria="calPrevMonth">‹</button>
+          <h2 id="cal-title" data-i18n="calendarTitle">Календар тренувань</h2>
+          <button type="button" class="cal-nav" id="cal-next" aria-label="Наступний місяць" data-i18n-aria="calNextMonth">›</button>
         </div>
         <div class="cal-badges" id="cal-badges"></div>
-        <div class="cal-week" aria-hidden="true" id="cal-week"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div>
+        <div class="cal-week" aria-hidden="true" id="cal-week"><span>Нд</span><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span></div>
         <div class="cal-grid" id="cal-grid" role="grid"></div>
       </section>
-      <p class="hint" data-i18n="keyboardHint">支持使用数字键和退格键（Backspace）作答</p>
+      <p class="hint" data-i18n="keyboardHint">Можна відповідати цифровими клавішами та Backspace</p>
     </section>
 
     <!-- Skill tree -->
     <section id="screen-tree" class="screen" aria-labelledby="tree-title">
       <header class="tree-head">
-        <button type="button" class="icon-btn" id="tree-back" aria-label="返回" data-i18n-aria="treeBackAria">‹</button>
-        <h2 id="tree-title" data-i18n="treeHeadTitle">技能树</h2>
+        <button type="button" class="icon-btn" id="tree-back" aria-label="Назад" data-i18n-aria="treeBackAria">‹</button>
+        <h2 id="tree-title" data-i18n="treeHeadTitle">Дерево навичок</h2>
         <span class="tree-count" id="tree-count"></span>
       </header>
       <p class="tree-stars" id="tree-stars"></p>
-      <p class="tree-note" data-i18n="treeNote">轻按练习（达到 ☆ 条件可掌握）· 长按可重置该技能及后续节点</p>
+      <p class="tree-note" data-i18n="treeNote">Торкнись для тренування · Затисни для скидання</p>
       <div class="tree-scroll" id="tree-scroll"><div class="tree-lanes" id="tree-lanes" aria-hidden="true"></div><div class="tree" id="tree"><svg class="tree-links" id="tree-links" aria-hidden="true"></svg></div></div>
       <p class="toast" id="toast" role="status" hidden></p>
     </section>
@@ -78,12 +78,12 @@
     <!-- Trophies (id036) -->
     <section id="screen-trophy" class="screen" aria-labelledby="trophy-title">
       <header class="tree-head">
-        <button type="button" class="icon-btn" id="trophy-back" aria-label="返回" data-i18n-aria="treeBackAria">‹</button>
-        <h2 id="trophy-title" data-i18n="trophyHeadTitle">成就奖杯</h2>
+        <button type="button" class="icon-btn" id="trophy-back" aria-label="Назад" data-i18n-aria="treeBackAria">‹</button>
+        <h2 id="trophy-title" data-i18n="trophyHeadTitle">Трофеї</h2>
         <span class="tree-count" id="trophy-count"></span>
       </header>
-      <div class="tr-filter" role="group" aria-label="分类筛选">
-        <button type="button" data-f="all" aria-pressed="true" data-i18n="trFilterAll">全部</button><button type="button" data-f="got" aria-pressed="false" data-i18n="trFilterGot">已获得</button><button type="button" data-f="next" aria-pressed="false" data-i18n="trFilterNext">未获得</button><button type="button" data-f="soon" aria-pressed="false" data-i18n="trFilterSoon">即将达成</button>
+      <div class="tr-filter" role="group" aria-label="Фільтр категорій">
+        <button type="button" data-f="all" aria-pressed="true" data-i18n="trFilterAll">Усі</button><button type="button" data-f="got" aria-pressed="false" data-i18n="trFilterGot">Здобуті</button><button type="button" data-f="next" aria-pressed="false" data-i18n="trFilterNext">Не здобуті</button><button type="button" data-f="soon" aria-pressed="false" data-i18n="trFilterSoon">Майже здобуто</button>
       </div>
       <div class="tr-scroll" id="tr-scroll"><div class="tr-list" id="tr-list"></div></div>
     </section>
@@ -91,27 +91,27 @@
     <!-- Collection (id041) -->
     <section id="screen-collect" class="screen" aria-labelledby="collect-title">
       <header class="tree-head">
-        <button type="button" class="icon-btn" id="collect-back" aria-label="返回" data-i18n-aria="treeBackAria">‹</button>
-        <h2 id="collect-title" data-i18n="collectHeadTitle">宝物收藏库</h2>
+        <button type="button" class="icon-btn" id="collect-back" aria-label="Назад" data-i18n-aria="treeBackAria">‹</button>
+        <h2 id="collect-title" data-i18n="collectHeadTitle">Колекція</h2>
         <span class="tree-count" id="collect-count"></span>
       </header>
       <div class="co-preview" id="co-preview" aria-hidden="true"><div class="stamp co-mark" id="co-mark"></div><p class="co-now" id="co-now"></p></div>
-      <div class="co-tabs" id="co-tabs" role="group" aria-label="外观种类"></div>
-      <div class="co-scroll" id="co-scroll"><p class="co-note" id="co-note" data-i18n="collectNote">在此选择游戏中生效的视觉外观、音乐与终场特效（选择“随机”每次将自动随机）</p><div class="co-grid" id="co-grid"></div></div>
+      <div class="co-tabs" id="co-tabs" role="group" aria-label="Категорії"></div>
+      <div class="co-scroll" id="co-scroll"><p class="co-note" id="co-note" data-i18n="collectNote">Обирай теми, музику та ефекти, відкриті за трофеї (або ввімкни «Випадково»)</p><div class="co-grid" id="co-grid"></div></div>
     </section>
 
     <!-- Play -->
-    <section id="screen-play" class="screen" aria-label="游戏答题界面">
+    <section id="screen-play" class="screen" aria-label="Екран гри">
       <header class="hud">
         <div class="pips" id="pips" aria-hidden="true"></div>
-        <div class="clock" aria-live="off"><span id="clock-label">目标 2:40</span><b id="clock">0:00</b></div>
-        <span class="demo-tag" aria-hidden="true" data-i18n="demoTag">演示模式</span>
-        <button type="button" class="icon-btn" id="mute" aria-label="静音切换" data-i18n-aria="muteBtnAria" aria-pressed="false">♪</button>
+        <div class="clock" aria-live="off"><span id="clock-label">Ціль 2:40</span><b id="clock">0:00</b></div>
+        <span class="demo-tag" aria-hidden="true" data-i18n="demoTag">ДЕМО</span>
+        <button type="button" class="icon-btn" id="mute" aria-label="Перемкнути звук" data-i18n-aria="muteBtnAria" aria-pressed="false">♪</button>
       </header>
       <div class="hud2">
-        <div class="tally"><span><span data-i18n="correctCount">正确</span> <b id="ok">0</b><small id="ok-total">/10</small></span><span class="ng"><span data-i18n="missCount">差一点</span> <b id="ng">0</b></span></div>
-        <div class="combo" id="combo-box" aria-hidden="true"><b id="combo">0</b><small data-i18n="comboLabel">连击</small><span class="combo-mult" id="combo-mult"></span><i class="combo-track"><i id="combo-bar"></i></i></div>
-        <div class="dopa" id="dopa-box"><small data-i18n="dopaLabel">多帕</small><b id="dopa">0</b></div>
+        <div class="tally"><span><span data-i18n="correctCount">Правильно</span> <b id="ok">0</b><small id="ok-total">/10</small></span><span class="ng"><span data-i18n="missCount">Близько</span> <b id="ng">0</b></span></div>
+        <div class="combo" id="combo-box" aria-hidden="true"><b id="combo">0</b><small data-i18n="comboLabel">Комбо</small><span class="combo-mult" id="combo-mult"></span><i class="combo-track"><i id="combo-bar"></i></i></div>
+        <div class="dopa" id="dopa-box"><small data-i18n="dopaLabel">Допа</small><b id="dopa">0</b></div>
       </div>
       <div class="stage" id="stage" aria-hidden="true">
         <svg class="bunting" viewBox="0 0 400 40" preserveAspectRatio="none"><path d="M0 4 Q200 34 400 4" fill="none" stroke="#1b1d4d" stroke-width="2.5"/><g id="flags"></g></svg>
@@ -120,42 +120,42 @@
       </div>
       <section class="card" id="card" aria-labelledby="qtitle">
         <div class="marquee" aria-hidden="true"></div>
-        <div class="card-top"><span class="chip" id="qtitle">加法</span><span class="qno" id="qno">第 1 题</span></div>
-        <div class="sheet-wrap"><div class="sheet" id="sheet" role="group" aria-label="算式"></div></div>
-        <p class="step-label" id="step-label" aria-live="polite">个位</p>
+        <div class="card-top"><span class="chip" id="qtitle">Додавання</span><span class="qno" id="qno">Завдання 1</span></div>
+        <div class="sheet-wrap"><div class="sheet" id="sheet" role="group" aria-label="Рівняння"></div></div>
+        <p class="step-label" id="step-label" aria-live="polite">Одиниці</p>
         <div class="stamp" id="stamp" aria-hidden="true"></div>
-        <div class="reach-tag" id="reach-tag" aria-hidden="true">还剩 1 格</div>
+        <div class="reach-tag" id="reach-tag" aria-hidden="true">Залишилось 1</div>
       </section>
-      <div class="pad" id="pad" role="group" aria-label="数字键">
+      <div class="pad" id="pad" role="group" aria-label="Клавіатура">
         <button type="button" data-key="7">7</button><button type="button" data-key="8">8</button><button type="button" data-key="9">9</button>
         <button type="button" data-key="4">4</button><button type="button" data-key="5">5</button><button type="button" data-key="6">6</button>
         <button type="button" data-key="1">1</button><button type="button" data-key="2">2</button><button type="button" data-key="3">3</button>
-        <button type="button" data-key="Backspace" class="del" aria-label="删除前一位">⌫</button><button type="button" data-key="0" class="zero">0</button>
+        <button type="button" data-key="Backspace" class="del" aria-label="Видалити">⌫</button><button type="button" data-key="0" class="zero">0</button>
       </div>
     </section>
 
     <!-- Basic result -->
     <section id="screen-result" class="screen" aria-labelledby="result-title">
       <div class="result-card">
-        <p class="chip" id="result-title" data-i18n="basicResultTitle">基础练习完成</p>
-        <p class="score"><b id="r-score">100</b><span data-i18n="pts">分</span></p>
+        <p class="chip" id="result-title" data-i18n="basicResultTitle">Основне тренування завершено</p>
+        <p class="score"><b id="r-score">100</b><span data-i18n="pts">балів</span></p>
         <dl class="stats">
-          <div><dt data-i18n="correctCount">正确</dt><dd id="r-ok">10题</dd></div>
-          <div><dt data-i18n="missCount">差一点</dt><dd id="r-ng">0次</dd></div>
-          <div><dt data-i18n="accuracyLabel">初次正解率</dt><dd id="r-rate">100%</dd></div>
-          <div><dt data-i18n="timeLabel">用时</dt><dd id="r-time">1:23</dd></div>
+          <div><dt data-i18n="correctCount">Правильно</dt><dd id="r-ok">10 завд.</dd></div>
+          <div><dt data-i18n="missCount">Близько</dt><dd id="r-ng">0 разів</dd></div>
+          <div><dt data-i18n="accuracyLabel">Влучність з 1-ї спроби</dt><dd id="r-rate">100%</dd></div>
+          <div><dt data-i18n="timeLabel">Час</dt><dd id="r-time">1:23</dd></div>
         </dl>
-        <p class="dopa-final"><small data-i18n="dopaLabel">多帕</small><b id="r-dopa">0</b></p>
+        <p class="dopa-final"><small data-i18n="dopaLabel">Допа</small><b id="r-dopa">0</b></p>
         <div class="growth-box" id="r-growth"></div>
         <p class="unlock" id="r-unlock"></p>
         <div class="skill-news" id="r-skills"></div>
         <div class="quest-mini" id="r-quests"></div>
         <div class="actions">
-          <button type="button" id="go-extra" class="big-btn"><span data-i18n="btnGoExtra">挑战加时赛</span> <small data-i18n="btnGoExtraSub">90秒限时</small></button>
-          <button type="button" id="go-review" class="sub-btn review-btn" data-i18n="btnReviewMistakes" hidden>重做错题</button>
-          <button type="button" id="go-tree" class="sub-btn" data-i18n="btnViewTree" hidden>查看技能树</button>
-          <button type="button" id="go-again" class="sub-btn" data-i18n="btnPlayAgain" hidden>再来一次</button>
-          <button type="button" id="go-title" class="sub-btn" data-i18n="btnFinish">结束返回</button>
+          <button type="button" id="go-extra" class="big-btn"><span data-i18n="btnGoExtra">Додатковий раунд</span> <small data-i18n="btnGoExtraSub">90 секунд</small></button>
+          <button type="button" id="go-review" class="sub-btn review-btn" data-i18n="btnReviewMistakes" hidden>Повторити помилки</button>
+          <button type="button" id="go-tree" class="sub-btn" data-i18n="btnViewTree" hidden>Дерево навичок</button>
+          <button type="button" id="go-again" class="sub-btn" data-i18n="btnPlayAgain" hidden>Ще раз</button>
+          <button type="button" id="go-title" class="sub-btn" data-i18n="btnFinish">Завершити</button>
         </div>
       </div>
     </section>
@@ -163,22 +163,22 @@
     <!-- Final result -->
     <section id="screen-final" class="screen" aria-labelledby="final-title">
       <div class="result-card">
-        <p class="chip" id="final-title" data-i18n="finalResultTitle">加时挑战结束</p>
-        <p class="score"><b id="f-score">100</b><span data-i18n="pts">分</span></p>
-        <p class="breakdown" id="f-break">基础 100 ＋ 挑战加分 0</p>
+        <p class="chip" id="final-title" data-i18n="finalResultTitle">Додатковий раунд завершено</p>
+        <p class="score"><b id="f-score">100</b><span data-i18n="pts">балів</span></p>
+        <p class="breakdown" id="f-break">Базові 100 ＋ Додаткові 0</p>
         <dl class="stats">
-          <div><dt data-i18n="extraSolvedLabel">挑战答对</dt><dd id="f-ok">0题</dd></div>
-          <div><dt data-i18n="extraMissLabel">挑战失误</dt><dd id="f-ng">0次</dd></div>
-          <div><dt data-i18n="basicMissLabel">基础失误</dt><dd id="f-bng">0次</dd></div>
-          <div><dt data-i18n="basicTimeLabel">基础用时</dt><dd id="f-time">0:00</dd></div>
+          <div><dt data-i18n="extraSolvedLabel">Розвʼязано в екстра</dt><dd id="f-ok">0 завд.</dd></div>
+          <div><dt data-i18n="extraMissLabel">Помилок в екстра</dt><dd id="f-ng">0 разів</dd></div>
+          <div><dt data-i18n="basicMissLabel">Базових помилок</dt><dd id="f-bng">0 разів</dd></div>
+          <div><dt data-i18n="basicTimeLabel">Базовий час</dt><dd id="f-time">0:00</dd></div>
         </dl>
-        <p class="dopa-final"><small data-i18n="dopaLabel">多帕</small><b id="f-dopa">0</b></p>
+        <p class="dopa-final"><small data-i18n="dopaLabel">Допа</small><b id="f-dopa">0</b></p>
         <div class="skill-news" id="f-skills"></div>
         <div class="quest-mini" id="f-quests"></div>
         <div class="actions">
-          <button type="button" id="f-review" class="sub-btn review-btn" data-i18n="btnReviewMistakes" hidden>重做错题</button>
-          <button type="button" id="f-tree" class="sub-btn" data-i18n="btnViewTree" hidden>查看技能树</button>
-          <button type="button" id="again" class="big-btn" data-i18n="btnFinish">结束返回</button>
+          <button type="button" id="f-review" class="sub-btn review-btn" data-i18n="btnReviewMistakes" hidden>Повторити помилки</button>
+          <button type="button" id="f-tree" class="sub-btn" data-i18n="btnViewTree" hidden>Дерево навичок</button>
+          <button type="button" id="again" class="big-btn" data-i18n="btnFinish">Завершити</button>
         </div>
       </div>
     </section>
@@ -187,10 +187,10 @@
   <!-- Settings (above #app, below particles and actors) -->
   <div class="modal" id="settings" role="dialog" aria-modal="true" aria-labelledby="settings-title" hidden>
     <div class="modal-card">
-      <h2 id="settings-title" class="chip" data-i18n="settingsTitle">系统设置</h2>
+      <h2 id="settings-title" class="chip" data-i18n="settingsTitle">Налаштування</h2>
       
       <div class="set-row">
-        <span class="set-label" data-i18n="setLanguage">语言 / Language</span>
+        <span class="set-label" data-i18n="setLanguage">Мова / Language</span>
         <div class="lang-pick-group" role="radiogroup" aria-label="Мова" id="lang-pick">
           <button type="button" role="radio" data-lang="uk" aria-checked="true">Українська</button>
           <button type="button" role="radio" data-lang="en" aria-checked="false">English</button>
@@ -199,68 +199,68 @@
       </div>
 
       <div class="set-row">
-        <span class="set-label" data-i18n="setProblemCount">每组题数</span>
-        <div class="pick" role="radiogroup" aria-label="问题数">
-          <button type="button" role="radio" data-count="6" aria-checked="false">6<small data-i18n="problemsUnit">题</small></button>
-          <button type="button" role="radio" data-count="10" aria-checked="true">10<small data-i18n="problemsUnit">题</small></button>
-          <button type="button" role="radio" data-count="14" aria-checked="false">14<small data-i18n="problemsUnit">题</small></button>
+        <span class="set-label" data-i18n="setProblemCount">Кількість завдань</span>
+        <div class="pick" role="radiogroup" aria-label="Кількість завдань">
+          <button type="button" role="radio" data-count="6" aria-checked="false">6<small data-i18n="problemsUnit">завд.</small></button>
+          <button type="button" role="radio" data-count="10" aria-checked="true">10<small data-i18n="problemsUnit">завд.</small></button>
+          <button type="button" role="radio" data-count="14" aria-checked="false">14<small data-i18n="problemsUnit">завд.</small></button>
         </div>
       </div>
 
       <div class="set-row">
-        <span class="set-label" data-i18n="setSound">音效与音乐</span>
+        <span class="set-label" data-i18n="setSound">Звук та музика</span>
         <div class="set-inline">
-          <button type="button" class="toggle" data-toggle="sound" aria-pressed="true"><i aria-hidden="true">♪</i><b id="sound-state-text" data-i18n="setSoundOn">开启</b></button>
-          <input type="range" class="slider" id="volume" min="0" max="100" step="1" value="80" aria-label="音量调节" data-i18n-aria="setVolumeAria">
+          <button type="button" class="toggle" data-toggle="sound" aria-pressed="true"><i aria-hidden="true">♪</i><b id="sound-state-text" data-i18n="setSoundOn">Увімкнено</b></button>
+          <input type="range" class="slider" id="volume" min="0" max="100" step="1" value="80" aria-label="Гучність" data-i18n-aria="setVolumeAria">
         </div>
       </div>
 
       <div class="set-row">
-        <span class="set-label"><span data-i18n="setMotion">动态特效强度</span> <b id="motion-val">100%</b></span>
-        <input type="range" class="slider motion" id="motion" min="0" max="100" step="1" value="100" aria-label="动态特效强度" data-i18n-aria="setMotion" aria-describedby="motion-note">
-        <p class="set-note" id="motion-note" data-i18n="setMotionNote">调至 0% 可关闭屏幕晃动、强光闪烁与纸屑飘落</p>
+        <span class="set-label"><span data-i18n="setMotion">Інтенсивність анімацій</span> <b id="motion-val">100%</b></span>
+        <input type="range" class="slider motion" id="motion" min="0" max="100" step="1" value="100" aria-label="Інтенсивність анімацій" data-i18n-aria="setMotion" aria-describedby="motion-note">
+        <p class="set-note" id="motion-note" data-i18n="setMotionNote">0% вимикає тремтіння екрана, спалахи та конфеті</p>
       </div>
 
       <div class="set-row">
-        <span class="set-label" data-i18n="setDemo">自动演示</span>
-        <button type="button" class="sub-btn demo-btn" id="demo-play" data-i18n="setDemoBtn">▶ 查看自动演示</button>
-        <p class="set-note" data-i18n="setDemoNote">轻触屏幕或按任意键即可退出演示（不计入个人记录）</p>
+        <span class="set-label" data-i18n="setDemo">Демо-гра</span>
+        <button type="button" class="sub-btn demo-btn" id="demo-play" data-i18n="setDemoBtn">▶ Переглянути демо-гру</button>
+        <p class="set-note" data-i18n="setDemoNote">Торкнись екрана або натисни будь-яку клавішу для виходу</p>
       </div>
 
       <div class="set-row">
-        <span class="set-label" data-i18n="setData">存档数据</span>
-        <button type="button" class="sub-btn danger reset-btn" id="reset-data" aria-describedby="reset-note" data-i18n="setDataReset">全部重置</button>
-        <p class="set-note" id="reset-note" data-i18n="setDataResetNote">清除此浏览器上的所有游戏进度、成就与自定义设置，回到初始状态</p>
+        <span class="set-label" data-i18n="setData">Дані гри</span>
+        <button type="button" class="sub-btn danger reset-btn" id="reset-data" aria-describedby="reset-note" data-i18n="setDataReset">Скинути все</button>
+        <p class="set-note" id="reset-note" data-i18n="setDataResetNote">Очистити весь прогрес, трофеї та налаштування в цьому браузері</p>
       </div>
 
       <div class="set-row set-credits">
-        <span class="set-label" data-i18n="setCreditsLabel">关于与致谢</span>
+        <span class="set-label" data-i18n="setCreditsLabel">Про проєкт та подяка</span>
         <div class="credits-card">
           <div class="credits-text">
             <span class="credits-heart" aria-hidden="true">❤️</span>
-            <span class="credits-desc" data-i18n-html="setCreditsDesc">感谢原作者 <b>@grmchn4ai</b> 的精妙原作与开源分享</span>
+            <span class="credits-desc" data-i18n-html="setCreditsDesc">Дякуємо автору <b>@grmchn4ai</b> за чудовий оригінал і відкритий код</span>
           </div>
-          <a href="https://github.com/grmchn/dopa-drill" target="_blank" rel="noopener noreferrer" class="credits-btn" aria-label="前往 GitHub 查看原作仓库" data-i18n-aria="setCreditsAria">
+          <a href="https://github.com/grmchn/dopa-drill" target="_blank" rel="noopener noreferrer" class="credits-btn" aria-label="Відкрити оригінальний репозиторій на GitHub" data-i18n-aria="setCreditsAria">
             <svg class="credits-gh-icon" viewBox="0 0 16 16" width="18" height="18" aria-hidden="true" fill="currentColor">
               <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
             </svg>
-            <span data-i18n="setCreditsRepo">GitHub 原作仓库</span>
+            <span data-i18n="setCreditsRepo">Репозиторій автора на GitHub</span>
             <span class="credits-arrow" aria-hidden="true">↗</span>
           </a>
         </div>
       </div>
 
-      <button type="button" class="big-btn" id="close-settings" data-i18n="btnClose">关闭</button>
+      <button type="button" class="big-btn" id="close-settings" data-i18n="btnClose">Закрити</button>
     </div>
   </div>
 
   <div class="modal" id="bonus" role="dialog" aria-modal="true" aria-labelledby="bonus-title" hidden>
     <div class="modal-card bonus-card">
-      <h2 id="bonus-title" class="chip" data-i18n="bonusTitle">每日登录奖励</h2>
+      <h2 id="bonus-title" class="chip" data-i18n="bonusTitle">Щоденний бонус</h2>
       <p class="bonus-run" id="bonus-run"></p>
       <div class="bonus-card-grid" id="bonus-grid"></div>
-      <p class="bonus-note" id="bonus-note" data-i18n="bonusCardNote">每天坚持算一算，多多练习更有劲！</p>
-      <button type="button" class="big-btn" id="bonus-ok" data-i18n="bonusGetBtn">立即领取</button>
+      <p class="bonus-note" id="bonus-note" data-i18n="bonusCardNote">Тренуйся щодня, розвивай швидкість і памʼять!</p>
+      <button type="button" class="big-btn" id="bonus-ok" data-i18n="bonusGetBtn">Отримати</button>
     </div>
   </div>
 
@@ -272,51 +272,51 @@
       <div class="si-next" id="si-next"></div>
       <p class="si-note" id="si-note"></p>
       <div class="confirm-actions">
-        <button type="button" class="sub-btn" id="si-close" data-i18n="btnClose">关闭</button>
-        <button type="button" class="sub-btn si-go" id="si-go" data-i18n="siPracticeBtn">专项练习</button>
+        <button type="button" class="sub-btn" id="si-close" data-i18n="btnClose">Закрити</button>
+        <button type="button" class="sub-btn si-go" id="si-go" data-i18n="siPracticeBtn">Тренування</button>
       </div>
     </div>
   </div>
 
   <div class="modal" id="trophy-got" role="dialog" aria-modal="true" aria-labelledby="tg-title" hidden>
     <div class="modal-card trophy-card">
-      <h2 id="tg-title" class="chip" data-i18n="trGotTitle">获得新成就！</h2>
+      <h2 id="tg-title" class="chip" data-i18n="trGotTitle">Новий трофей здобуто!</h2>
       <p class="tg-sub" id="tg-sub"></p>
       <ul class="tg-list" id="tg-list"></ul>
-      <button type="button" class="big-btn" id="tg-ok" data-i18n="trGotButton">太棒了！</button>
+      <button type="button" class="big-btn" id="tg-ok" data-i18n="trGotButton">Чудово!</button>
     </div>
   </div>
 
   <div class="modal" id="hammer" role="dialog" aria-modal="true" aria-labelledby="hammer-title" aria-describedby="hammer-msg" hidden>
     <div class="modal-card hammer-card">
-      <h2 id="hammer-title" class="chip" data-i18n="hammerTitle">补签铁锤</h2>
+      <h2 id="hammer-title" class="chip" data-i18n="hammerTitle">Ремонтний молоток</h2>
       <div class="hammer-art" id="hammer-art" aria-hidden="true"></div>
       <p class="hammer-msg" id="hammer-msg"></p>
       <p class="hammer-have" id="hammer-have"></p>
       <div class="confirm-actions">
-        <button type="button" class="sub-btn" id="hammer-no" data-i18n="hammerNoUse">暂不使用</button>
-        <button type="button" class="sub-btn hammer-yes" id="hammer-yes" data-i18n="hammerUse">立即补签</button>
+        <button type="button" class="sub-btn" id="hammer-no" data-i18n="hammerNoUse">Не використовувати</button>
+        <button type="button" class="sub-btn hammer-yes" id="hammer-yes" data-i18n="hammerUse">Використати</button>
       </div>
     </div>
   </div>
 
   <div class="modal" id="confirm" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-msg" hidden>
     <div class="modal-card confirm-card">
-      <h2 id="confirm-title" class="chip" data-i18n="confirmRelockTitle">重置此技能进度</h2>
+      <h2 id="confirm-title" class="chip" data-i18n="confirmRelockTitle">Скинути навичку</h2>
       <p class="confirm-msg" id="confirm-msg"></p>
       <ul class="confirm-list" id="confirm-list"></ul>
       <div class="confirm-actions">
-        <button type="button" class="sub-btn" id="confirm-no" data-i18n="confirmCancel">取消</button>
-        <button type="button" class="sub-btn danger" id="confirm-yes" data-i18n="confirmDanger">确认重置</button>
+        <button type="button" class="sub-btn" id="confirm-no" data-i18n="confirmCancel">Скасувати</button>
+        <button type="button" class="sub-btn danger" id="confirm-yes" data-i18n="confirmDanger">Скинути</button>
       </div>
     </div>
   </div>
 
   <div class="modal" id="day-log" role="dialog" aria-modal="true" aria-labelledby="day-title" hidden>
     <div class="modal-card">
-      <h2 id="day-title" class="chip" data-i18n="dayLogTitle">历史游玩记录</h2>
+      <h2 id="day-title" class="chip" data-i18n="dayLogTitle">Історія тренувань</h2>
       <ul class="day-list" id="day-list"></ul>
-      <button type="button" class="big-btn" id="close-day" data-i18n="btnClose">关闭</button>
+      <button type="button" class="big-btn" id="close-day" data-i18n="btnClose">Закрити</button>
     </div>
   </div>
 
@@ -324,6 +324,6 @@
   <svg id="actors" aria-hidden="true"><g id="actors-back"></g><g id="actors-front"></g></svg>
   <div id="cutins" aria-hidden="true"></div>
   <div id="flash" aria-hidden="true"></div>
-  <noscript>本游戏需要开启 JavaScript 才能运行。</noscript>
+  <noscript>Для роботи гри потрібен увімкнений JavaScript.</noscript>
 </body>
 </html>

@@ -327,7 +327,19 @@ const fracTok = (n, d, whole) => ({ f: [n, d, whole] });
 const GEN = {
   compose(rng, { total }) {
     const a = R(rng)(1, total - 1);
-    return buildH([{ n: total }, { w: 'は' }, { n: a }, { w: 'と' }, { ans: total - a }], { title: 'いくつといくつ', text: `${total}は${a}と`, answer: String(total - a), help: `${a}に いくつで ${total}` });
+    const b = total - a;
+    return buildH([
+      { n: a },
+      { op: '＋' },
+      { ans: b },
+      { op: '＝' },
+      { n: total }
+    ], {
+      title: 'いくつといくつ',
+      text: `${a}+?=${total}`,
+      answer: String(b),
+      help: `${a} ＋ ${b} ＝ ${total}`
+    });
   },
   hadd(rng, { a, b, carry, tensToo }) {
     const r = R(rng);
@@ -378,7 +390,18 @@ const GEN = {
   },
   fracOf(rng, { dens }) {
     const d = pickOf(rng, dens); const q = R(rng)(1, 9);
-    return buildH([{ n: q * d }, { w: 'の' }, fracTok(1, d), { w: 'は' }, { ans: q }], { title: 'ぶんすう', text: `${q * d}の1/${d}`, answer: String(q), help: `${q * d}を ${d}つに わける` });
+    return buildH([
+      { n: q * d },
+      { op: '×' },
+      fracTok(1, d),
+      { op: '＝' },
+      { ans: q }
+    ], {
+      title: 'ぶんすう',
+      text: `${q * d}*(1/${d})`,
+      answer: String(q),
+      help: `${q * d} ÷ ${d} ＝ ${q}`
+    });
   },
   div(rng) {
     const d = R(rng)(2, 9); const q = R(rng)(1, 9);
@@ -387,7 +410,20 @@ const GEN = {
   divRem(rng) {
     const d = R(rng)(2, 9); const q = R(rng)(1, 9); const rem = R(rng)(1, d - 1);
     const D = q * d + rem;
-    return buildH([{ n: D }, { op: '÷' }, { n: d }, { op: '＝' }, { ans: q, label: '商' }, { w: 'あまり' }, { ans: rem, label: 'あまり' }], { title: 'あまりのあるわりざん', text: `${D} ÷ ${d}`, answer: `${q} あまり ${rem}`, help: table(d, D) });
+    return buildH([
+      { n: D },
+      { op: '÷' },
+      { n: d },
+      { op: '＝' },
+      { ans: q, label: '商' },
+      { w: 'あまり' },
+      { ans: rem, label: 'あまり' }
+    ], {
+      title: 'あまりのあるわりざん',
+      text: `${D} ÷ ${d}`,
+      answer: `${q} あまり ${rem}`,
+      help: `${d} × ${q} ＝ ${d * q}`
+    });
   },
   divTens(rng) {
     const r = R(rng);
@@ -489,8 +525,22 @@ const GEN = {
       if (a === b || a < 4 || b < 4) continue;
       const ans = kind === 'gcd' ? gcd(a, b) : lcm(a, b);
       if (ans === 1 || ans > 99) continue;
-      const w = kind === 'gcd' ? '最大公約数' : '最小公倍数';
-      return buildH([{ n: a }, { w: 'と' }, { n: b }, { w: 'の' }, { br: true }, { w }, { op: '＝' }, { ans }], { title: w, text: `${a}と${b}の${w}`, answer: String(ans), help: kind === 'gcd' ? `どちらも わりきれる 数` : `${Math.max(a, b)}のばいすう` });
+      const w = kind === 'gcd' ? 'НСД' : 'НСК';
+      return buildH([
+        { w },
+        { op: '(' },
+        { n: a },
+        { op: ',' },
+        { n: b },
+        { op: ')' },
+        { op: '＝' },
+        { ans }
+      ], {
+        title: kind === 'gcd' ? '最大公約数' : '最小公倍数',
+        text: `${kind}(${a},${b})`,
+        answer: String(ans),
+        help: kind === 'gcd' ? 'Спільний дільник: ділить обидва числа' : 'Спільне кратне: ділиться на обидва числа'
+      });
     }
     throw new Error('gcdlcm');
   },
@@ -515,15 +565,36 @@ const GEN = {
     const pl = r(1, Math.min(3, len - 2));
     const unit = 10 ** pl; const ans = Math.round(n / unit) * unit;
     if (String(ans).length > len) return GEN.round(rng);
-    const nm = ['十', '百', '千'][pl - 1];
-    return buildH([{ n }, { w: 'を' }, { br: true }, { w: `${nm}の位まで` }, { op: '→' }, { ans }], { title: 'がい数', text: `${n}を${nm}の位までのがい数に`, answer: String(ans), help: `${['一', '十', '百'][pl - 1]}の位を 四捨五入` });
+    const nm = pl === 1 ? 'до десятків' : (pl === 2 ? 'до сотень' : 'до тисяч');
+    return buildH([
+      { n },
+      { op: '≈' },
+      { ans }
+    ], {
+      title: 'がい数',
+      text: `round(${n},${unit})`,
+      answer: String(ans),
+      help: `Округлення: ${nm}`
+    });
   },
   percent(rng) {
     const r = R(rng);
     for (let g = 0; g < 200; g++) {
       const base = pickOf(rng, [20, 40, 50, 60, 80, 100, 200, 300, 400, 500]); const p = pickOf(rng, [5, 10, 20, 25, 30, 40, 50, 60, 75]);
       const ans = (base * p) / 100; if (!Number.isInteger(ans) || ans === 0) continue;
-      return buildH([{ n: base }, { w: 'の' }, { n: p }, { op: '%' }, { op: '＝' }, { ans }], { title: '百分率', text: `${base}の${p}%`, answer: String(ans), help: `${base} × ${p / 100}` });
+      return buildH([
+        { n: p },
+        { op: '%' },
+        { op: '×' },
+        { n: base },
+        { op: '＝' },
+        { ans }
+      ], {
+        title: '百分率',
+        text: `${p}%*${base}`,
+        answer: String(ans),
+        help: `${base} × ${p} ÷ 100 ＝ ${ans}`
+      });
     }
     throw new Error('percent');
   },

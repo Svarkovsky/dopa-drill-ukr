@@ -76,12 +76,12 @@ const STRINGS = {
     skillTree: 'Дерево навичок',
     trophy: 'Трофеї',
     collection: 'Колекція',
-    grade1: '1 клас',
-    grade2: '2 клас',
-    grade3: '3 клас',
-    grade4: '4 клас',
-    grade5: '5 клас',
-    grade6: '6 клас',
+    grade1: 'кл',
+    grade2: 'кл',
+    grade3: 'кл',
+    grade4: 'кл',
+    grade5: 'кл',
+    grade6: 'кл',
     gradeGroupAria: 'Тренування за класами',
 
     // Quests & Calendar
@@ -1387,23 +1387,29 @@ export function dayLogTitleText(m, d) {
 }
 
 export function cellTextI18n(text) {
-  if (currentLang === 'ja' || !text) return text;
-  if (currentLang === 'uk') {
-    if (text === '最大公約数') return 'НСД';
-    if (text === '最小公倍数') return 'НСК';
-    if (text === 'あまり') return 'остача';
-    if (text === '十の位まで') return 'до десятків';
-    if (text === '百の位まで') return 'до сотень';
-    if (text === '千の位まで') return 'до тисяч';
-    if (text === '一の位まで') return 'до одиниць';
+  if (!text) return text;
+  if (currentLang === 'en') {
+    if (text === 'НСД' || text === '最大公約数') return 'GCD';
+    if (text === 'НСК' || text === '最小公倍数') return 'LCM';
+    if (text === 'ост.' || text === 'あまり') return 'rem.';
+    if (text === 'до десятків' || text === '十の位まで') return 'to tens';
+    if (text === 'до сотень' || text === '百の位まで') return 'to 100s';
+    if (text === 'до тисяч' || text === '千の位まで') return 'to 1000s';
     return text;
   }
-  if (text === '最大公約数') return 'GCD';
-  if (text === '最小公倍数') return 'LCM';
-  if (text === 'あまり') return 'rem';
-  if (text === '十の位まで') return 'to tens';
-  if (text === '百の位まで') return 'to 100s';
-  if (text === '千の位まで') return 'to 1000s';
+  if (currentLang === 'ja') {
+    if (text === 'НСД') return '最大公約数';
+    if (text === 'НСК') return '最小公倍数';
+    if (text === 'ост.') return 'あまり';
+    return text;
+  }
+  // Ukrainian default
+  if (text === '最大公約数') return 'НСД';
+  if (text === '最小公倍数') return 'НСК';
+  if (text === 'あまり') return 'ост.';
+  if (text === '十の位まで') return 'до десятків';
+  if (text === '百の位まで') return 'до сотень';
+  if (text === '千の位まで') return 'до тисяч';
   return text;
 }
 
@@ -1442,26 +1448,24 @@ export function answerTextI18n(ansText) {
 export function questTextI18n(q, fallback) {
   if (currentLang === 'ja' || !q) return fallback;
   const id = q.id || '';
-  if (currentLang === 'uk') {
-    if (id === 'play1') return 'Зіграти 1 раунд тренування';
-    if (id === 'play2') return 'Зіграти 2 раунди тренувань';
-    if (id === 'combo5') return 'Досягти 5 комбо';
-    if (id === 'combo10') return 'Досягти 10 комбо';
-    if (id === 'extra') return 'Увійти до додаткового раунду';
-    if (id === 'perfect') return 'Пройти раунд на 100 балів';
-    if (id === 'review') return 'Повторити помилки у режимі повторення';
-    if (id === 'grade') return 'Пройти тренування у розділі класів';
-    if (id === 'speed') return 'Розвʼязати завдання швидше ніж за 2.5 с';
-    return fallback;
+  const isUk = currentLang === 'uk';
+  if (id === 'play1') return isUk ? 'Зіграти 1 раунд тренування' : 'Play 1 session of math drill';
+  if (id === 'play2') return isUk ? 'Зіграти 2 раунди тренувань' : 'Play 2 sessions of math drill';
+  if (id === 'combo5') return isUk ? 'Досягти 5 комбо' : 'Achieve a 5-combo';
+  if (id === 'combo10') return isUk ? 'Досягти 10 комбо' : 'Achieve a 10-combo';
+  if (id === 'combo20') return isUk ? 'Досягти 20 комбо' : 'Achieve a 20-combo';
+  if (id === 'first5') return isUk ? '5 правильних з 1-ї спроби' : '5 first-try correct';
+  if (id === 'review1' || id === 'review') return isUk ? '1 виправлена помилка' : 'Review 1 mistake';
+  if (id === 'new1') return isUk ? '1 завдання з нової навички' : '1 problem from a new skill';
+  if (id === 'extra') return isUk ? 'Увійти до додаткового раунду' : 'Enter the Extra Stage';
+  if (id === 'extra5') return isUk ? 'Розвʼязати 5 завдань в екстра' : 'Solve 5 problems in Extra';
+  if (id === 'perfect') return isUk ? 'Пройти раунд на 100 балів' : 'Clear with 100 points';
+  if (id === 'grade1' || id === 'grade') return isUk ? 'Зіграти 1 раунд у розділі класів' : 'Play 1 session in Grade mode';
+  if (id === 'learn10') return isUk ? '10 завдань навичок, що вивчаються' : 'Solve 10 problems of learning skills';
+  if (id === 'polish') {
+    const sName = (q.skill && skillName(q.skill)) || q.skill || '';
+    return isUk ? `Освіжити «${sName}» (3 завдання)` : `Polish "${sName}" (3 Qs)`;
   }
-  if (id === 'play1') return 'Play 1 session of math drill';
-  if (id === 'play2') return 'Play 2 sessions of math drill';
-  if (id === 'combo5') return 'Achieve a 5-combo';
-  if (id === 'combo10') return 'Achieve a 10-combo';
-  if (id === 'extra') return 'Enter the Extra Stage';
-  if (id === 'perfect') return 'Clear a session with 100 pts';
-  if (id === 'review') return 'Review mistakes in Review mode';
-  if (id === 'grade') return 'Practice in Grade mode';
-  if (id === 'speed') return 'Solve a problem under 2.5 seconds';
+  if (id === 'speed') return isUk ? 'Розвʼязати завдання швидше ніж за 2.5 с' : 'Solve a problem under 2.5s';
   return fallback;
 }
