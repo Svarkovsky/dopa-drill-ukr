@@ -2725,6 +2725,7 @@ if (installBtn) {
       }
     } else {
       if (installModal) {
+        if (hero) hero.visible = false;
         installModal.hidden = false;
         const card = installModal.querySelector('.modal-card');
         if (!S.reduced && card) tween(300, (k) => { card.style.transform = `translateY(${(1 - k) * 40}px) scale(${0.9 + 0.1 * k})`; }, easeOutBack).then(() => { card.style.transform = ''; });
@@ -2738,6 +2739,7 @@ if (installModalClose) {
   installModalClose.addEventListener('click', () => {
     audio.play('blip', audio.now(), { m: 72, v: 0.08 });
     if (installModal) installModal.hidden = true;
+    if (hero) hero.visible = true;
   });
 }
 
@@ -2746,6 +2748,7 @@ if (installModal) {
     if (e.target.id === 'install-modal') {
       audio.play('blip', audio.now(), { m: 72, v: 0.08 });
       installModal.hidden = true;
+      if (hero) hero.visible = true;
     }
   });
 }
