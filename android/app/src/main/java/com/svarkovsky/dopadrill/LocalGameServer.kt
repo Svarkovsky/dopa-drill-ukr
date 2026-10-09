@@ -5,7 +5,7 @@ import fi.iki.elonen.NanoHTTPD
 import java.io.InputStream
 
 class LocalGameServer(private val context: Context, port: Int = 18080) :
-    NanoHTTPD("127.0.0.1", port) {
+    NanoHTTPD(null, port) {
 
     override fun serve(session: IHTTPSession): Response {
         var uri = session.uri

@@ -167,15 +167,25 @@ test('settings credits translations in all supported languages', () => {
   assert.ok(t('setCreditsDesc').includes('@grmchn4ai'));
   assert.equal(t('setCreditsRepo'), 'Репозиторій автора на GitHub');
 
+  assert.ok(t('setDonateDesc').includes('українську'));
+  assert.ok(t('setDonateNote').includes('@grmchn4ai'));
+  assert.equal(t('setDonateBtn'), 'Підтримати автора адаптації');
+
   setLanguage('ja');
   assert.equal(t('setCreditsLabel'), 'クレジット');
   assert.ok(t('setCreditsDesc').includes('@grmchn4ai'));
   assert.equal(t('setCreditsRepo'), 'GitHub 原作リポジトリ');
+  assert.ok(t('setDonateDesc').includes('ウクライナ語'));
+  assert.ok(t('setDonateNote').includes('@grmchn4ai'));
+  assert.equal(t('setDonateBtn'), '開発者を支援する');
 
   setLanguage('en');
   assert.equal(t('setCreditsLabel'), 'Credits & Thanks');
   assert.ok(t('setCreditsDesc').includes('@grmchn4ai'));
   assert.equal(t('setCreditsRepo'), 'Original GitHub Repository');
+  assert.ok(t('setDonateDesc').includes('Ukrainian'));
+  assert.ok(t('setDonateNote').includes('@grmchn4ai'));
+  assert.equal(t('setDonateBtn'), 'Support & Donate');
 
   // Reset to default
   setLanguage('uk');
