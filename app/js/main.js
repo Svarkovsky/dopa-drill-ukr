@@ -2702,6 +2702,18 @@ $('#close-day').addEventListener('click', () => { $('#day-log').hidden = true; }
 $('#day-log').addEventListener('click', (e) => { if (e.target.id === 'day-log') $('#day-log').hidden = true; });
 $('#screen-title').addEventListener('scroll', () => requestAnimationFrame(layoutActors), { passive: true });
 $$('#screen-result, #screen-final, #tree-scroll, #tr-scroll').forEach((el) => el.addEventListener('scroll', () => requestAnimationFrame(layoutActors), { passive: true }));
+// Register Service Worker for true offline play & auto-updates
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').then((reg) => {
+      reg.update().catch(() => {});
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') reg.update().catch(() => {});
+      });
+    }).catch((err) => console.warn('SW registration failed:', err));
+  });
+}
+
 // PWA installation logic
 let deferredInstallPrompt = null;
 window.addEventListener('beforeinstallprompt', (e) => {

@@ -105,7 +105,10 @@ export default {
     headers.set('Content-Type', asset.mime);
     headers.set('Access-Control-Allow-Origin', '*');
 
-    if (path.startsWith('fonts/')) {
+    if (path === 'sw.js') {
+      headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+      headers.set('Service-Worker-Allowed', '/');
+    } else if (path.startsWith('fonts/')) {
       headers.set('Cache-Control', 'public, max-age=31536000, immutable');
     } else {
       headers.set('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400');
