@@ -290,7 +290,7 @@ body.reduced .logo *, body.reduced .logo-burst { animation: none !important; }
   display: flex;
   align-items: center;
   justify-content: center;
-  text-transform: lowercase;
+
 }
 .graphics-pick button[aria-checked="true"], .graphics-pick button[aria-pressed="true"] {
   background: var(--yellow);

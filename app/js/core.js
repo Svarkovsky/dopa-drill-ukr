@@ -156,7 +156,9 @@ export function getGraphicsPreference() {
   try {
     if (typeof localStorage !== 'undefined') {
       const saved = localStorage.getItem('dopa-drill:graphics-mode');
-      if (['auto', 'turbo', 'smooth'].includes(saved)) return saved;
+      if (saved === 'turbo') return 'high';
+      if (saved === 'smooth') return 'low';
+      if (['auto', 'high', 'low'].includes(saved)) return saved;
     }
   } catch {}
   return 'auto';
@@ -172,7 +174,7 @@ export function setGraphicsPreference(mode) {
 
 export function isSmoothTier() {
   const pref = getGraphicsPreference();
-  if (pref === 'smooth') return true;
-  if (pref === 'turbo') return false;
+  if (pref === 'low' || pref === 'smooth') return true;
+  if (pref === 'high' || pref === 'turbo') return false;
   return detectHardwareTier() === 'low';
 }
