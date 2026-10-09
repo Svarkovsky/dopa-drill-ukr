@@ -23,13 +23,11 @@ export function makeGraph(ctx) {
   g.music = ctx.createGain(); g.music.gain.value = 0.8; g.music.connect(g.musicFilter);
   g.sfx = ctx.createGain(); g.sfx.gain.value = 0.85; g.sfx.connect(g.master);
 
-  // Reverb from a generated stereo impulse response.
-  const len = Math.floor(ctx.sampleRate * 2.4);
-  const ir = ctx.createBuffer(2, len, ctx.sampleRate);
-  for (let ch = 0; ch < 2; ch++) {
-    const d = ir.getChannelData(ch);
-    for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / len) ** 2.6 * (i < 300 ? i / 300 : 1);
-  }
+  // Lightweight impulse response: 1.0s mono (auto-upmixed to stereo, ~5x less FFT convolution load)
+  const len = Math.floor(ctx.sampleRate * 1.0);
+  const ir = ctx.createBuffer(1, len, ctx.sampleRate);
+  const d = ir.getChannelData(0);
+  for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / len) ** 2.4 * (i < 200 ? i / 200 : 1);
   g.rev = ctx.createGain(); g.rev.gain.value = 0.42;
   const conv = ctx.createConvolver(); conv.buffer = ir;
   const revHp = ctx.createBiquadFilter(); revHp.type = 'highpass'; revHp.frequency.value = 260;
@@ -505,6 +503,25 @@ export class AudioEngine {
       this.ctx = new AC({ latencyHint: 'interactive' });
       this.g = makeGraph(this.ctx);
       this.g.master.gain.value = this.muted ? 0 : 0.72 * this.volume;
+
+      // Pre-bake static clap sound in background
+      try {
+        const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+        if (OAC) {
+          const octx = new OAC(1, Math.floor(this.ctx.sampleRate * 0.3), this.ctx.sampleRate);
+          const og = {
+            ctx: octx,
+            drums: octx.createGain(),
+            master: octx.createGain(),
+            rev: octx.createGain(),
+            dly: octx.createGain(),
+            noise: this.g.noise,
+          };
+          og.drums.connect(octx.destination);
+          SYNTH.clap(og, 0, { v: 0.8 });
+          octx.startRendering().then((buf) => { this.bakedClap = buf; }).catch(() => {});
+        }
+      } catch (_) {}
     }
     if (this.ctx.state === 'suspended') this.ctx.resume();
   }
@@ -514,6 +531,20 @@ export class AudioEngine {
   play(name, when, p = {}) {
     if (this.capture) { this.log.push([name, when, p]); return; }
     if (!this.ctx || !this.g) return;
+    if (this.muted || this.volume <= 0.001) return;
+
+    // Use pre-baked clap buffer if available (1 node instead of 12)
+    if (name === 'clap' && this.bakedClap && (!p.v || Math.abs(p.v - 0.8) < 0.05)) {
+      try {
+        const src = this.ctx.createBufferSource();
+        src.buffer = this.bakedClap;
+        src.connect(this.g.drums);
+        send(this.g, src, 0.35);
+        src.start(Math.max(when, this.ctx.currentTime));
+        return;
+      } catch (_) {}
+    }
+
     try { SYNTH[name](this.g, Math.max(when, this.ctx.currentTime), p); } catch (e) { console.warn(name, e); }
   }
 
