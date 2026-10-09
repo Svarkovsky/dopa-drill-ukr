@@ -1,4 +1,4 @@
-console.log('🎮 Dopa Drill v1.0.5');
+console.log('🎮 Dopa Drill v1.0.6');
 // Game flow, input, scoring, and the "director" that turns every event into
 // escalating visuals and sound.
 import { startClock, onFrame, wait, tween, clamp, lerp, rand, pick, chance, centerOf, advanceFrame, detectHardwareTier, params,
@@ -2412,6 +2412,8 @@ function renderCollection() {
   const isUk = i18n.getLanguage() === 'uk';
   const isEn = i18n.getLanguage() === 'en';
   $('#co-tabs').innerHTML = ul.CATS.map((c) => { const own = ul.unlockedIn(c.key, got).length; const all = ul.ITEMS.filter((it) => it.cat === c.key).length; return `<button type="button" data-cat="${c.key}" aria-pressed="${c.key === co.cat}">${catName(c.key)}<small>${own}/${all}</small></button>`; }).join('');
+  const curTabBtn = $(`#co-tabs button[data-cat="${co.cat}"]`);
+  if (curTabBtn) setTimeout(() => curTabBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }), 10);
   const items = ul.ITEMS.filter((it) => it.cat === co.cat);
   const auto = eq[co.cat] === 'auto';
   $('#co-note').textContent = auto
@@ -2854,7 +2856,52 @@ $('#trophy-got').addEventListener('click', (e) => { if (e.target.id === 'trophy-
 $('#open-trophy').addEventListener('click', openTrophyList);
 $('#open-collect').addEventListener('click', openCollection);
 $('#collect-back').addEventListener('click', () => { audio.play('blip', audio.now(), { m: 72, v: 0.08 }); toTitle(); });
-$('#co-tabs').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; co.cat = b.dataset.cat; audio.play('blip', audio.now(), { m: 80, v: 0.08 }); clearPreviewCrowd(); renderCollection(); $('#co-scroll').scrollTop = 0; });
+// Horizontal scrolling and drag for collection tabs
+const coTabsEl = $('#co-tabs');
+let coTabsDrag = { isDown: false, startX: 0, scrollStart: 0, moved: false };
+
+if (coTabsEl) {
+  coTabsEl.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      e.preventDefault();
+      coTabsEl.scrollLeft += e.deltaY;
+    }
+  }, { passive: false });
+
+  coTabsEl.addEventListener('mousedown', (e) => {
+    coTabsDrag.isDown = true;
+    coTabsDrag.moved = false;
+    coTabsDrag.startX = e.pageX - coTabsEl.offsetLeft;
+    coTabsDrag.scrollStart = coTabsEl.scrollLeft;
+  });
+
+  window.addEventListener('mouseup', () => {
+    coTabsDrag.isDown = false;
+  });
+
+  coTabsEl.addEventListener('mousemove', (e) => {
+    if (!coTabsDrag.isDown) return;
+    const x = e.pageX - coTabsEl.offsetLeft;
+    const walk = x - coTabsDrag.startX;
+    if (Math.abs(walk) > 4) coTabsDrag.moved = true;
+    coTabsEl.scrollLeft = coTabsDrag.scrollStart - walk;
+  });
+}
+
+$('#co-tabs').addEventListener('click', (e) => {
+  if (coTabsDrag.moved) {
+    coTabsDrag.moved = false;
+    return;
+  }
+  const b = e.target.closest('button');
+  if (!b) return;
+  co.cat = b.dataset.cat;
+  audio.play('blip', audio.now(), { m: 80, v: 0.08 });
+  clearPreviewCrowd();
+  renderCollection();
+  $('#co-scroll').scrollTop = 0;
+  b.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+});
 $('#co-grid').addEventListener('click', (e) => { const b = e.target.closest('.co-item'); if (b) pickItem(b.dataset.id); });
 $('#trophy-back').addEventListener('click', () => { audio.play('blip', audio.now(), { m: 72, v: 0.08 }); toTitle(); });
 $$('.tr-filter button').forEach((b) => b.addEventListener('click', () => { trFilter.f = b.dataset.f; $$('.tr-filter button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); audio.play('blip', audio.now(), { m: 80, v: 0.08 }); renderTrophyList(); }));

@@ -843,8 +843,36 @@ li.done .qbar { background: var(--mint); }
 .co-preview { position: relative; flex: none; height: min(28vh, 220px); margin: 0 14px 8px; border: 3px solid var(--ink); border-radius: 22px; background: rgba(255, 255, 255, .35); box-shadow: 0 5px 0 var(--ink); overflow: hidden; }
 .co-preview .co-mark { left: 50%; top: 50%; right: auto !important; transform-origin: center; translate: -50% -58%; }
 .co-now { position: absolute; left: 10px; top: 8px; margin: 0; padding: 2px 10px; border-radius: 999px; background: var(--ink); color: #fff; font-size: 11px; font-weight: 900; }
-.co-tabs { flex: none; display: flex; gap: 6px; overflow-x: auto; padding: 2px 14px 8px; scrollbar-width: none; }
-.co-tabs::-webkit-scrollbar { display: none; }
+.co-tabs {
+  flex: none;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2px 14px 10px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--blue) rgba(27, 29, 77, .12);
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  cursor: grab;
+}
+.co-tabs:active { cursor: grabbing; }
+.co-tabs::-webkit-scrollbar {
+  display: block;
+  height: 6px;
+}
+.co-tabs::-webkit-scrollbar-track {
+  background: rgba(27, 29, 77, .08);
+  border-radius: 999px;
+  margin: 0 14px;
+}
+.co-tabs::-webkit-scrollbar-thumb {
+  background: var(--blue);
+  border-radius: 999px;
+}
+.co-tabs::-webkit-scrollbar-thumb:hover {
+  background: #254ec9;
+}
 .co-tabs button { flex: none; display: flex; flex-direction: column; align-items: center; padding: 4px 12px; border: 2.5px solid var(--ink); border-radius: 14px; background: #fff; font-size: 12px; font-weight: 900; line-height: 1.2; }
 .co-tabs button small { font-size: 10px; opacity: .6; }
 .co-tabs button[aria-pressed="true"] { background: var(--yellow); box-shadow: 0 3px 0 var(--ink); }
