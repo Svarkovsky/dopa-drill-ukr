@@ -1499,6 +1499,11 @@ function toTitle() {
   checkLoginBonus();
 }
 
+// Dedicated audio scheduler: ticks every 25ms independently of UI frame drops
+setInterval(() => {
+  audio.update();
+}, 25);
+
 // ---------------------------------------------------------------- frame loop
 let lastClockText = '';
 onFrame((dt, t) => {

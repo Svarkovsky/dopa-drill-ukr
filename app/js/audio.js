@@ -171,11 +171,12 @@ export const SYNTH = {
     const m2 = g.ctx.createGain(); m2.gain.value = 0.5;
     o1.connect(lp); o2.connect(m2); m2.connect(lp); lp.connect(e); e.connect(g.music);
   },
-  pad(g, t, { notes, dur = 2, v = 0.08, bright = 900 }) {
+  pad(g, t, { notes, dur = 2, v = 0.08, bright = 900, level = 0 }) {
     const e = env(g, t, { a: 0.35, peak: v, d: 0.4, s: 0.85, hold: dur, r: 0.6 });
     const lp = filt(g, 'lowpass', bright, 0.8);
     lp.connect(e); e.connect(g.music); send(g, e, 0.5);
-    for (const m of notes) for (const dt of [-9, 9]) {
+    const detunes = (level != null && level < 5) ? [0] : [-9, 9];
+    for (const m of notes) for (const dt of detunes) {
       const o = osc(g, 'sawtooth', midiHz(m), t, t + dur + 1.2, dt);
       o.connect(lp);
     }
@@ -194,11 +195,12 @@ export const SYNTH = {
     const p = pan(g, Math.sin(m * 1.7) * 0.5);
     o.connect(lp); lp.connect(e); e.connect(p); p.connect(g.music); send(g, e, 0.15, 0.55);
   },
-  stab(g, t, { notes, v = 0.12, dur = 0.2 }) {
+  stab(g, t, { notes, v = 0.12, dur = 0.2, level = 0 }) {
     const lp = filt(g, 'lowpass', 5200, 1.2); lp.frequency.setValueAtTime(5200, t); lp.frequency.exponentialRampToValueAtTime(900, t + dur + 0.1);
     const e = env(g, t, { a: 0.003, peak: v, d: dur + 0.1 });
     lp.connect(e); e.connect(g.music); send(g, e, 0.35, 0.2);
-    for (const m of notes) for (const dt of [-18, -7, 0, 7, 18]) {
+    const detunes = (level != null && level < 6) ? [-7, 0, 7] : [-18, -7, 0, 7, 18];
+    for (const m of notes) for (const dt of detunes) {
       const o = osc(g, 'sawtooth', midiHz(m), t, t + dur + 0.25, dt);
       o.connect(lp);
     }
@@ -215,10 +217,17 @@ export const SYNTH = {
   choir(g, t, { notes, dur = 2, v = 0.06 }) {
     const out = env(g, t, { a: 0.5, peak: v, d: 0.5, s: 0.9, hold: dur, r: 0.8 });
     out.connect(g.music); send(g, out, 0.7);
-    for (const fq of [[730, 6], [1090, 7], [2440, 9]]) {
-      const bp = filt(g, 'bandpass', fq[0], fq[1]); const fg = g.ctx.createGain(); fg.gain.value = fq[0] === 730 ? 1.3 : 0.7;
-      bp.connect(fg); fg.connect(out);
-      for (const m of notes) { const o = osc(g, 'sawtooth', midiHz(m), t, t + dur + 1.5, (m % 5) * 4 - 8); o.connect(bp); }
+    const bps = [[730, 6, 1.3], [1090, 7, 0.7], [2440, 9, 0.7]].map(([fq, q, gainVal]) => {
+      const bp = filt(g, 'bandpass', fq, q);
+      const fg = g.ctx.createGain();
+      fg.gain.value = gainVal;
+      bp.connect(fg);
+      fg.connect(out);
+      return bp;
+    });
+    for (const m of notes) {
+      const o = osc(g, 'sawtooth', midiHz(m), t, t + dur + 1.5, (m % 5) * 4 - 8);
+      for (const bp of bps) o.connect(bp);
     }
   },
   bell(g, t, { m, v = 0.2, dur = 1.1, pan: pv = 0 }) {
@@ -504,22 +513,72 @@ export class AudioEngine {
       this.g = makeGraph(this.ctx);
       this.g.master.gain.value = this.muted ? 0 : 0.72 * this.volume;
 
-      // Pre-bake static clap sound in background
+      // Pre-bake frequently used sounds in background
       try {
         const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
         if (OAC) {
-          const octx = new OAC(1, Math.floor(this.ctx.sampleRate * 0.3), this.ctx.sampleRate);
-          const og = {
-            ctx: octx,
-            drums: octx.createGain(),
-            master: octx.createGain(),
-            rev: octx.createGain(),
-            dly: octx.createGain(),
-            noise: this.g.noise,
-          };
-          og.drums.connect(octx.destination);
-          SYNTH.clap(og, 0, { v: 0.8 });
-          octx.startRendering().then((buf) => { this.bakedClap = buf; }).catch(() => {});
+          this.bakedDrums = {};
+
+          // 1. Bake drums
+          const drumBakes = [
+            ['clap', { v: 0.8 }, 0.3],
+            ['kick', { v: 1 }, 0.5],
+            ['snare', { v: 0.6 }, 0.25],
+            ['hat', { v: 0.3, open: false }, 0.1],
+            ['crash', { v: 0.5 }, 2.0],
+            ['impact', { v: 1 }, 1.5],
+          ];
+          for (const [dName, dParams, dur] of drumBakes) {
+            try {
+              const octx = new OAC(1, Math.floor(this.ctx.sampleRate * dur), this.ctx.sampleRate);
+              const og = {
+                ctx: octx,
+                drums: octx.createGain(),
+                sfx: octx.createGain(),
+                music: octx.createGain(),
+                master: octx.createGain(),
+                rev: octx.createGain(),
+                dly: octx.createGain(),
+                noise: this.g.noise,
+              };
+              og.drums.connect(octx.destination);
+              SYNTH[dName](og, 0, dParams);
+              octx.startRendering().then((buf) => {
+                this.bakedDrums[dName] = buf;
+                if (dName === 'clap') this.bakedClap = buf;
+              }).catch(() => {});
+            } catch (_) {}
+          }
+
+          // 2. Bake reference bell (C6 = midi 84)
+          try {
+            const octxBell = new OAC(1, Math.floor(this.ctx.sampleRate * 1.2), this.ctx.sampleRate);
+            const ogBell = {
+              ctx: octxBell,
+              sfx: octxBell.createGain(),
+              rev: octxBell.createGain(),
+              dly: octxBell.createGain(),
+              noise: this.g.noise,
+            };
+            ogBell.sfx.connect(octxBell.destination);
+            SYNTH.bell(ogBell, 0, { m: 84, v: 0.2, dur: 1.1 });
+            octxBell.startRendering().then((buf) => { this.bakedBell = buf; }).catch(() => {});
+          } catch (_) {}
+
+          // 3. Bake reference choir chord (C major = [72, 76, 79])
+          try {
+            const octxChoir = new OAC(2, Math.floor(this.ctx.sampleRate * 2.2), this.ctx.sampleRate);
+            const ogChoir = {
+              ctx: octxChoir,
+              music: octxChoir.createGain(),
+              rev: octxChoir.createGain(),
+              dly: octxChoir.createGain(),
+              noise: this.g.noise,
+            };
+            ogChoir.music.connect(octxChoir.destination);
+            SYNTH.choir(ogChoir, 0, { notes: [72, 76, 79], dur: 2.0, v: 0.06 });
+            octxChoir.startRendering().then((buf) => { this.bakedChoir = buf; }).catch(() => {});
+          } catch (_) {}
         }
       } catch (_) {}
     }
@@ -533,13 +592,55 @@ export class AudioEngine {
     if (!this.ctx || !this.g) return;
     if (this.muted || this.volume <= 0.001) return;
 
-    // Use pre-baked clap buffer if available (1 node instead of 12)
-    if (name === 'clap' && this.bakedClap && (!p.v || Math.abs(p.v - 0.8) < 0.05)) {
+    // Fast-path: use pre-baked drum buffers
+    if (this.bakedDrums && this.bakedDrums[name] && (name !== 'hat' || !p.open)) {
       try {
         const src = this.ctx.createBufferSource();
-        src.buffer = this.bakedClap;
-        src.connect(this.g.drums);
-        send(this.g, src, 0.35);
+        src.buffer = this.bakedDrums[name];
+        const gain = this.ctx.createGain();
+        const baseV = name === 'kick' ? 1 : (name === 'snare' ? 0.6 : (name === 'hat' ? 0.3 : (name === 'crash' ? 0.5 : 1)));
+        gain.gain.value = (p.v != null ? p.v : baseV) / baseV;
+        src.connect(gain);
+        gain.connect(this.g.drums);
+        if (name === 'clap') send(this.g, gain, 0.35);
+        else if (name === 'crash') send(this.g, gain, 0.3);
+        else if (name === 'impact') send(this.g, gain, 0.5);
+        src.start(Math.max(when, this.ctx.currentTime));
+        return;
+      } catch (_) {}
+    }
+
+    // Fast-path: use pre-baked bell with pitch-shift
+    if (name === 'bell' && this.bakedBell) {
+      try {
+        const src = this.ctx.createBufferSource();
+        src.buffer = this.bakedBell;
+        const targetMidi = p.m || 84;
+        src.playbackRate.value = 2 ** ((targetMidi - 84) / 12);
+        const gain = this.ctx.createGain();
+        gain.gain.value = (p.v || 0.2) / 0.2;
+        const pNode = pan(this.g, p.pan || 0);
+        src.connect(gain);
+        gain.connect(pNode);
+        pNode.connect(this.g.sfx);
+        send(this.g, gain, 0.35, 0.3);
+        src.start(Math.max(when, this.ctx.currentTime));
+        return;
+      } catch (_) {}
+    }
+
+    // Fast-path: use pre-baked choir chord with pitch-shift
+    if (name === 'choir' && this.bakedChoir && p.notes && p.notes.length) {
+      try {
+        const src = this.ctx.createBufferSource();
+        src.buffer = this.bakedChoir;
+        const root = p.notes[0];
+        src.playbackRate.value = 2 ** ((root - 72) / 12);
+        const gain = this.ctx.createGain();
+        gain.gain.value = (p.v || 0.06) / 0.06;
+        src.connect(gain);
+        gain.connect(this.g.music);
+        send(this.g, gain, 0.7);
         src.start(Math.max(when, this.ctx.currentTime));
         return;
       } catch (_) {}
@@ -626,7 +727,7 @@ export class AudioEngine {
       this.play('pluck', t, { m: m + 12 + k, v: 0.16 * (1 - L / 9), dur: 0.45, pan: idx % 2 ? 0.3 : -0.3 });
     }
     this.play('shaker', t, { v: (s % 2 ? 0.06 : 0.035) * (0.6 + L / 12) });
-    if (s === 0) this.play('pad', t, { notes: ch.tones.map((m) => m + k), dur: this.stepDur * 15, v: 0.05 + 0.035 * Math.min(L, 8) / 8, bright: 650 + 260 * L });
+    if (s === 0) this.play('pad', t, { notes: ch.tones.map((m) => m + k), dur: this.stepDur * 15, v: 0.05 + 0.035 * Math.min(L, 8) / 8, bright: 650 + 260 * L, level: L });
 
     const kick = (L >= 3 && s % 4 === 0) || (L >= 1 && (s === 0 || s === 8));
     if (kick) {
@@ -647,7 +748,7 @@ export class AudioEngine {
       const m = i === 3 ? ch.tones[0] + 12 : ch.tones[i];
       this.play('arp', t, { m: m + 12 + (s >= 8 && L >= 8 ? 12 : 0) + k, v: 0.06 });
     }
-    if (L >= 6 && s % 4 === 2) this.play('stab', t, { notes: ch.tones.map((m) => m + 12 + k), v: 0.075 });
+    if (L >= 6 && s % 4 === 2) this.play('stab', t, { notes: ch.tones.map((m) => m + 12 + k), v: 0.075, level: L });
     if (L >= 8 && s % 2 === 0) {
       const m = HOOK[bar][s / 2];
       if (m) this.play('lead', t, { m: m + k, dur: this.stepDur * 1.7, v: 0.075 });

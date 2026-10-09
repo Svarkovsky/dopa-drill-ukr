@@ -1,5 +1,5 @@
 // Dopa Drill Service Worker - Full Offline Support & Auto-Update
-const CACHE_NAME = 'dopa-drill-v1.0.2';
+const CACHE_NAME = 'dopa-drill-v1.0.3';
 
 const STATIC_ASSETS = [
   './',
