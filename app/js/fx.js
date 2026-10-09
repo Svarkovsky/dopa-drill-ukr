@@ -1,6 +1,6 @@
 // Canvas 2D particle layer: paper confetti, stars, sparks, coins, fireworks,
 // streamers, mini Dopakichi sprites and floating score text.
-import { rand, pick, clamp, getAdaptiveDPR } from './core.js';
+import { rand, pick, clamp, getAdaptiveDPR, isSmoothTier } from './core.js';
 import { dopakichiSprite } from './dopakichi.js';
 
 export const COLORS = ['#ff7ab6', '#3b6bff', '#ffd23f', '#3fdcb0', '#a77bff', '#ff5a4f', '#ffffff'];
@@ -43,7 +43,7 @@ export class FX {
   themed(kind) { return kind === 'confetti' && this.theme && Math.random() < 0.65 ? this.theme : kind; }
 
   burst(x, y, { count = 20, speed = 420, kinds = ['confetti'], up = 0, spread = Math.PI * 2, angle = -Math.PI / 2, colors = PAPER, size = 1, gravity = 1, life = 1 } = {}) {
-    const isLow = typeof document !== 'undefined' && document.body.classList.contains('tier-low');
+    const isLow = isSmoothTier();
     const baseCount = isLow ? Math.max(8, Math.round(count * 0.55)) : count;
     const effSize = isLow ? size * 1.25 : size;
     const n = this.scale(baseCount);

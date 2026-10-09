@@ -151,3 +151,28 @@ export function detectHardwareTier() {
   const mem = typeof navigator !== 'undefined' ? (navigator.deviceMemory || 4) : 4;
   return (isSoftware || (cores <= 2 && mem <= 2)) ? 'low' : 'high';
 }
+
+export function getGraphicsPreference() {
+  try {
+    if (typeof localStorage !== 'undefined') {
+      const saved = localStorage.getItem('dopa-drill:graphics-mode');
+      if (['auto', 'turbo', 'smooth'].includes(saved)) return saved;
+    }
+  } catch {}
+  return 'auto';
+}
+
+export function setGraphicsPreference(mode) {
+  try {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('dopa-drill:graphics-mode', mode);
+    }
+  } catch {}
+}
+
+export function isSmoothTier() {
+  const pref = getGraphicsPreference();
+  if (pref === 'smooth') return true;
+  if (pref === 'turbo') return false;
+  return detectHardwareTier() === 'low';
+}

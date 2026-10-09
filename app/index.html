@@ -232,6 +232,25 @@
       </div>
 
       <div class="set-row">
+        <span class="set-label" data-i18n="setGraphicsMode">Visual Performance Mode</span>
+        <div class="pick graphics-pick" role="radiogroup" aria-label="Visual Mode" id="graphics-pick">
+          <button type="button" role="radio" data-mode="auto" aria-checked="true">
+            <span>⚙️ Auto</span>
+            <small data-i18n="modeAutoSub">Smart Auto</small>
+          </button>
+          <button type="button" role="radio" data-mode="turbo" aria-checked="false">
+            <span>🚀 Turbo</span>
+            <small data-i18n="modeTurboSub">3D Rays</small>
+          </button>
+          <button type="button" role="radio" data-mode="smooth" aria-checked="false">
+            <span>🍃 Smooth</span>
+            <small data-i18n="modeSmoothSub">Silky Smooth</small>
+          </button>
+        </div>
+        <p class="set-note" id="graphics-note" data-i18n="setGraphicsNote">«Smooth» is optimized for laptops and PCs without a dedicated GPU: buttery-smooth 60 FPS with zero heat.</p>
+      </div>
+
+      <div class="set-row">
         <span class="set-label" data-i18n="setSound">Звук та музика</span>
         <div class="set-inline">
           <button type="button" class="toggle" data-toggle="sound" aria-pressed="true"><i aria-hidden="true">♪</i><b id="sound-state-text" data-i18n="setSoundOn">Увімкнено</b></button>
@@ -292,7 +311,7 @@
       </div>
 
       <button type="button" class="big-btn" id="close-settings" data-i18n="btnClose">Закрити</button>
-      <div class="app-version">v1.0.7</div>
+      <div class="app-version">v1.0.8</div>
     </div>
   </div>
 

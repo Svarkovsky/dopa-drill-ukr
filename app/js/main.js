@@ -1,7 +1,7 @@
-console.log('🎮 Dopa Drill v1.0.7');
+console.log('🎮 Dopa Drill v1.0.8');
 // Game flow, input, scoring, and the "director" that turns every event into
 // escalating visuals and sound.
-import { startClock, onFrame, wait, tween, clamp, lerp, rand, pick, chance, centerOf, advanceFrame, detectHardwareTier, params,
+import { startClock, onFrame, wait, tween, clamp, lerp, rand, pick, chance, centerOf, advanceFrame, detectHardwareTier, getGraphicsPreference, setGraphicsPreference, isSmoothTier, params,
   easeOutBack, easeOutCubic, easeInCubic, easeInOutCubic, easeOutQuint } from './core.js';
 import { makeRng, generate, makeProblem, signature, BASIC_SETS, EXTRA_TIERS } from './problems.js';
 import { AudioEngine } from './audio.js';
@@ -29,10 +29,9 @@ const EXTRA_MS = Number(params.get('extra') || 90) * 1000;
 const audio = new AudioEngine({ capture });
 const fx = new FX($('#fx'), 300);
 const fxBack = new FX($('#fx-back'), 520);
-const hardwareTier = detectHardwareTier();
-if (hardwareTier === 'low') {
+if (isSmoothTier()) {
   document.body.classList.add('tier-low');
-  console.log('⚡ Dopa Drill: Low-end / Software rendering mode enabled');
+  console.log('⚡ Dopa Drill: Smooth performance mode active');
 }
 const bg = new Backdrop($('#bg'), $('#rays-fallback'));
 const backLayer = $('#actors-back');
@@ -3079,6 +3078,13 @@ function updateI18nDOM() {
     b.setAttribute('aria-pressed', isCur);
   });
 
+  const curGraphicsMode = getGraphicsPreference();
+  $$('#graphics-pick button').forEach((b) => {
+    const isCur = String(b.dataset.mode === curGraphicsMode);
+    b.setAttribute('aria-checked', isCur);
+    b.setAttribute('aria-pressed', isCur);
+  });
+
   // 6. Dynamic cards & screens
   renderQuests();
   renderCalendar();
@@ -3094,6 +3100,25 @@ $$('#lang-pick button').forEach((b) => b.addEventListener('click', () => {
   audio.unlock();
   audio.play('blip', audio.now(), { m: 80, v: 0.1 });
   updateI18nDOM();
+}));
+
+function applyGraphicsMode(mode) {
+  setGraphicsPreference(mode);
+  const isSmooth = isSmoothTier();
+  document.body.classList.toggle('tier-low', isSmooth);
+  if (bg) bg.setPerformanceMode(isSmooth);
+  $$('#graphics-pick button').forEach((b) => {
+    const isCur = String(b.dataset.mode === mode);
+    b.setAttribute('aria-checked', isCur);
+    b.setAttribute('aria-pressed', isCur);
+  });
+}
+
+$$('#graphics-pick button').forEach((b) => b.addEventListener('click', () => {
+  const mode = b.dataset.mode;
+  applyGraphicsMode(mode);
+  audio.unlock();
+  audio.play('blip', audio.now(), { m: 84, v: 0.1 });
 }));
 
 const saved = store.settings();

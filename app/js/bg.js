@@ -1,4 +1,4 @@
-import { getAdaptiveDPR, detectHardwareTier } from './core.js';
+import { getAdaptiveDPR, detectHardwareTier, isSmoothTier } from './core.js';
 // Full-screen WebGL backdrop: sunburst rays that grow into a rainbow tunnel of
 // Dopakichi silhouettes. Falls back to a CSS conic gradient without WebGL.
 
@@ -206,17 +206,47 @@ const FALLBACK = [
   'repeating-conic-gradient(from 0deg at 50% 50%, #ffb8d4 0 9deg, #c4d6ff 9deg 18deg)',
 ];
 
+const FALLBACK_SMOOTH = [
+  'linear-gradient(135deg, #3b6bff 0%, #7b5bff 18%, #ff7ab6 36%, #ffd23f 54%, #ff7ab6 72%, #7b5bff 86%, #3b6bff 100%)',
+  'linear-gradient(135deg, #1b1d4d 0%, #3b2f7a 30%, #5d469f 60%, #1b1d4d 100%)',
+  'linear-gradient(135deg, #1d6a96 0%, #3aa7d8 35%, #8fe3ef 70%, #1d6a96 100%)',
+  'linear-gradient(135deg, #14082e 0%, #4a1f6e 35%, #8432a1 70%, #14082e 100%)',
+  'linear-gradient(135deg, #ff4f5e 0%, #ff8364 35%, #ffd23f 70%, #ff4f5e 100%)',
+  'linear-gradient(135deg, #f7d794 0%, #f5cd79 35%, #f19066 70%, #f7d794 100%)',
+];
+
 export class Backdrop {
   constructor(canvas, fallback) {
     this.canvas = canvas;
     this.fallback = fallback;
     this.state = { E: 0, kick: 0, flash: 0, reach: 0, hue: 0, cx: 0, cy: 0, theme: 0 };
     this.gl = null;
-    this.isLowEnd = detectHardwareTier() === 'low';
+    this.isLowEnd = isSmoothTier();
     if (!this.isLowEnd) {
       try { this.init(); } catch (e) { console.warn('webgl off', e); this.gl = null; }
     }
-    if (!this.gl) { canvas.style.display = 'none'; fallback.style.display = 'block'; }
+    if (!this.gl) {
+      canvas.style.display = 'none';
+      fallback.style.display = 'block';
+      this.setTheme(THEMES[0]);
+    }
+  }
+  setPerformanceMode(isSmooth) {
+    this.isLowEnd = isSmooth;
+    if (isSmooth) {
+      this.canvas.style.display = 'none';
+      this.fallback.style.display = 'block';
+      this.fallback.style.transform = '';
+      this.setTheme(THEMES[this.state.theme]);
+    } else {
+      if (!this.gl) {
+        try { this.init(); } catch (e) { this.gl = null; }
+      }
+      if (this.gl) {
+        this.canvas.style.display = 'block';
+        this.fallback.style.display = 'none';
+      }
+    }
   }
   init() {
     const gl = this.canvas.getContext('webgl', { antialias: false, premultipliedAlpha: true, alpha: true, powerPreference: 'high-performance' });
@@ -249,14 +279,22 @@ export class Backdrop {
   setTheme(name) {
     const i = Math.max(0, THEMES.indexOf(name));
     this.state.theme = i;
-    this.fallback.style.background = FALLBACK[i];
+    if (this.isLowEnd) {
+      this.fallback.style.background = FALLBACK_SMOOTH[i] || FALLBACK_SMOOTH[0];
+    } else {
+      this.fallback.style.background = FALLBACK[i] || FALLBACK[0];
+    }
   }
   render(t) {
     const s = this.state;
-    if (!this.gl) {
+    if (!this.gl || this.isLowEnd) {
       const f = this.fallback;
       f.style.opacity = String(Math.min(1, Math.max(s.reach * 0.8, (s.E - 0.12) * 2)));
-      f.style.transform = `rotate(${(t / 1000) * (8 + 40 * s.E)}deg) scale(${1 + s.kick * 0.04})`;
+      if (!this.isLowEnd) {
+        f.style.transform = `rotate(${(t / 1000) * (8 + 40 * s.E)}deg) scale(${1 + s.kick * 0.04})`;
+      } else {
+        f.style.transform = '';
+      }
       const highE = s.E > 0.6;
       if (highE !== this._lastHighE) {
         this._lastHighE = highE;
