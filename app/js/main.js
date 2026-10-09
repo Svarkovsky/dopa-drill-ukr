@@ -1,7 +1,7 @@
 console.log('🎮 Dopa Drill v1.0.5');
 // Game flow, input, scoring, and the "director" that turns every event into
 // escalating visuals and sound.
-import { startClock, onFrame, wait, tween, clamp, lerp, rand, pick, chance, centerOf, advanceFrame, params,
+import { startClock, onFrame, wait, tween, clamp, lerp, rand, pick, chance, centerOf, advanceFrame, detectHardwareTier, params,
   easeOutBack, easeOutCubic, easeInCubic, easeInOutCubic, easeOutQuint } from './core.js';
 import { makeRng, generate, makeProblem, signature, BASIC_SETS, EXTRA_TIERS } from './problems.js';
 import { AudioEngine } from './audio.js';
@@ -29,6 +29,11 @@ const EXTRA_MS = Number(params.get('extra') || 90) * 1000;
 const audio = new AudioEngine({ capture });
 const fx = new FX($('#fx'), 300);
 const fxBack = new FX($('#fx-back'), 520);
+const hardwareTier = detectHardwareTier();
+if (hardwareTier === 'low') {
+  document.body.classList.add('tier-low');
+  console.log('⚡ Dopa Drill: Low-end / Software rendering mode enabled');
+}
 const bg = new Backdrop($('#bg'), $('#rays-fallback'));
 const backLayer = $('#actors-back');
 const frontLayer = $('#actors-front');
@@ -1573,15 +1578,24 @@ onFrame((dt, t) => {
   // screen shake (keypad stays still to keep tap targets stable)
   S.shake = Math.max(0, S.shake - dt * 30);
   const shk = S.shake * S.motion;
+  const isLow = document.body.classList.contains('tier-low');
   if (shk > 0.1 && !S.reduced) {
-    const sx = rand(-shk, shk);
-    const sy = rand(-shk, shk);
-    stage.style.translate = `${sx}px ${sy}px`;
-    if (domHud) domHud.style.translate = `${sx * 0.5}px ${sy * 0.5}px`;
+    if (!isLow) {
+      const sx = rand(-shk, shk);
+      const sy = rand(-shk, shk);
+      stage.style.translate = `${sx}px ${sy}px`;
+      if (domHud) domHud.style.translate = `${sx * 0.5}px ${sy * 0.5}px`;
+    } else {
+      stage.classList.add('cpu-shake');
+    }
     wasShake = true;
   } else if (wasShake) {
-    stage.style.translate = '';
-    if (domHud) domHud.style.translate = '';
+    if (!isLow) {
+      stage.style.translate = '';
+      if (domHud) domHud.style.translate = '';
+    } else {
+      stage.classList.remove('cpu-shake');
+    }
     wasShake = false;
   }
 

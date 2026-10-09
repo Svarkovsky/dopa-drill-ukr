@@ -126,3 +126,28 @@ export function getAdaptiveDPR(maxPixels = 1920 * 1080) {
   }
   return Math.max(0.75, dpr);
 }
+
+// Hardware tier detection (software rendering / weak CPU)
+export function detectHardwareTier() {
+  let isSoftware = false;
+  if (typeof document !== 'undefined') {
+    try {
+      const c = document.createElement('canvas');
+      const gl = c.getContext('webgl') || c.getContext('experimental-webgl');
+      if (gl) {
+        const dbg = gl.getExtension('WEBGL_debug_renderer_info');
+        if (dbg) {
+          const r = (gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) || '').toLowerCase();
+          isSoftware = /swiftshader|llvmpipe|software|mesa dri|microsoft basic|gallium/i.test(r);
+        }
+      } else {
+        isSoftware = true;
+      }
+    } catch (_) {
+      isSoftware = true;
+    }
+  }
+  const cores = typeof navigator !== 'undefined' ? (navigator.hardwareConcurrency || 2) : 4;
+  const mem = typeof navigator !== 'undefined' ? (navigator.deviceMemory || 4) : 4;
+  return (isSoftware || (cores <= 2 && mem <= 2)) ? 'low' : 'high';
+}

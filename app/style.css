@@ -1075,3 +1075,60 @@ html[lang="uk"] #go-extra small {
   letter-spacing: .08em;
   margin-top: -4px;
 }
+
+/* ------------------------------------------------------------ Low-End / Software Rendering Optimizations */
+body.tier-low #rays-fallback {
+  background: linear-gradient(
+    135deg,
+    #3b6bff 0%, #7b5bff 18%, #ff7ab6 36%,
+    #ffd23f 54%, #ff7ab6 72%, #7b5bff 86%, #3b6bff 100%
+  ) !important;
+  background-size: 300% 300% !important;
+  animation: bg-soft-shift 6s ease-in-out infinite !important;
+  filter: none !important;
+  transform: translateZ(0) !important;
+  will-change: opacity !important;
+}
+@keyframes bg-soft-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+body.tier-low .bg-hue-anim {
+  animation: bg-pulse-soft 3s ease-in-out infinite !important;
+  filter: none !important;
+}
+@keyframes bg-pulse-soft {
+  0%, 100% { opacity: 0.65; }
+  50% { opacity: 0.95; }
+}
+
+body.tier-low .cpu-shake {
+  outline: 4px solid var(--pink) !important;
+  outline-offset: -4px !important;
+}
+
+body.tier-low.reach .cell.input.active {
+  box-shadow: 0 0 0 5px var(--pink), 0 0 0 9px var(--yellow) !important;
+  outline: 4px solid var(--yellow) !important;
+  animation: reach-cell-cpu .25s steps(2) infinite !important;
+}
+@keyframes reach-cell-cpu {
+  50% { box-shadow: 0 0 0 5px var(--blue), 0 0 0 9px var(--pink) !important; }
+}
+
+body.tier-low.lv9 .card {
+  box-shadow: 0 7px 0 var(--ink), 0 0 0 5px var(--pink), 0 0 0 9px var(--yellow) !important;
+}
+
+body.tier-low.lv8 .pad button {
+  box-shadow: 0 5px 0 var(--ink), 0 0 0 3px var(--yellow) !important;
+}
+
+body.tier-low #bg,
+body.tier-low #fx-back,
+body.tier-low #fx,
+body.tier-low #actors,
+body.tier-low #cutins,
+body.tier-low #flash {
+  will-change: auto !important;
+}

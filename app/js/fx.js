@@ -43,16 +43,23 @@ export class FX {
   themed(kind) { return kind === 'confetti' && this.theme && Math.random() < 0.65 ? this.theme : kind; }
 
   burst(x, y, { count = 20, speed = 420, kinds = ['confetti'], up = 0, spread = Math.PI * 2, angle = -Math.PI / 2, colors = PAPER, size = 1, gravity = 1, life = 1 } = {}) {
-    const n = this.scale(count);
+    const isLow = typeof document !== 'undefined' && document.body.classList.contains('tier-low');
+    const baseCount = isLow ? Math.max(8, Math.round(count * 0.55)) : count;
+    const effSize = isLow ? size * 1.25 : size;
+    const n = this.scale(baseCount);
     for (let i = 0; i < n; i++) {
       const kind = this.themed(pick(kinds));
       const a = angle + (Math.random() - 0.5) * spread;
       const v = speed * rand(0.35, 1);
-      const p = { kind, x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - up, rot: rand(0, 6.28), vr: rand(-12, 12), flip: rand(0, 6.28), vf: rand(6, 16), color: pick(colors), size: size * rand(0.7, 1.3), life: rand(1.4, 2.6), g: 900 * gravity, drag: 0.8 };
+      const p = this.allocPart();
+      p.kind = kind; p.x = x; p.y = y; p.vx = Math.cos(a) * v; p.vy = Math.sin(a) * v - up;
+      p.rot = rand(0, 6.28); p.vr = rand(-12, 12); p.flip = rand(0, 6.28); p.vf = rand(6, 16);
+      p.color = pick(colors); p.size = effSize * rand(0.7, 1.3); p.life = rand(1.4, 2.6);
+      p.g = 900 * gravity; p.drag = 0.8;
       if (kind === 'spark') { p.life = rand(0.35, 0.7); p.g = 300 * gravity; p.drag = 2.4; p.color = pick(['#fff', '#ffe98a', '#ffd23f', '#ff9ccc']); }
       if (kind === 'star') { p.life = rand(0.8, 1.4); p.g = 500 * gravity; p.drag = 1.6; p.color = pick(['#ffd23f', '#fff', '#ff9ccc', '#8fd3ff']); }
       if (kind === 'coin') { p.life = rand(1.4, 2.2); p.g = 1300 * gravity; p.drag = 0.4; }
-      if (kind === 'mini') { p.life = rand(1.6, 2.4); p.g = 900 * gravity; p.drag = 0.5; p.sprite = pick(this.sprites); p.vr = rand(-6, 6); p.size = size * rand(0.8, 1.2); }
+      if (kind === 'mini') { p.life = rand(1.6, 2.4); p.g = 900 * gravity; p.drag = 0.5; p.sprite = pick(this.sprites); p.vr = rand(-6, 6); p.size = effSize * rand(0.8, 1.2); }
       if (kind === 'heart') { p.life = rand(1, 1.6); p.g = -80; p.drag = 1.8; p.color = pick(['#ff3f8e', '#ff7ab6']); }
       THEME_INIT[kind] && THEME_INIT[kind](p);
       p.life *= life;

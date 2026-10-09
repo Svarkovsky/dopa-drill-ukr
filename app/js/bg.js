@@ -1,4 +1,4 @@
-import { getAdaptiveDPR } from './core.js';
+import { getAdaptiveDPR, detectHardwareTier } from './core.js';
 // Full-screen WebGL backdrop: sunburst rays that grow into a rainbow tunnel of
 // Dopakichi silhouettes. Falls back to a CSS conic gradient without WebGL.
 
@@ -212,7 +212,10 @@ export class Backdrop {
     this.fallback = fallback;
     this.state = { E: 0, kick: 0, flash: 0, reach: 0, hue: 0, cx: 0, cy: 0, theme: 0 };
     this.gl = null;
-    try { this.init(); } catch (e) { console.warn('webgl off', e); this.gl = null; }
+    this.isLowEnd = detectHardwareTier() === 'low';
+    if (!this.isLowEnd) {
+      try { this.init(); } catch (e) { console.warn('webgl off', e); this.gl = null; }
+    }
     if (!this.gl) { canvas.style.display = 'none'; fallback.style.display = 'block'; }
   }
   init() {
